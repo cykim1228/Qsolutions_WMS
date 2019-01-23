@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="co.kr.qsolutions.mapper.accountMapper">
+
+ 	
+ 	<!-- Login처리 -->
+    
+ 	<!-- 특정유저 검색 -->
+    <select id="UserCheckID" resultType="UserVO" parameterType="String">
+    	select userid,userpasswd from user
+    	<where>
+    		userid = #{userid}
+    	</where>    
+    </select>
+    <select id="UserViewSelect" resultType="UserVO" parameterType="String">
+    	select
+    		userid, username, usermobile,useremail,companyusercode,u.deptcode,d.deptname,u.positioncode,p.positionname
+    	from 
+    		user u left join dept d ON u.deptcode = d.deptcode
+            left join positions p ON u.positioncode = p.positioncode 
+    	<where>
+    		userid = #{userid}
+    	</where>    
+    </select>
+ 	<!-- 전체 유저 검색 -->
+    <select id="SelectUserList" resultType="UserVO" parameterType="PagingVO">
+    	select
+    		userid, username, usermobile,useremail,companyusercode,u.deptcode,d.deptname,u.positioncode,p.positionname
+    	from 
+    		user u left join dept d ON u.deptcode = d.deptcode
+            left join positions p ON u.positioncode = p.positioncode 
+    	<trim prefix="WHERE" prefixOverrides="AND |OR ">
+	       	<if test="searchType=='userid'">
+	       		userid like CONCAT('%',#{searchData},'%')
+	       	</if>
+	       	<if test="searchType=='username'">
+	       		username like CONCAT('%',#{searchData},'%')
+	       	</if>
+			AND u.IsUse = 0
+		</trim>
+		ORDER BY
+			userid ASC
+		Limit #{start},#{last}
+    </select>
+    
+    <select id="SelectUserCount" resultType="Integer" parameterType="PagingVO">
+    	select
+    		count(*)
+    	from
+    		user
+    	<trim prefix="WHERE" prefixOverrides="AND |OR ">
+	       	<if test="searchType=='userid'">
+	       		userid like CONCAT('%',#{searchData},'%')
+	       	</if>
+	       	<if test="searchType=='username'">
+	       		username like CONCAT('%',#{searchData},'%')
+	       	</if>
+			AND IsUse = 0
+		</trim>
+    </select>
+    
+    <select id="SelectDeptList" resultType="UserVO">
+    	select deptname, deptcode from dept
+    </select>
+	<select id="SelectPositionList" resultType="UserVO">
+		select positionname, positioncode from positions
+	</select>    
+   	<insert id="InsertUser" parameterType="UserDTO">
+   		insert into user
+   			(userid,username,userpasswd,companyusercode,deptcode,positioncode,usermobile,useremail)
+   		value
+   			(#{userid},#{username},#{userpasswd},#{companyusercode},#{deptcode},#{positioncode},#{usermobile},#{useremail})
+   	</insert>
+   	
+   	<update id="UpdateUser" parameterType="UserDTO">
+   		update 
+			user
+		set
+			username = #{username}, userpasswd = #{userpasswd}, usermobile = #{usermobile}, useremail = #{useremail},
+			companyusercode = #{companyusercode}, deptcode = #{deptcode}, positioncode = #{positioncode}
+		where
+			userid = #{userid}
+   	</update>
+   	<update id="DeleteUser" parameterType="UserDTO">
+   		update 
+			user
+		set
+			IsUse = 1
+		where
+			userid = #{userid}
+   	</update>
+   	
+    <!--
+        로그인된 경우 해당 세션id와 유효시간을 사용자 테이블에 세팅한다.
+     -->
+    <update id="keepLogin">
+        update user set sessionKey = #{sessionId}, sessionLimit = #{next} where userId=#{userId}
+    </update>
+    <!--
+        유효기간이 남아 있으면서 해당 sessionId를 가지는 사용자 정보를 꺼내오는 부분
+     -->
+    <select id="checkUserWithSessionKey" resultType="UserVO">
+        select * from user where sessionKey = #{sessionId} and sessionLimit > now()
+    </select>
+</mapper>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="co.kr.qsolutions.mapper.companyMapper">
+	
+	<select id="SelectCompanyList" parameterType="PagingVO" resultType="CompanyVO">
+		select 
+			companycode, companyname, companyhomepg, companyaddress, IsUse, companyclass
+		from
+			company
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+	       	<if test="searchType=='companycode'">
+	       		companycode like CONCAT('%',#{searchData},'%')
+	       	</if>
+	       	<if test="searchType=='companyname'">
+	       		companyname like CONCAT('%',#{searchData},'%')
+	       	</if>
+	       	<if test="searchType=='companyhomepg'">
+	       		companyhomepg like CONCAT('%',#{searchData},'%')
+	       	</if>
+			<if test="searchType=='companyaddress'">
+				companyaddress like CONCAT('%',#{searchData},'%')
+			</if>
+			AND IsUse != 1
+		</trim>
+		order by
+			companyname asc
+		Limit #{start},#{last}
+	</select>
+ 	<select id="SelectCompanyCount" parameterType="PagingVO" resultType="java.lang.Integer">
+		select 
+			count(*)
+		from
+			company
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+	       	<if test="searchType=='companycode'">
+	       		companycode like CONCAT('%',#{searchData},'%')
+	       	</if>
+	       	<if test="searchType=='companyname'">
+	       		companyname like CONCAT('%',#{searchData},'%')
+	       	</if>
+	       	<if test="searchType=='companyhomepg'">
+	       		companyhomepg like CONCAT('%',#{searchData},'%')
+	       	</if>
+			<if test="searchType=='companyaddress'">
+				companyaddress like CONCAT('%',#{searchData},'%')
+			</if>
+			AND IsUse != 1
+		</trim>
+		order by
+			companyname asc
+	</select>
+	
+	<select id="CoworkViewSelectCompany" resultType="CoworkVO" parameterType="CoworkDTO">
+		select 
+			*
+		from
+			company c inner join cowork cw ON c.companycode = cw.coworkcompany
+		where
+			c.companycode = #{companycode};
+	</select>
+	
+	<select id="SelectCompanyView" parameterType="String" resultType="CompanyVO">
+		select
+			*
+		from
+			company
+		where
+			companycode = #{companycode};
+	</select>
+	<insert id="InsertCompany" parameterType="CompanyDTO">
+		insert into company
+			(companycode, companyname, companyhomepg, companyzipcode, companyaddress, companyaddress2, companyclass)
+		value
+			(#{companycode},#{companyname},#{companyhomepg},#{companyzipcode},#{companyaddress},#{companyaddress2}, #{companyclass})
+	</insert>
+	<update id="UpdateCompany" parameterType="CompanyDTO">
+		update company 
+			set 
+				companyname = #{companyname}, companyhomepg = #{companyhomepg}, companyzipcode = #{companyzipcode}, companyaddress = #{companyaddress}, companyaddress2 = #{companyaddress2}, companyclass = #{companyclass}
+			where 
+				companycode = #{companycode}
+	</update>
+	<update id="DeleteCompany" parameterType="CompanyDTO">
+		update company
+			set IsUse = 1
+		where
+			companycode = #{companycode}
+	</update>
+	<select id="SelectCompanyCode" resultType="String">
+		select MAX(companycode) from company
+	</select>
+	<select id="SelectUser" resultType="UserVO">
+		select 
+			*
+		from 
+			user 
+	</select>
+	<select id="SelectCompanyUser" resultType="UserVO" parameterType="CompanyDTO">
+		select distinct
+			u.userid, u.username, u.usermobile, u.useremail
+		from 
+			user u inner join usercompany uc ON u.userid = uc.userid
+		    <!-- inner join company c ON uc.companycode = c.companycode -->
+		where
+			uc.companycode = #{companycode}
+	</select>
+	
+	<select id="SelectManager" resultType="UserVO" parameterType="CompanyDTO">
+		select 
+			u.userid, u.username, u.usermobile, u.useremail, uc.companycode
+		from 
+			user u inner join usercompany uc ON u.userid = uc.userid
+		    inner join company c ON uc.companycode = c.companycode
+		where
+			uc.companycode = #{companycode}
+	</select>
+	
+	<insert id="InsertManager" parameterType="CoworkDTO">
+		insert into usercompany
+			(userid, companycode)
+		select
+			#{userid},#{companycode}
+		from dual
+		where not exists
+			(select * from usercompany where userid = #{userid} and companycode = #{companycode})
+	
+	</insert>
+	
+	<delete id="DeleteManager" parameterType="CoworkDTO">
+		delete from usercompany
+		where 
+			userid=#{userid} and companycode=#{companycode};
+	</delete>
+	
+	<select id="CompanyAllSelect" resultType="CompanyVO">
+		select companycode,companyname from company
+	</select>
+</mapper>

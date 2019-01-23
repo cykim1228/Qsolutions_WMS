@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration 
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+    <configuration>
+        <settings>
+	        <!-- http://www.mybatis.org/mybatis-3/ko/configuration.html -->
+	        <setting name="cacheEnabled" value="true"/>
+	        <setting name="lazyLoadingEnabled" value="false"/>
+	        <setting name="multipleResultSetsEnabled" value="true"/>
+	        <setting name="useColumnLabel" value="true"/>
+	        <setting name="useGeneratedKeys" value="false"/>
+	        <setting name="defaultExecutorType" value="SIMPLE"/>
+	        <setting name="defaultStatementTimeout" value="25000"/>
+	        <setting name="mapUnderscoreToCamelCase" value="true"/>
+	        <setting name="jdbcTypeForNull" value="VARCHAR"/>
+	        <!-- <setting name="callSettersOnNulls" value="true" /> -->
+	    </settings>
+
+         <typeAliases>
+            <typeAlias type="kr.co.qsolutions.cowork.DTO.UserDTO" alias="UserDTO"/>
+            <typeAlias type="kr.co.qsolutions.cowork.DTO.FileDTO" alias="FileDTO"/>
+            <typeAlias type="kr.co.qsolutions.cowork.DTO.LogDTO" alias="LogDTO"/>
+            <typeAlias type="kr.co.qsolutions.cowork.DTO.CoworkDTO" alias="CoworkDTO"/>
+            <typeAlias type="kr.co.qsolutions.cowork.DTO.SubCoworkDTO" alias="SubCoworkDTO"/>
+            <typeAlias type="kr.co.qsolutions.cowork.DTO.CompanyDTO" alias="CompanyDTO"/>
+            <typeAlias type="kr.co.qsolutions.cowork.VO.UserVO" alias="UserVO"/>
+            <typeAlias type="kr.co.qsolutions.cowork.VO.LogVO" alias="LogVO"/>
+            <typeAlias type="kr.co.qsolutions.cowork.VO.PagingVO" alias="PagingVO"/>
+            <typeAlias type="kr.co.qsolutions.cowork.VO.CoworkVO" alias="CoworkVO"/>
+            <typeAlias type="kr.co.qsolutions.cowork.VO.SubCoworkVO" alias="SubCoworkVO"/>
+            <typeAlias type="kr.co.qsolutions.cowork.VO.CompanyVO" alias="CompanyVO"/>
+        </typeAliases>
+        <mappers>
+	        <package name="kr.co.qsolutions.cowork.mapper"/>
+	    </mappers>
+    </configuration>

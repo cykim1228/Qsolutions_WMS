@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="co.kr.qsolutions.mapper.coworkMapper">
+
+ 	
+ 	<!-- Login처리 -->
+ 	<!-- 페이징 처리를 위한  -->
+ 	<select id="CoworkViewListSelect" parameterType="PagingVO" resultType="CoworkVO">
+		select 
+			cw.userid, u.username ,c.companycode, c.companyname,cw.coworkcode, cw.coworktitle, cw.coworkdate, cw.coworksubject
+		from
+			user u inner join cowork cw ON u.userid = cw.userid     
+		inner join company c ON cw.coworkcompany = c.companycode
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+	       	<if test="searchType=='userid'">
+	       		cw.userid like CONCAT('%',#{searchData},'%')
+	       	</if>
+	       	<if test="searchType=='username'">
+	       		u.username like CONCAT('%',#{searchData},'%')
+	       	</if>
+	       	<if test="searchType=='companyname'">
+	       		c.companyname like CONCAT('%',#{searchData},'%')
+	       	</if>
+			<if test="searchType=='coworkcode'">
+				cw.cowortitle like CONCAT('%',#{searchData},'%')
+			</if>
+			AND cw.IsUse != 1
+		</trim>
+		ORDER BY
+			coworkcode ASC
+		Limit #{start},#{last}
+	</select> 	
+	
+	<select id="CoworkViewListCount" parameterType="PagingVO" resultType="java.lang.Integer">
+		select 
+			count(*)
+		from
+			user u inner join cowork cw ON u.userid = cw.userid     
+		inner join company c ON cw.coworkcompany = c.companycode
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+	       	<if test="searchType=='userid'">
+	       		cw.userid like CONCAT('%',#{searchData},'%')
+	       	</if>
+	       	<if test="searchType=='username'">
+	       		u.username like CONCAT('%',#{searchData},'%')
+	       	</if>
+	       	<if test="searchType=='companyname'">
+	       		c.companyname like CONCAT('%',#{searchData},'%')
+	       	</if>
+			<if test="searchType=='coworkcode'">
+				cw.cowortitle like CONCAT('%',#{searchData},'%')
+			</if>
+			AND cw.IsUse != 1
+		</trim>
+		order by
+			coworkcode ASC
+	</select>
+	
+	<select id="CoworkViewSelect" parameterType="CoworkDTO" resultType="CoworkVO">
+			select
+				cw.userid, u.username,cw.coworktext,cw.coworkcode,cw.coworktitle,cw.coworkdate,c.companycode,c.companyname,cw.coworksubject
+			from
+			user u inner join cowork cw ON u.userid = cw.userid     
+			inner join company c ON cw.coworkcompany = c.companycode
+		<where>
+        	cw.coworkcode = #{coworkcode}
+		</where>
+	</select>
+	
+	
+	<select id="CompanyAllSelect" resultType="CompanyVO">
+		select companycode,companyname from company
+	</select>
+	<select id="CoworkCodeSelect" resultType="String" parameterType="String">
+		select max(coworkcode) from cowork
+		<where>
+			coworkcode like CONCAT('%',#{nowdate},'%') 
+		</where>
+	</select>
+
+	<insert id="CoworkViewInsert" parameterType="CoworkDTO">
+		insert into cowork
+			(coworksubject,coworkcode,coworktitle,coworktext,coworkcompany,userid) 
+		value 
+			(#{coworksubject},#{coworkcode},#{coworktitle},#{coworktext},#{companycode},#{userid});
+	</insert>	
+	<update id="CoworkViewUpdate" parameterType="CoworkDTO">
+		update 
+			cowork 
+		set
+			coworksubject = #{coworksubject}, coworktitle = #{coworktitle}, coworktext = #{coworktext}, coworkcompany = #{companycode}
+		<where>
+			coworkcode = #{coworkcode} 
+		</where>
+	</update>
+	
+	<update id="CoworkViewDelete" parameterType="CoworkDTO">
+		update
+			cowork
+		set
+			IsUse = 1
+		<where>
+			coworkcode = #{coworkcode}		
+		</where>
+	</update>
+	<select id="SubCoworkListSelect" resultType="SubCoworkVO" parameterType="CoworkDTO">
+		select
+			sc.subcoworkcode, sc.subcoworkdate, sc.subcoworktext, sc.coworkcode,u.userid,u.username, sc.IsUse 
+		from 
+			subcowork sc left join user u ON sc.userid = u.userid
+		<where>
+			coworkcode = #{coworkcode} and sc.IsUse = 0
+		</where>
+		order by subcoworkcode desc;
+	</select>
+	<select id="SubCoworkCount" resultType="Integer" parameterType="CoworkDTO">
+		select
+			count(*)
+		from 
+			subcowork sc left join user u ON sc.userid = u.userid
+		where
+			coworkcode = #{coworkcode} and sc.IsUse = 0;
+	</select>
+	<insert id="SubCoworkListInsert" parameterType="SubCoworkDTO">
+		Insert into subcowork
+			(subcoworkdate,subcoworktext,coworkcode,userid)
+		value
+			(NOW(),#{subcoworktext},#{coworkcode},#{userid})
+	</insert>
+	<update id ="SubCoworkListUpdate" parameterType="SubCoworkDTO">
+		update
+			subcowork
+		set
+			subcoworkdate = now(),subcoworktext = #{subcoworktext}
+		where
+			coworkcode = #{coworkcode} and subcoworkcode = #{subcoworkcode}
+	</update>
+	<update id ="SubCoworkListDelete" parameterType="SubCoworkDTO">
+		update
+			subcowork
+		set
+			IsUse = 1
+		where
+			coworkcode = #{coworkcode} and subcoworkcode = #{subcoworkcode}
+	</update>
+</mapper>
