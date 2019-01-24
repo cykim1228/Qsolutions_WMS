@@ -151,5 +151,11 @@ body {
         <input type='hidden' name='searchType' id='searchType' value='${pagingVO.searchType}'>
         <input type='hidden' name='searchData' id='searchData' value='${pagingVO.searchData}'>
     </form>
+    
+    <form action="${pageContext.request.contextPath}/Search/List" method="post">
+    	<input type="text" class="form-control" placeholder="Search..." value="${SearchData}" name=SearchData>
+    	<input type="submit">
+    </form>
+    
 </body>
 </html>

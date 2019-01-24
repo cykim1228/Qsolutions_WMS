@@ -40,4 +40,8 @@ public interface CoworkDao {
 
     public List<CoworkVO> CoworkViewSelectCompany(String companycode);
 
+	public List<CoworkVO> SearchCoworkAll(PagingVO pagingVO);
+
+	public int SearchCoworkCount();
+
 }

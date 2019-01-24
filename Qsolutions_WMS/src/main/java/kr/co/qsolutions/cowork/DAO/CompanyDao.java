@@ -42,5 +42,9 @@ public interface CompanyDao {
 	public int InsertManager(CoworkDTO coworkDTO) throws Exception;
 	
 	public int DeleteManager(CoworkDTO coworkDTO) throws Exception;
+
+	public List<CompanyVO> SearchCompanyAll(PagingVO pagingVO);
+
+	public int SearchCompanyCount();
 	
 }

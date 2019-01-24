@@ -96,5 +96,18 @@ public class UserDaoImpl implements UserDao  {
         // 유효시간이 남아있고(>now()) 전달받은 세션 id와 일치하는 사용자 정보를 꺼낸다.
         return sqlSession.selectOne(Namespace+".checkUserWithSessionKey",sessionId);
     }
+    
+	@Override
+	public List<UserVO> SearchUserAll(PagingVO pagingVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(Namespace+".SearchUserAll", pagingVO);
+	}
+	
+	@Override
+	public int SearchUserCount() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(Namespace+".SearchUserCount");
+	}
+    
 }
 																																																																																																																																																																							

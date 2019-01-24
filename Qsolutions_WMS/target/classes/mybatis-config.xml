@@ -32,6 +32,6 @@
             <typeAlias type="kr.co.qsolutions.cowork.VO.CompanyVO" alias="CompanyVO"/>
         </typeAliases>
         <mappers>
-	        <package name="kr.co.qsolutions.cowork.mapper"/>
+	        <package name="kr.co.qsolutions.mapper"/>
 	    </mappers>
     </configuration>
