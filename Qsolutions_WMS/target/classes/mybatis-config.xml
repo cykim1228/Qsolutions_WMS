@@ -24,12 +24,14 @@
             <typeAlias type="kr.co.qsolutions.cowork.DTO.CoworkDTO" alias="CoworkDTO"/>
             <typeAlias type="kr.co.qsolutions.cowork.DTO.SubCoworkDTO" alias="SubCoworkDTO"/>
             <typeAlias type="kr.co.qsolutions.cowork.DTO.CompanyDTO" alias="CompanyDTO"/>
+            <typeAlias type="kr.co.qsolutions.cowork.DTO.SearchDTO" alias="SearchDTO"/>
             <typeAlias type="kr.co.qsolutions.cowork.VO.UserVO" alias="UserVO"/>
             <typeAlias type="kr.co.qsolutions.cowork.VO.LogVO" alias="LogVO"/>
             <typeAlias type="kr.co.qsolutions.cowork.VO.PagingVO" alias="PagingVO"/>
             <typeAlias type="kr.co.qsolutions.cowork.VO.CoworkVO" alias="CoworkVO"/>
             <typeAlias type="kr.co.qsolutions.cowork.VO.SubCoworkVO" alias="SubCoworkVO"/>
             <typeAlias type="kr.co.qsolutions.cowork.VO.CompanyVO" alias="CompanyVO"/>
+            <typeAlias type="kr.co.qsolutions.cowork.VO.SearchVO" alias="SearchVO"/>
         </typeAliases>
         <mappers>
 	        <package name="kr.co.qsolutions.mapper"/>

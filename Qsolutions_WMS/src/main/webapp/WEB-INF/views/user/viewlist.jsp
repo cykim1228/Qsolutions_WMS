@@ -88,20 +88,21 @@ body {
           <ul class="nav navbar-nav navbar-right">
             <li><a href="${pageContext.request.contextPath}/Logout">LOGOUT</a></li>
           </ul>
-		<form class="navbar-form navbar-right">
-			<select class="btn btn-primary" name="SearchType">
-	            <option value="userid" <c:if test="${pagingVO.searchType == 'userid'}">seleted</c:if> >사용자ID</option>
-	            <option value="username"<c:if test="${pagingVO.searchType == 'username'}">seleted</c:if> >사용자명</option>
-	        </select>
-            <input type="text" class="form-control" placeholder="Search..." value="${SearchData}" name=SearchData>
-          </form>
         </div>
     </div>
     </nav>
 	<!-- 상세 뷰 페이지 -->
 	<div class="viewListTop">
 		<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 30px; font-weight: bold;">사용자 리스트</span>
-	    <button type="button" class="btn btn-primary pull-right" onclick="insertView()" style="margin-right: 10px; margin-top: 8px;">사용자 등록</button>
+	    <button type="button" class="btn btn-primary pull-right" onclick="insertView()" style="margin-left:10px; margin-right: 10px; margin-top: 8px;">사용자 등록</button>
+	    <form class="navbar-form navbar-right" style="border-right-width: 2px; border-right-style: solid; border-right-color: gray; margin-right: 5px;">
+			<select class="btn btn-primary" name="SearchType">
+	            <option value="userid" <c:if test="${pagingVO.searchType == 'userid'}">seleted</c:if> >사용자ID</option>
+	            <option value="username"<c:if test="${pagingVO.searchType == 'username'}">seleted</c:if> >사용자명</option>
+	        </select>
+            <input type="text" class="form-control" placeholder="Search..." value="${SearchData}" name="SearchData">
+            <input type="submit" class="btn btn-primary" value="검색">
+          </form>
 	</div>
 	<div class="viewList">
 		<div class="table-responsive">

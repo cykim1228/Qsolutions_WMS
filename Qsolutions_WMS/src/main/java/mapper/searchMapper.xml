@@ -37,7 +37,7 @@
  	</select>
  	
  	<!-- company테이블 통합 검색 갯수 -->
- 	<select id="SearchCompanyCount" parameterType="PagingVO" resultType="java.lang.Integer">
+ 	<select id="SearchCompanyCount" resultType="Integer">
  		SELECT 
 			count(*)
 		FROM
@@ -48,7 +48,7 @@
  	</select>
  	
  	<!-- user테이블 통합 검색 갯수 -->
- 	<select id="SearchUserCount" parameterType="PagingVO" resultType="java.lang.Integer">
+ 	<select id="SearchUserCount" resultType="Integer">
  		SELECT 
 			count(*)
 		FROM
@@ -59,9 +59,42 @@
  	</select>
  	
  	<!-- cowork테이블 통합 검색 갯수 -->
- 	<select id="SearchCoworkCount" parameterType="PagingVO" resultType="java.lang.Integer">
+ 	<select id="SearchCoworkCount" resultType="Integer">
  		SELECT 
 			count(*)
+		FROM
+			cowork co
+		WHERE
+			co.coworksubject LIKE CONCAT('%',#{searchData},'%') OR co.coworktitle LIKE CONCAT('%',#{searchData},'%') OR co.coworktext LIKE CONCAT('%',#{searchData},'%') OR co.userid LIKE CONCAT('%',#{searchData},'%')
+			AND IsUse != 1
+ 	</select>
+ 	
+ 	<!-- company테이블 통합 검색 갯수 -->
+ 	<select id="SearchCompanyCountvo" parameterType="PagingVO" resultType="SearchVO">
+ 		SELECT 
+			count(*) AS count
+		FROM
+			company c
+		WHERE
+			c.companyclass LIKE CONCAT('%',#{searchData},'%') OR c.companyname LIKE CONCAT('%',#{searchData},'%') OR c.companyaddress LIKE CONCAT('%',#{searchData},'%')
+			AND IsUse != 1
+ 	</select>
+ 	
+ 	<!-- user테이블 통합 검색 갯수 -->
+ 	<select id="SearchUserCountvo" parameterType="PagingVO" resultType="SearchVO">
+ 		SELECT 
+			count(*) AS count
+		FROM
+			user u
+		WHERE
+			u.userid LIKE CONCAT('%',#{searchData},'%') OR u.username LIKE CONCAT('%',#{searchData},'%') OR u.useremail LIKE CONCAT('%',#{searchData},'%')
+			AND IsUse != 1
+ 	</select>
+ 	
+ 	<!-- cowork테이블 통합 검색 갯수 -->
+ 	<select id="SearchCoworkCountvo" parameterType="PagingVO" resultType="SearchVO">
+ 		SELECT 
+			count(*) AS count
 		FROM
 			cowork co
 		WHERE

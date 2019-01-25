@@ -38,6 +38,7 @@
 			<mapping path="/Company/**"/>
 			<mapping path="/Admin/**"/>
 			<mapping path="/User/**"/> 
+			<mapping path="/Search/**"/>
 			<beans:ref bean="authenticationInterceptor"></beans:ref>
 		</interceptor>
 	</interceptors>

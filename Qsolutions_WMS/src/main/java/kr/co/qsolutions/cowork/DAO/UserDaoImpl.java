@@ -97,17 +97,5 @@ public class UserDaoImpl implements UserDao  {
         return sqlSession.selectOne(Namespace+".checkUserWithSessionKey",sessionId);
     }
     
-	@Override
-	public List<UserVO> SearchUserAll(PagingVO pagingVO) {
-		// TODO Auto-generated method stub
-		return sqlSession.selectList(Namespace+".SearchUserAll", pagingVO);
-	}
-	
-	@Override
-	public int SearchUserCount() {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne(Namespace+".SearchUserCount");
-	}
-    
 }
 																																																																																																																																																																							

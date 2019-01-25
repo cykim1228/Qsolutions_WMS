@@ -120,18 +120,10 @@ body {
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="${pageContext.request.contextPath}/Logout">LOGOUT</a></li>
 				</ul>
-				<form class="navbar-form navbar-right">
-					<select class="btn btn-primary" name="SearchType">
-						<option value="companyname"
-							<c:if test="${pagingVO.searchType == 'companyname'}">seleted</c:if>>회사명</option>
-						<option value="companyhomepg"
-							<c:if test="${pagingVO.searchType == 'companyhomepg'}">seleted</c:if>>홈페이지
-							주소</option>
-						<option value="companyaddress"
-							<c:if test="${pagingVO.searchType == 'companyaddress'}">seleted</c:if>>회사주소</option>
-					</select> <input type="text" class="form-control" placeholder="Search..."
-						value="${SearchData}">
-				</form>
+				<form action="${pageContext.request.contextPath}/Search/List" method="post" class="navbar-form navbar-right">
+			    	<input type="text" class="form-control" placeholder="통합검색.." value="${SearchData}" name=SearchData>
+			    	<input type="submit" class="btn btn-primary" value="검색">
+    			</form>
 			</div>
 		</div>
 	</nav>

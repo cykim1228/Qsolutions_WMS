@@ -104,19 +104,6 @@ public class CompanyDaoImpl implements CompanyDao  {
 		return sqlSession.delete(Namespace+".DeleteManager",coworkDTO);
 	}
 
-	@Override
-	public List<CompanyVO> SearchCompanyAll(PagingVO pagingVO) {
-		// TODO Auto-generated method stub
-		return sqlSession.selectList(Namespace+".SearchCompanyAll",pagingVO);
-	}
-
-	@Override
-	public int SearchCompanyCount() {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne(Namespace+".SearchCompanyCount");
-	}
-
-	
 	
 }
 																																																																																																																																																																							

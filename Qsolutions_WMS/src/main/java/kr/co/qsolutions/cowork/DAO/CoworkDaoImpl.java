@@ -101,16 +101,4 @@ public class CoworkDaoImpl implements CoworkDao  {
 		return sqlSession.selectList(Namespace+".CoworkViewSelectCompany");
 	}
 
-	@Override
-	public List<CoworkVO> SearchCoworkAll(PagingVO pagingVO) {
-		// TODO Auto-generated method stub
-		return sqlSession.selectList(Namespace+".SearchCoworkAll",pagingVO);
-	}
-
-	@Override
-	public int SearchCoworkCount() {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne(Namespace+".SearchCoworkCount");
-	}
-
 }
