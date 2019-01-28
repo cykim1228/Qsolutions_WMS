@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -119,6 +120,7 @@ body {
 </head>
 <body>
 <%@ include file="/WEB-INF/views/header/header.jsp"%>
+
     
 	<!-- 상세 뷰 페이지 -->
 	<div class="viewListTop">
@@ -156,7 +158,7 @@ body {
 						<td><a href='${pageContext.request.contextPath}/Company/View?companycode=${coworklistvo.companycode}'>${coworklistvo.companyname}</a></td>
 						<td><a href='${pageContext.request.contextPath}/Cowork/View?coworkcode=${coworklistvo.coworkcode}'>${coworklistvo.coworktitle}</a></td>
 						<td><a href='${pageContext.request.contextPath}/User/View?userid=${coworklistvo.userid}'>${coworklistvo.userid}</a></td>
-						<td>${coworklistvo.coworkdate}</td>
+						<td><fmt:formatDate value="${coworklistvo.coworkdate}" pattern="yyyy/MM/dd"/></td>
 					</tr>
 				</c:forEach>
 			</tbody>

@@ -1,6 +1,7 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -197,41 +198,8 @@ body {
 
 </head>
 <body>
-	<!-- 네비에이션 부분 (검색 및 확인 필요) -->	
-    <nav class="navbar navbar-inverse">
-	<div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="${pageContext.request.contextPath}/Cowork/List">업무관리 시스템</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-center">
-            <li><a href="${pageContext.request.contextPath}/Cowork/List">업무</a></li>
-            <li><a href="${pageContext.request.contextPath}/Company/List">사이트</a></li>
-            <li><a href="${pageContext.request.contextPath}/User/List">사용자</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="${pageContext.request.contextPath}/Logout">LOGOUT</a></li>
-          </ul>
-		<form class="navbar-form navbar-right">
-			<select class="btn btn-primary" name="SearchType">
-	            <option value="userid" <c:if test="${pagingVO.searchType == 'userid'}">seleted</c:if> >사용자ID</option>
-	            <option value="username"<c:if test="${pagingVO.searchType == 'username'}">seleted</c:if> >사용자명</option>
-	            <option value="coworktitle"<c:if test="${pagingVO.searchType == 'coworktitle'}">seleted</c:if> >업무명</option>
-	            <option value="companyname"<c:if test="${pagingVO.searchType == 'companyname'}">seleted</c:if> >사이트명</option>
-	        </select>
-            <input type="text" class="form-control" placeholder="Search..." value="${SearchData}">
-          </form>
-        </div>
-     </div>
-    </nav>
-    
-    
+<%@ include file="/WEB-INF/views/header/header.jsp"%>
+
 	<!-- 상세 뷰 페이지  -->
     <div class="viewListTop">
     	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 30px; font-weight: bold;">업무 상세 조회</span>
@@ -264,7 +232,7 @@ body {
 							<td><a href='${pageContext.request.contextPath}/Company/View?companycode=${CoworkVO.companycode}'>${CoworkVO.companyname}</a></td>
 							<td>${CoworkVO.coworktitle}</td>
 							<td><a href='${pageContext.request.contextPath}/User/View?userid=${CoworkVO.userid}'>${CoworkVO.userid}</a></td>
-							<td>${CoworkVO.coworkdate}</td>
+							<td><fmt:formatDate value="${CoworkVO.coworkdate}" pattern="yyyy/MM/dd"/></td>
 						</tr>
 				</tbody>
 			</table>
@@ -305,6 +273,7 @@ body {
 	        	<c:forEach var="SubCoworkVO" items="${SubCoworkVO}" varStatus="linenum">
 	        	<div class="viewList">
 					<div class="roundedSubNo">
+					
 						No. ${SubCoworkVO.subcoworkcode}
 						<input type="hidden" id="subcoworkcode" name="subcoworkcode" value="${SubCoworkVO.subcoworkcode}">
 					</div>
@@ -315,7 +284,9 @@ body {
 		            	${SubCoworkVO.userid}
 		            </div>
 		            <div class="roundedSubName">
-		            	${SubCoworkVO.subcoworkdate}
+		            	<fmt:timeZone value="GMT">
+		            	<fmt:formatDate value="${SubCoworkVO.subcoworkdate}" pattern="yyyy/MM/dd a h:mm"/>
+		            	</fmt:timeZone>
 		            </div>
 		            <button type="button" class="btn btn-danger pull-right" onclick="deletesubcowork()" style="width: 9%; height: 74px; display: inline-block;">삭제</button>
 	        	</div>
@@ -345,7 +316,7 @@ body {
 							<td>${CoworkVO.companyname}</td>
 							<td>${CoworkVO.coworktitle}</td>
 							<td>${CoworkVO.userid}</td>
-							<td>${CoworkVO.coworkdate}</td>
+							<td><fmt:formatDate value="${CoworkVO.coworkdate}" pattern="yyyy/MM/dd"/></td>
 						</tr>
 				</tbody>
 			</table>

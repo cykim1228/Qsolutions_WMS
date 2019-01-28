@@ -66,31 +66,10 @@ body {
 </style>
 
 </head>
+<body>
+<%@ include file="/WEB-INF/views/header/header.jsp"%>
 <!-- <body style="background-color:#d4d4d4"> -->
-	<!-- 네비에이션 부분 (검색 및 확인 필요) -->	
-    <nav class="navbar navbar-inverse">
-	<div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="${pageContext.request.contextPath}/Cowork/List">업무관리 시스템</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-center">
-            <li><a href="${pageContext.request.contextPath}/Cowork/List">업무</a></li>
-            <li><a href="${pageContext.request.contextPath}/Company/List">사이트</a></li>
-            <li><a href="${pageContext.request.contextPath}/User/List">사용자</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="${pageContext.request.contextPath}/Logout">LOGOUT</a></li>
-          </ul>
-        </div>
-    </div>
-    </nav>
+
 	<!-- 상세 뷰 페이지 -->
 	<div class="viewListTop">
 		<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 30px; font-weight: bold;">사용자 리스트</span>

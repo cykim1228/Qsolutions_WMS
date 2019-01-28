@@ -19,9 +19,9 @@
 		<h1 class="h3 mb-3 font-weight-normal">사내 업무 시스템</h1>
 		
 		<label for="inputEmail" class="sr-only">UserID</label>
-		<input type="text" name="userid"  class="form-control" placeholder="아이디" value="${cookie.rememberID.value}"  required autofocus>
+		<input type="text" id="userid" name="userid"  class="form-control" placeholder="아이디" value="${cookie.rememberID.value}"  required autofocus>
 		<label for="inputPassword" class="sr-only">Password</label>
-		<input type="password" name="userpasswd" class="form-control" placeholder="패스워드" required>
+		<input type="password" id="userpasswd" name="userpasswd" class="form-control" placeholder="패스워드" required>
 		<input type="hidden" name="Client" value="N"/>
 	
 	<div class="checkbox mb-3">
@@ -29,11 +29,29 @@
           <input type="checkbox" name="useCookie"> 로그인유지
         </label>
       </div>
-		<button type="button" onclick="check()" class="btn btn-default btn-lg" style=" margin-bottom: 20px" >LOGIN</button>
+		<button type="button" onclick="check()" id="loginBtn" class="btn btn-default btn-lg" style=" margin-bottom: 20px">LOGIN</button>
 		<p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
 	</form>
 	<script>
 		var LoginForm = document.SendLogin;
+		
+		$(document).ready(function(){
+		
+			//아이디input에서 엔터입력시 비밀번호input으로 넘어감
+			$('#userid').keydown(function(event){
+				if(event.keyCode == 13){
+					$('#userpasswd').focus();
+				}
+			});
+			
+			//비밀번호input에서 엔터를 누르면 로그인 클릭됨
+			$('#userpasswd').keydown(function(event) {
+				if(event.keyCode == 13){
+					$('#loginBtn').trigger('click');
+				}
+			});
+		});
+		
 		function check(){
 			if(LoginForm.userid.value == ""){
 				alert("아이디를 입력해주시기 바랍니다.");
