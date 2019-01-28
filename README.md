@@ -22,6 +22,6 @@
 #### Release V0.15 20190124
 - 통합검색 기능 구현 :seedling:
 
-#### Release V0.15 20190128
+#### Release V0.16 20190128
 - 네비게이션바 통합 :seedling:
 - 회사 삭제처리 시 업무도 함께 삭제처리 :seedling:
