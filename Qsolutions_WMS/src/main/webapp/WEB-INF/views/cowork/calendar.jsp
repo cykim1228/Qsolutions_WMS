@@ -27,7 +27,7 @@
 		var y = date.getFullYear();
 
 		$('#calendar').fullCalendar({
-			locale: 'ko',
+			locale: 'ko', 
 			businessHours: true,
 			header : {
 				left : 'prev,next today',
