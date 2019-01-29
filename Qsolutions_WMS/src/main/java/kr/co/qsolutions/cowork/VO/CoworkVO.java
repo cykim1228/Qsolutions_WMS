@@ -18,8 +18,22 @@ public class CoworkVO {
 	private String coworktitle;
 	private Date coworkdate;
 	private String coworksubject;
+	private String startdate;
+	private String enddate;
 	
 
+	public String getStartdate() {
+		return startdate;
+	}
+	public void setStartdate(String startdate) {
+		this.startdate = startdate;
+	}
+	public String getEnddate() {
+		return enddate;
+	}
+	public void setEnddate(String enddate) {
+		this.enddate = enddate;
+	}
 	public String getCoworksubject() {
 		return coworksubject;
 	}
@@ -150,7 +164,8 @@ public class CoworkVO {
 				+ positionname + ", usermobile=" + usermobile + ", useremail=" + useremail + ", usercompanycode="
 				+ usercompanycode + ", companycode=" + companycode + ", companyname=" + companyname + ", coworkcode="
 				+ coworkcode + ", coworktext=" + coworktext + ", coworktitle=" + coworktitle + ", coworkdate="
-				+ coworkdate + ", coworksubject=" + coworksubject + "]";
+				+ coworkdate + ", coworksubject=" + coworksubject + ", startdate=" + startdate + ", enddate=" + enddate
+				+ "]";
 	}
-
+	
 }

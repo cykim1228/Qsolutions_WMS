@@ -8,14 +8,9 @@
 <title>Insert title here</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
-<script
-	src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/util.js"></script>
+<%-- <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script> --%>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/util.js"></script>
 
 <style>
 body {
@@ -116,6 +111,7 @@ body {
 					<li><a href="${pageContext.request.contextPath}/Cowork/List">업무</a></li>
 					<li><a href="${pageContext.request.contextPath}/Company/List">사이트</a></li>
 					<li><a href="${pageContext.request.contextPath}/User/List">사용자</a></li>
+					<li><a href="${pageContext.request.contextPath}/Cowork/Calendar">캘린더</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="${pageContext.request.contextPath}/Logout">LOGOUT</a></li>

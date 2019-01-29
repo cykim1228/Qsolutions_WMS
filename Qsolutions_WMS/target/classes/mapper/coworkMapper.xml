@@ -59,7 +59,7 @@
 	
 	<select id="CoworkViewSelect" parameterType="CoworkDTO" resultType="CoworkVO">
 			select
-				cw.userid, u.username,cw.coworktext,cw.coworkcode,cw.coworktitle,date_format(cw.coworkdate, '%Y-%m-%d') AS coworkdate,c.companycode,c.companyname,cw.coworksubject
+				cw.userid, u.username,cw.coworktext,cw.coworkcode,cw.coworktitle,date_format(cw.coworkdate, '%Y-%m-%d') AS coworkdate,c.companycode,c.companyname,cw.coworksubject,cw.startdate,cw.enddate
 			from
 			user u inner join cowork cw ON u.userid = cw.userid     
 			inner join company c ON cw.coworkcompany = c.companycode
@@ -81,9 +81,9 @@
 
 	<insert id="CoworkViewInsert" parameterType="CoworkDTO">
 		insert into cowork
-			(coworksubject,coworkcode,coworktitle,coworktext,coworkcompany,userid) 
+			(coworksubject,coworkcode,coworktitle,coworktext,coworkcompany,userid,startdate,enddate) 
 		value 
-			(#{coworksubject},#{coworkcode},#{coworktitle},#{coworktext},#{companycode},#{userid});
+			(#{coworksubject},#{coworkcode},#{coworktitle},#{coworktext},#{companycode},#{userid},#{startdate},#{enddate});
 	</insert>	
 	<update id="CoworkViewUpdate" parameterType="CoworkDTO">
 		update 

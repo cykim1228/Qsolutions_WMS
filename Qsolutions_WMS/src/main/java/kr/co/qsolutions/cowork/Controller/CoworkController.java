@@ -63,6 +63,22 @@ public class CoworkController {
 		
 		return "cowork/viewlist";
 	}
+	
+	@RequestMapping(value = "/Cowork/Calendar")
+	public String CoworkCalendar(PagingVO pagingVO, HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
+
+		UserVO loginVO = (UserVO)session.getAttribute("login");
+
+		pagingVO.setTotal(coworkservice.CoworkViewListCount(pagingVO));
+		List<CoworkVO> listvo = coworkservice.CoworkViewListSelect(pagingVO);
+
+		model.addAttribute("coworklistvo",listvo);
+		model.addAttribute("pagingVO", pagingVO);
+		model.addAttribute("userid", loginVO.getUserid());
+		
+		return "cowork/calendar";
+	}
+	
 	@RequestMapping(value = "/Cowork/View")
 	public String CoworkView(HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
 		UserVO loginVO = (UserVO)session.getAttribute("login");

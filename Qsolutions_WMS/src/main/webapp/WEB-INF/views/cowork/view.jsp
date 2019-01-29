@@ -244,17 +244,33 @@ body {
 			<table class="table table-striped">
 				<thead align="center">
 					<tr>
+						<th style="width: 50%; text-align: center;">시작시간</th>
+						<th style="width: 50%; text-align: center;">종료시간</th>
+					</tr>
+				</thead>
+				<tbody align="center">
+					<tr>
+						<td>${CoworkVO.startdate}</td>
+						<td>${CoworkVO.enddate}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead align="center">
+					<tr>
 						<th style="width: 30%; text-align: center;">담당자</th>
 						<th style="width: 35%; text-align: center;">담당자연락처</th>
 						<th style="width: 35%; text-align: center;">담당자이메일</th>
 					</tr>
 				</thead>
 				<tbody align="center">
-						<tr>
-							<td>테스터(예시)</td>
-							<td>01012345678(예시)</td>
-							<td>qsolutions@qsolutions.co.kr(예시)</td>
-						</tr>
+					<tr>
+						<td>테스터(예시)</td>
+						<td>01012345678(예시)</td>
+						<td>qsolutions@qsolutions.co.kr(예시)</td>
+					</tr>
 				</tbody>
 			</table>
 		</div>

@@ -9,15 +9,26 @@
 <head>
 <title>[QSOLUTIONS]업무관리 시스템</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
-<script
-	src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/util.js"></script>
+
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-material-datetimepicker.css" />
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/material.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/moment-with-locales.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap-material-datetimepicker.js"></script>
+<script src="https://code.jquery.com/ui/1.9.1/jquery-ui.js" integrity="sha256-tXuytmakTtXe6NCDgoePBXiKe1gB+VA3xRvyBs/sq94=" crossorigin="anonymous"></script>
+
+<%-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script> --%>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script type="text/javascript">
+
 	// 	function fileupload(){}
 	// 		$(function () {
 	// 		    'use strict';
@@ -53,6 +64,8 @@
 		temp_obj["userid"] = $("#userid").val();
 		temp_obj["companycode"] = $("#companycode").val();
 		temp_obj["coworktext"] = $("#coworktext").val();
+		temp_obj["startdate"] = $("#startdate").val();
+		temp_obj["enddate"] = $("#enddate").val();
 
 		$.ajax({
 			url : "Insert",
@@ -74,6 +87,40 @@
 	function cancel() {
 		location.href = "/qsolcowork/Cowork/List";
 	}
+	
+	$(document).ready(function() {
+
+		$('#enddate').bootstrapMaterialDatePicker ({
+			weekStart: 0, 
+			format: 'YYYY-MM-DD HH:mm',
+			cancelText: 'Cancel',
+			okText: 'OK',
+			/* nowButton : true, */
+			switchOnClick : true,
+			lang: 'ko'
+		});
+		
+		$('#startdate').bootstrapMaterialDatePicker ({
+			weekStart: 0, 
+			format: 'YYYY-MM-DD HH:mm',
+			cancelText: 'Cancel',
+			okText: 'OK',
+			/* nowButton : true, */
+			switchOnClick : true,
+			lang: 'ko'
+		}).on('change', function(e, date) {
+			$('#enddate').bootstrapMaterialDatePicker('setMinDate', date);
+		});
+
+		$('#min-date').bootstrapMaterialDatePicker({ 
+			format : 'YYYY/MM/DD HH:mm', 
+			minDate : new Date() 
+		});
+		
+		$.material.init()
+		
+	});
+	
 </script>
 
 <style>
@@ -92,7 +139,7 @@ body {
 	width: 80%;
 	height: 80%;
 	margin: 0 auto; 
-	margin-top: 15px;
+	
 }
 
 .viewListCenter {
@@ -161,6 +208,28 @@ body {
 	-webkit-border-radius: 0.5em;
 }
 
+/* datepicer 버튼 롤오버 시 손가락 모양 표시 */
+.ui-datepicker-trigger {
+	cursor: pointer;
+}
+
+/* datepicer input 롤오버 시 손가락 모양 표시 */
+.hasDatepicker {
+	cursor: pointer;
+}
+
+h2 {
+	padding: 0 20px 10px 20px;
+	font-size: 20px;
+	font-weight: 400;
+}
+
+@media(max-width: 300px) {
+	.well { 
+		margin : 0
+	}
+}
+
 </style>
 
 </head>
@@ -201,13 +270,15 @@ body {
 			</select>
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">업무 내용</p>
 			<textarea id="coworktext" name="coworktext" class="form-control" rows="3" placeholder="업무 내용을 입력해주세요.." style="width: 100%; display: inline-block;"></textarea>
+			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">업무 날짜</p>
+			<input id="startdate" name="startdate" type="text" class="form-control" placeholder="시작 시간.." value="" size="50" style="width: 49%; display: inline-block;">
+			<input id="enddate" name="enddate" type="text" class="form-control pull-right" placeholder="종료 시간.." value="" size="50" style="width: 49%; display: inline-block;">
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">담당자 명</p>
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">담당자 연락처</p>
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">담당자 이메일</p>
 		</div>
 	</form>
-
-
+	
 	<%-- <!-- 상세 뷰 페이지  -->
 	<form action="${pageContext.request.contextPath}/Cowork/Insert"
 		method="post" id="insertData" name="insertData">
