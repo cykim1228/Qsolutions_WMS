@@ -19,8 +19,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.expression.spel.ast.TypeReference;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -77,6 +79,18 @@ public class CoworkController {
 		model.addAttribute("userid", loginVO.getUserid());
 		
 		return "cowork/calendar";
+	}
+	
+	@RequestMapping(value = "/Cowork/Calendar", method = RequestMethod.POST)
+	@ResponseBody
+	public CoworkVO CoworkCalendarSelect(String coworktitle) throws Exception {
+		CoworkDTO coworkDTO = new CoworkDTO();
+		coworkDTO.setCoworktitle(coworktitle);
+		CoworkVO coworkVO = coworkservice.CoworkCalendarSelect(coworkDTO);
+		
+		System.out.println("È®ÀÎ¿ë : " + coworkVO);
+		return coworkVO;
+		
 	}
 	
 	@RequestMapping(value = "/Cowork/View")

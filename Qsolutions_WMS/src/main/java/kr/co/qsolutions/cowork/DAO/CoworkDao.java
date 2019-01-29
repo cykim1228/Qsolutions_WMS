@@ -40,4 +40,6 @@ public interface CoworkDao {
 
     public List<CoworkVO> CoworkViewSelectCompany(String companycode);
 
+	public CoworkVO CoworkCalendarSelect(CoworkDTO coworkDTO);
+
 }

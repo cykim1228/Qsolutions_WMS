@@ -37,4 +37,6 @@ public interface CoworkService {
 
 	public List<CoworkVO> CoworkViewSelectCompany(String companycode) throws Exception;
 
+	public CoworkVO CoworkCalendarSelect(CoworkDTO coworkDTO) throws Exception;
+
 }

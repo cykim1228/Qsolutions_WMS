@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,6 +27,7 @@
 		var d = date.getDate();
 		var m = date.getMonth();
 		var y = date.getFullYear();
+		
 
 		$('#calendar').fullCalendar({
 			locale: 'ko', 
@@ -32,59 +35,94 @@
 			header : {
 				left : 'prev,next today',
 				center : 'title',
-				right : 'month,basicWeek,basicDay'
+				right : 'month,agendaWeek,agendaDay' // basicDay
 			},
-			editable : true,
-			events : [ {
-				title : 'All Day Event',
-				start : new Date(y, m, 1)
-			}, {
-				title : 'Long Event',
-				start : new Date(y, m, d - 5),
-				end : new Date(y, m, d - 2)
-			}, {
-				id : 999,
-				title : 'Repeating Event',
-				start : new Date(y, m, d - 3, 16, 0),
-				allDay : false
-			}, {
-				id : 999,
-				title : 'Repeating Event',
-				start : new Date(y, m, d + 4, 16, 0),
-				allDay : false
-			}, {
-				title : 'Meeting',
-				start : new Date(y, m, d, 10, 30),
-				allDay : false
-			}, {
-				title : 'Lunch',
-				start : new Date(y, m, d, 12, 0),
-				end : new Date(y, m, d, 14, 0),
-				allDay : false
-			}, {
-				title : 'Birthday Party',
-				start : new Date(y, m, d + 1, 19, 0),
-				end : new Date(y, m, d + 1, 22, 30),
-				allDay : false
-			}, {
-				title : 'Click for Google',
-				start : new Date(y, m, 28),
-				end : new Date(y, m, 29),
-				url : 'http://google.com/'
-			} ]
+			editable : false,
+			eventLimit: true,
+			/* eventClick: function() {
+				$("#layerpop").modal(); */
+			eventClick: function(calEvent, jsEvent, view) {
+				var coworktitle = calEvent.title;
+				console.log(coworktitle);
+				
+				$.ajax({
+					type : 'post',
+					url : '/qsolcowork/Cowork/Calendar',
+					data : {
+						coworktitle : coworktitle
+					},
+					success : function(data) {
+						
+						console.log(data);
+						console.log(data.coworktitle);
+						
+						var str = '';
+						str += '<tr>';
+						str += '<td>' + data.coworksubject + '</td>';
+						str += '<td><a href="${pageContext.request.contextPath}/Cowork/View?coworkcode=' + data.coworkcode + '">' + data.coworktitle + '</a></td>';
+						str += '<td>' + data.coworkcode + '</td>';
+						str += '</tr>';
+
+						$('#cowork_text').html(str);
+						
+						var strs = '';
+						strs += '<tr>';
+						strs += '<td><a href="${pageContext.request.contextPath}/Company/View?companycode=' + data.companycode + '">' + data.companyname + '</a></td>';
+						strs += '<td><a href="${pageContext.request.contextPath}/User/View?userid=' + data.userid + '">' + data.username + '</a></td>';
+						strs += '<td>' + data.startdate + '</td>';
+						strs += '<td>' + data.enddate + '</td>';
+						strs += '</tr>';
+						
+						$('#cowork_texts').html(strs);
+						
+						$("#layerpop").modal(); 
+					}
+				});
+				
+				
+				
+				
+			},
+			events : [ 
+				<c:forEach items="${coworklistvo}" var="coworklistvo" varStatus="rowCount">
+					{
+						title : '${coworklistvo.coworktitle}',
+						start : '${coworklistvo.startdate}',
+						end : '${coworklistvo.enddate}'
+							<c:choose>
+			                    <c:when test="${coworklistvo.username=='관리자'}">,color : '#000000'</c:when>
+			                    <c:when test="${coworklistvo.username=='김찬영'}">,color : '#FA5858'</c:when>
+			                    <c:when test="${coworklistvo.username=='이다해'}">,color : '#FF0000'</c:when>
+			                    <c:when test="${coworklistvo.username=='김도균'}">,color : '#FF8000'</c:when>
+			                    <c:when test="${coworklistvo.username=='김동현'}">,color : '#FFBF00'</c:when>
+			                    <c:when test="${coworklistvo.username=='이건수'}">,color : '#D7DF01'</c:when>
+			                    <c:when test="${coworklistvo.username=='조형찬'}">,color : '#04B404'</c:when>
+			                    <c:when test="${coworklistvo.username=='홍재영'}">,color : '#088A68'</c:when>
+			                    <c:when test="${coworklistvo.username=='박종신'}">,color : '#01DFD7'</c:when>
+			                    <c:when test="${coworklistvo.username=='이준호'}">,color : '#01A9DB'</c:when>
+			                    <c:when test="${coworklistvo.username=='조만수'}">,color : '#0080FF'</c:when>
+			                    <c:when test="${coworklistvo.username=='서미향'}">,color : '#0040FF'</c:when>
+			                    <c:when test="${coworklistvo.username=='임문혁'}">,color : '#0101DF'</c:when>
+			                    <c:when test="${coworklistvo.username=='윤도영'}">,color : '#8258FA'</c:when>
+			                    <c:when test="${coworklistvo.username=='유지헌'}">,color : '#BF00FF'</c:when>
+			                    <c:when test="${coworklistvo.username=='유웅재'}">,color : '#B4045F'</c:when>
+			                    <c:when test="${coworklistvo.username=='짠짠영'}">,color : '#8A0829'</c:when>
+			                    <c:otherwise>,color : '#000000' </c:otherwise>
+							</c:choose>
+					},
+				</c:forEach>
+			]
 		});
 
 	});
 </script>
 
 <style>
-body {
+
+#calendar {
 	text-align: center;
 	font-size: 14px;
 	font-family: "Lucida Grande", Helvetica, Arial, Verdana, sans-serif;
-}
-
-#calendar {
 	width: 900px;
 	margin: 0 auto;
 }
@@ -96,11 +134,97 @@ body {
 .fc-day-number.fc-sun.fc-past { 
 	color:#FF0000; 
 }    /* 일요일 */
+
+.viewListTop{
+	width: 80%;
+	height: 80%;
+	margin: 0 auto; 
+}
+
+.viewList {
+	width: 80%;
+	height: 80%;
+	margin: 0 auto; 
+	margin-top: 15px;
+}
+
+.pagingView {
+	width: 80%;
+	height: 80%;
+	margin: 0 auto; 
+}
+
+.fc-sun { 
+	color: red;
+	background-color:#F5A9A9; 
+	font-weight: bold;
+}
+.fc-sat { 
+	color: #2E64FE;
+	background-color:#A9E2F3;  
+	font-weight: bold;
+}
+
 </style>
 
 </head>
 <body>
 <%@ include file="/WEB-INF/views/header/header.jsp"%>
+	<div class="viewListTop" style="margin-bottom: 20px;">
+		<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 30px; font-weight: bold;">업무 달력</span>
+	</div>
 	<div id='calendar'></div>
+	
+	
+	<!-- 모달 창 -->
+
+<div class="modal fade" id="layerpop" >
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<!-- header -->
+			<div class="modal-header">
+				<!-- header title -->
+				<h4 class="modal-title">업무 상세보기</h4>
+				<!-- 닫기(x) 버튼 -->
+				<button type="button" class="close" data-dismiss="modal">×</button>
+			</div>
+			
+			<!-- body -->
+			<div id="coworkViewText" class="modal-body">
+			<table class="table table-striped">
+				<thead align="center">
+					<tr>
+						<th style="width: 30%; text-align: center;">카테고리</th>
+						<th style="width: 35%; text-align: center;">제목</th>
+						<th style="width: 35%; text-align: center;">업무코드</th>
+					</tr>
+				</thead>
+				<tbody align="center" id="cowork_text">
+					
+				</tbody>
+			</table>
+			<table class="table table-striped">
+				<thead align="center">
+					<tr>
+						<th style="width: 25%; text-align: center;">고객사명</th>
+						<th style="width: 25%; text-align: center;">등록자</th>
+						<th style="width: 25%; text-align: center;">시작시간</th>
+						<th style="width: 25%; text-align: center;">종료시간</th>
+					</tr>
+				</thead>
+				<tbody align="center" id="cowork_texts">
+					
+				</tbody>
+			</table>
+			</div>
+			
+			<!-- Footer -->
+			<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+			</div>
+		</div>
+	</div>
+</div>
+	
 </body>
 </html>
