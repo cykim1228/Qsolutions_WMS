@@ -30,6 +30,8 @@
         </label>
       </div>
 		<button type="button" onclick="check()" id="loginBtn" class="btn btn-default btn-lg" style=" margin-bottom: 20px">LOGIN</button>
+		<button type="button" onclick="googleLogin()" id="loginBtn" class="btn btn-default btn-lg" style=" margin-bottom: 20px">GoogleLogin</button>
+		
 		<p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
 	</form>
 	<script>
@@ -65,6 +67,11 @@
 			}
 			LoginForm.submit();
 		}
+		
+		function googleLogin() {
+			location.href = "/qsolcowork/Login/googleLogin";
+		}
+		
   	</script>
 </body>
 </html>

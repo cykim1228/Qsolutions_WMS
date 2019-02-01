@@ -38,8 +38,18 @@ public interface CoworkDao {
     public int SubCoworkListDelete(SubCoworkDTO subcoworkDTO) throws Exception;
     public int SubCoworkCount() throws Exception;
 
-    public List<CoworkVO> CoworkViewSelectCompany(String companycode);
+    public List<CoworkVO> CoworkViewSelectCompany(String companycode) throws Exception;
 
-	public CoworkVO CoworkCalendarSelect(CoworkDTO coworkDTO);
+	public CoworkVO CoworkCalendarSelect(CoworkDTO coworkDTO) throws Exception;
+
+	public List<CoworkVO> CoworkViewListCalendar(PagingVO pagingVO) throws Exception;
+
+	public String SelectCoworkCode() throws Exception;
+
+	public List<UserVO> SelectCoworkUser(CoworkDTO coworkDTO) throws Exception;
+
+	public int InsertCoworkManager(CoworkDTO coworkDTO) throws Exception;
+
+	public int DeleteCoworkManager(CoworkDTO coworkDTO) throws Exception;
 
 }

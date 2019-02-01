@@ -157,7 +157,7 @@ body {
 						<td>${coworklistvo.coworkcode}</td>
 						<td><a href='${pageContext.request.contextPath}/Company/View?companycode=${coworklistvo.companycode}'>${coworklistvo.companyname}</a></td>
 						<td><a href='${pageContext.request.contextPath}/Cowork/View?coworkcode=${coworklistvo.coworkcode}'>${coworklistvo.coworktitle}</a></td>
-						<td><a href='${pageContext.request.contextPath}/User/View?userid=${coworklistvo.userid}'>${coworklistvo.userid}</a></td>
+						<td><a href='${pageContext.request.contextPath}/User/View?userid=${coworklistvo.userid}'>${coworklistvo.username}</a></td>
 						<td><fmt:formatDate value="${coworklistvo.coworkdate}" pattern="yyyy/MM/dd"/></td>
 					</tr>
 				</c:forEach>

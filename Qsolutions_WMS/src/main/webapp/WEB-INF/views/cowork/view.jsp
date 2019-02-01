@@ -231,7 +231,7 @@ body {
 							<td>${CoworkVO.coworkcode}</td>
 							<td><a href='${pageContext.request.contextPath}/Company/View?companycode=${CoworkVO.companycode}'>${CoworkVO.companyname}</a></td>
 							<td>${CoworkVO.coworktitle}</td>
-							<td><a href='${pageContext.request.contextPath}/User/View?userid=${CoworkVO.userid}'>${CoworkVO.userid}</a></td>
+							<td><a href='${pageContext.request.contextPath}/User/View?userid=${CoworkVO.userid}'>${CoworkVO.username}</a></td>
 							<td><fmt:formatDate value="${CoworkVO.coworkdate}" pattern="yyyy/MM/dd"/></td>
 						</tr>
 				</tbody>
@@ -260,17 +260,25 @@ body {
 			<table class="table table-striped">
 				<thead align="center">
 					<tr>
-						<th style="width: 30%; text-align: center;">담당자</th>
+						<th style="width: 15%; text-align: center;">소속</th>
+						<th style="width: 15%; text-align: center;">담당자</th>
 						<th style="width: 35%; text-align: center;">담당자연락처</th>
 						<th style="width: 35%; text-align: center;">담당자이메일</th>
 					</tr>
 				</thead>
 				<tbody align="center">
-					<tr>
-						<td>테스터(예시)</td>
-						<td>01012345678(예시)</td>
-						<td>qsolutions@qsolutions.co.kr(예시)</td>
-					</tr>
+					<c:forEach items="${userList}" var="userList" varStatus="rowCount">
+						<tr>
+							<td>
+								<c:if test="${userList.companyusercode == 0}">퀀텀솔루션즈</c:if>
+								<c:if test="${userList.companyusercode == 1}">고객사</c:if>
+								<c:if test="${userList.companyusercode == 2}">파트너사</c:if>
+							</td>
+							<td>${userList.username}</td>
+							<td><a href='tel:${userList.usermobile}'>${userList.usermobile}</a></td>
+							<td><a href='mailto:${userList.useremail}'>${userList.useremail}</a></td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
 		</div>

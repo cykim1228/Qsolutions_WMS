@@ -17,6 +17,7 @@ import kr.co.qsolutions.cowork.VO.CompanyVO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
 import kr.co.qsolutions.cowork.VO.PagingVO;
 import kr.co.qsolutions.cowork.VO.SubCoworkVO;
+import kr.co.qsolutions.cowork.VO.UserVO;
  
 @Repository
 public class CoworkDaoImpl implements CoworkDao  {
@@ -107,4 +108,35 @@ public class CoworkDaoImpl implements CoworkDao  {
 		return sqlSession.selectOne(Namespace+".CoworkCalendarSelect",coworkDTO);
 	}
 
+	@Override
+	public List<CoworkVO> CoworkViewListCalendar(PagingVO pagingVO) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(Namespace+".CoworkViewListCalendar",pagingVO);
+	}
+
+	@Override
+	public String SelectCoworkCode() throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(Namespace+".SelectCoworkCode");
+	}
+
+	@Override
+	public List<UserVO> SelectCoworkUser(CoworkDTO coworkDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(Namespace+".SelectCoworkUser", coworkDTO);
+	}
+
+	@Override
+	public int InsertCoworkManager(CoworkDTO coworkDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.insert(Namespace+".InsertCoworkManager",coworkDTO);
+	}
+
+	@Override
+	public int DeleteCoworkManager(CoworkDTO coworkDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.delete(Namespace+".DeleteCoworkManager",coworkDTO);
+	}
+
+	
 }

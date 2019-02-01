@@ -13,6 +13,9 @@ public class UserVO {
 	private String positionname;
 	private int companyusercode;
 	private boolean useCookie;
+	private String gmail;
+	private String gname;
+	private String oauthcode;
 
 	public String getUserid() {
 		return userid;
@@ -82,9 +85,32 @@ public class UserVO {
 	public void setUseCookie(boolean useCookie) {
 		this.useCookie = useCookie;
 	}
+	public String getGmail() {
+		return gmail;
+	}
+	public void setGmail(String gmail) {
+		this.gmail = gmail;
+	}
+	public String getGname() {
+		return gname;
+	}
+	public void setGname(String gname) {
+		this.gname = gname;
+	}
+	public String getOauthcode() {
+		return oauthcode;
+	}
+	public void setOauthcode(String oauthcode) {
+		this.oauthcode = oauthcode;
+	}
+	
 	@Override
 	public String toString() {
-		return "PagingDto [userid=" + userid + ", username=" + username +  ", userpasswd=" + userpasswd +  ", usermobile=" + usermobile +  
-				", useremail=" + useremail +  ", deptcode=" + deptcode +  ", positioncode=" + positioncode +  ", companyusercode=" + companyusercode +  ", useCookie=" + useCookie +"]";
+		return "UserVO [userid=" + userid + ", username=" + username + ", userpasswd=" + userpasswd + ", usermobile="
+				+ usermobile + ", useremail=" + useremail + ", deptcode=" + deptcode + ", deptname=" + deptname
+				+ ", positioncode=" + positioncode + ", positionname=" + positionname + ", companyusercode="
+				+ companyusercode + ", useCookie=" + useCookie + ", gmail=" + gmail + ", gname=" + gname
+				+ ", oauthcode=" + oauthcode + "]";
 	}
+	
 }

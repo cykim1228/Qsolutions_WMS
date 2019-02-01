@@ -77,5 +77,10 @@ public class UserServiceImpl implements UserService {
     public UserVO checkUserWithSessionKey(String sessionId) {
         return dao.checkUserWithSessionKey(sessionId);
     }
+    
+    @Override
+    public int googleLogin(UserDTO userDTO) throws Exception {
+        return dao.googleLogin(userDTO);
+    }
 
 }

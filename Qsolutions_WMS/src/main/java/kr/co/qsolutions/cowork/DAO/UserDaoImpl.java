@@ -97,5 +97,11 @@ public class UserDaoImpl implements UserDao  {
         return sqlSession.selectOne(Namespace+".checkUserWithSessionKey",sessionId);
     }
     
+	@Override
+	public int googleLogin(UserDTO userDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.update(Namespace+".googleLogin");
+	}
+    
 }
 																																																																																																																																																																							

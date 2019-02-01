@@ -10,14 +10,25 @@
   <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/paging.js"></script>
   <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/util.js"></script>
-  <script type="text/javascript">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.css">
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap-select.min.js"></script>
+<!-- Include Choices CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js@4/public/assets/styles/choices.min.css">
+<!-- Include Choices JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/choices.js@4/public/assets/scripts/choices.min.js"></script>
+
+<script type="text/javascript">
 	function updatedata(){
 	    var temp_obj = {};
+	    
+	    temp_obj["coworksubject"] = $("#coworksubject").val();
 	    temp_obj["coworktitle"] = $("#coworktitle").val();
 	    temp_obj["coworkcode"] = $("#coworkcode").val();
 	    temp_obj["userid"] = $("#userid").val();
 	    temp_obj["companycode"] = $("#companycode").val();
 	    temp_obj["coworktext"] = $("#coworktext").val();
+	    temp_obj["startdate"] = $("#startdate").val();
+		temp_obj["enddate"] = $("#enddate").val();
 
 	    $.ajax({
 	        url:"Update",
@@ -39,6 +50,138 @@
 	function cancel(){
 		location.href = "/qsolcowork/Cowork/List";
 	}
+	
+	function changeSelect(){
+		var userid = $("#manager").val();
+		var companycode = $("#companycode").val();
+		var coworkcode = $("#coworkcode").val();
+		var managerName = $("#manager option:checked").text();
+		
+	    var temp_obj = {};
+	    temp_obj["userid"] = userid;
+	    temp_obj["companycode"] = companycode;
+	    temp_obj["coworkcode"] = coworkcode;
+	    
+	    var temp_html = "";
+	    
+	    temp_html = temp_html + '<div class="choices__list choices__list--multiple">';
+	    temp_html = temp_html + '<div class="choices__item choices__item--selectable" data-item="" data-id="12" data-value="' + userid + '" data-deletable="" aria-selected="true">';
+	    temp_html = temp_html + managerName;
+	    temp_html = temp_html + '<button id="managerId" name="' + userid + '" value="' + userid + '" type="button" class="choices__button" data-button="" aria-label="Remove item: managerName" onclick="deleteManager(this)">';
+	    temp_html = temp_html + userid;
+	    temp_html = temp_html + '</button>';
+	    temp_html = temp_html + '</div>';
+	    temp_html = temp_html + '</div>';
+	    
+	    $("#choicess").append(temp_html);
+	    $('#choicess').html();
+
+	    $.ajax({
+        url:"InsertManager",
+        type:"post",
+        data:JSON.stringify(temp_obj),
+        datatype:"json",
+        contentType:"application/json;charset=UTF-8",
+        success:function(data){
+        	viewManager();
+            alert("등록되었습니다.");
+        },
+        error:function(jqXHR, textStatus, errorThrown){
+            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
+        }
+		});
+		
+	}
+	
+	$(document).ready(function() {
+		
+		viewManager();
+		
+	});
+		
+	function viewManager() {
+		
+		// console.log("managerList : " + temp_obj)
+		
+		var coworkcode = $("#coworkcode").val();
+		var companycode = $("#companycode").val();
+		
+		$.ajax({
+		    url:"SelectManagerUpdate",
+		    type:"get",
+		    data:{"coworkcode" : coworkcode},
+	        datatype:"json",
+	        contentType:"application/json;charset=UTF-8",
+		    success:function(data){
+			    		
+		    	// console.log(data.managerList);
+			    // console.log(JSON.stringify(data));
+			   	// console.log("viewManagerData : " + data);
+			   	
+			   	console.log(JSON.stringify(data));
+			   	
+			   	var temp_html = "<br>";
+
+			   	// console.log("userid : " + managerList.userid);
+			   	
+			    $.each(data, function(index, item) {
+			    	console.log(index + " " + item.userid);
+			   	    index = index + 1;
+			    	temp_html = temp_html + '<div class="choices__list choices__list--multiple">';
+			    	temp_html = temp_html + '<div class="choices__item choices__item--selectable" data-item="" data-id="12" data-value="' + item.userid + '" data-deletable="" aria-selected="true">';
+				    temp_html = temp_html + item.username;
+				    temp_html = temp_html + '<button id="managerId" name="' + item.userid + '" value="' + item.userid + '" type="button" class="choices__button" data-button="" aria-label="Remove item: managerName" onclick="deleteManager(this)">';
+				    temp_html = temp_html + item.userid;
+				   	temp_html = temp_html + '</button>';
+				   	temp_html = temp_html + '</div>';
+				   	temp_html = temp_html + '</div>';
+			   	});
+			    
+				$("#choicess").html(temp_html);
+	        },
+	        error:function(jqXHR, textStatus, errorThrown){
+				alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
+		    }
+		});
+	}
+		
+	function deleteManager(e){
+	    var temp_obj = {};
+	    var answer = confirm("삭제하시겠습니까??")
+	    
+	    var managerid = e.getAttribute("name");
+	    
+	    if (answer) {
+		    temp_obj["userid"] = e.getAttribute("name");
+		    temp_obj["coworkcode"] = $("#coworkcode").val();
+		    temp_obj["companycode"] = $("#companycode").val();
+		    
+		    console.log(temp_obj);
+		    
+		    $.ajax({
+	        url:"DeleteManager",
+	        type:"delete",
+	        data:JSON.stringify(temp_obj),
+	        datatype:"json",
+	        contentType:"application/json;charset=UTF-8",
+	        success:function(data){
+	        	console.log("managerid : " + managerid);
+	        	console.log("." + managerid);
+	        	$("div").remove("." + managerid);
+	        	viewManager();
+	            alert("삭제되었습니다.");
+	        },
+	        error:function(jqXHR, textStatus, errorThrown){
+	            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
+	        }
+			});
+	    }
+	    else {
+	        return;
+	    }
+		
+	}
+	
   </script>
 
 <style>
@@ -158,12 +301,55 @@ body {
 			<input type="hidden" id="userid" value="${CoworkVO.userid}" name="userid" />
 			<input type="hidden" id="username" value="${CoworkVO.username}" name="username" />
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">고객사 명</p>
-			<input type="text" class="form-control" id="companycode" value="${CoworkVO.companyname}" name="companycode" size="50" style="width: 100%; display: inline-block;" readonly="readonly">
+			<input type="hidden" id="companycode" value="${CoworkVO.companycode}" name="companycode" />
+			<input type="text" class="form-control" id="companyname" value="${CoworkVO.companyname}" name="companyname" size="50" style="width: 100%; display: inline-block;" readonly="readonly">
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">업무 내용</p>
 			<textarea id="coworktext" name="coworktext" class="form-control" rows="3" placeholder="업무 내용을 입력해주세요.." style="width: 100%; display: inline-block;">${CoworkVO.coworktext}</textarea>
-			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">담당자 명</p>
-			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">담당자 연락처</p>
-			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">담당자 이메일</p>
+			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">업무 날짜</p>
+			<input id="startdate" name="startdate" value="${CoworkVO.startdate}" type="text" class="form-control" placeholder="시작 시간.." value="" size="50" style="width: 49%; display: inline-block;">
+			<input id="enddate" name="enddate" value="${CoworkVO.enddate}" type="text" class="form-control pull-right" placeholder="종료 시간.." value="" size="50" style="width: 49%; display: inline-block;">
+			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">담당자</p>
+				<select class="selectpicker show-tick" data-style="btn-primary" name="manager" id="manager" data-live-search="true" title="담당자 선택.." data-width="100%" data-size="5" onchange="changeSelect()">
+					<optgroup label="퀀텀솔루션즈">
+						<c:forEach var="usersVO" items="${usersVO}" varStatus="list">
+							<c:if test="${usersVO.companyusercode eq 0}">
+								<option id="manager" value="${usersVO.userid}"><p id="managerName" value="${usersVO.username}">${usersVO.username}</p></option>
+								
+							</c:if>
+						</c:forEach>
+					</optgroup>
+					<optgroup label="고객사">
+						<c:forEach var="usersVO" items="${usersVO}" varStatus="list">
+							<c:if test="${usersVO.companyusercode eq 1}">
+								<option id="manager" value="${usersVO.userid}">${usersVO.username}</option>
+								
+							</c:if>
+						</c:forEach>
+					</optgroup>
+						
+					<optgroup label="파트너사">
+						<c:forEach var="usersVO" items="${usersVO}" varStatus="list">
+							<c:if test="${usersVO.companyusercode eq 2}">
+								<option id="manager" value="${usersVO.userid}"><p id="managerName" value="${usersVO.username}">${usersVO.username}</p></option>
+								
+							</c:if>
+						</c:forEach>
+					</optgroup>
+				</select>
+				<div class="choices" data-type="select-multiple" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" dir="ltr">
+				<div id="choicess" class="choices__inner">
+					<%-- <c:forEach var="managerList" items="${managerList}" varStatus="list">
+						<div class="choices__list choices__list--multiple ${managerList.userid}">
+							<div class="choices__item choices__item--selectable" data-item="" data-id="12" data-value="${managerList.username}" data-deletable="" aria-selected="true">
+							${managerList.username}
+							<button id="managerId" name="${managerList.userid}" value="${managerList.userid}" type="button" class="choices__button" onclick="deleteManager(this)">
+							${managerList.userid}
+							</button>
+							</div>
+						</div>
+					</c:forEach> --%>
+				</div>
+			</div>
 		</div>
 	</form>
     

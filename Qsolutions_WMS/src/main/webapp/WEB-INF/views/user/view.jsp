@@ -48,6 +48,11 @@
 	function cancel(){
 		location.href = "/qsolcowork/User/List";
 	}
+	
+	function googleLogin() {
+		location.href = "/qsolcowork/User/googleCallback";
+	}
+	
   </script>
 
 <style>
@@ -140,6 +145,11 @@ body {
     	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 30px; font-weight: bold;">사용자 상세 조회</span>
     	<button type="button" class="btn btn-danger pull-right" onclick="deleteuserdata()" style="margin-right: 10px; margin-top: 8px;">사용자 삭제</button>
     	<button type="button" class="btn btn-primary pull-right" onclick="updateuserform()" style="margin-right: 10px; margin-top: 8px;">사용자 수정</button>
+    	<a href="${google_url}">
+    		<button id="btnJoinGoogle" class="btn btn-primary btn-round" style="width: 100%">
+        		<i class="fa fa-google" aria-hidden="true"></i>Google Login
+        	</button>
+        </a> 
     </div>
 	<!--  -->
 	<div class="viewList">

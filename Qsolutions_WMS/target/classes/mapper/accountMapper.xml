@@ -103,4 +103,14 @@
     <select id="checkUserWithSessionKey" resultType="UserVO">
         select * from user where sessionKey = #{sessionId} and sessionLimit > now()
     </select>
+    
+    <update id="googleLogin" parameterType="UserDTO">
+   		update 
+			user
+		set
+			gmail = #{gmail}, gname = #{gname}, oauthcode = #{oauthcode}
+		where
+			username = #{gname}
+   	</update>
+    
 </mapper>

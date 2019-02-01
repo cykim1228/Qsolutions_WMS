@@ -49,4 +49,17 @@
 		<constructor-arg value="D:\\SpringUploadRepo\\upload"></constructor-arg>
 	</bean> -->
 	
+	<!-- Google 소셜 로그인 연결 설정 -->
+	<bean id = "googleConnectionFactory" class="org.springframework.social.google.connect.GoogleConnectionFactory">
+	<constructor-arg value="118281903184-v4ds1n6m49q8kg5fbq7fcs8hni6k9js3.apps.googleusercontent.com"/>
+	<constructor-arg value="0TrFq9aK8cc5SxYfgKuEjipf"/>    
+	</bean>
+	 
+	<bean id = "googleOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">
+	<property name="scope" value="https://www.googleapis.com/auth/plus.login"></property>
+	<property name="redirectUri" value="http://localhost:8080/qsolcowork/User/googleCallback"/>
+	 
+	</bean>
+	
+	
 </beans>

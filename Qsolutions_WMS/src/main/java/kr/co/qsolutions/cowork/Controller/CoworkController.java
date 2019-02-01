@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.expression.spel.ast.TypeReference;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,9 +31,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 
+import kr.co.qsolutions.cowork.DTO.CompanyDTO;
 import kr.co.qsolutions.cowork.DTO.CoworkDTO;
 import kr.co.qsolutions.cowork.DTO.SubCoworkDTO;
 import kr.co.qsolutions.cowork.DTO.UserDTO;
+import kr.co.qsolutions.cowork.Service.CompanyService;
 import kr.co.qsolutions.cowork.Service.CoworkService;
 import kr.co.qsolutions.cowork.VO.CompanyVO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
@@ -45,6 +48,9 @@ import kr.co.qsolutions.cowork.VO.UserVO;
 public class CoworkController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CoworkController.class);
+	
+	@Inject
+	private CompanyService companyservice;
 	
 	@Inject
 	private CoworkService coworkservice;
@@ -71,12 +77,13 @@ public class CoworkController {
 
 		UserVO loginVO = (UserVO)session.getAttribute("login");
 
-		pagingVO.setTotal(coworkservice.CoworkViewListCount(pagingVO));
-		List<CoworkVO> listvo = coworkservice.CoworkViewListSelect(pagingVO);
+		List<CoworkVO> listvo = coworkservice.CoworkViewListCalendar(pagingVO);
 
 		model.addAttribute("coworklistvo",listvo);
 		model.addAttribute("pagingVO", pagingVO);
 		model.addAttribute("userid", loginVO.getUserid());
+		
+		System.out.println("확인용 : " + listvo);
 		
 		return "cowork/calendar";
 	}
@@ -105,8 +112,13 @@ public class CoworkController {
 		
 		List<SubCoworkVO>subcoworkVO = coworkservice.SubCoworkListSelect(tmpcode);
 		
+		List<UserVO> userList = coworkservice.SelectCoworkUser(coworkDTO);
+		
+		System.out.println("userList : " + userList);
+		
 		System.out.println(subcoworkVO);
 		
+		model.addAttribute("userList", userList);
 		model.addAttribute("CoworkVO", coworkVO);
 		model.addAttribute("SubCoworkVO", subcoworkVO);
 		
@@ -145,6 +157,9 @@ public class CoworkController {
 		coworkVO.setUserid(loginVO.getUserid());
 		coworkVO.setUsername(loginVO.getUsername());
 		
+		List<UserVO> usersVO = (List<UserVO>)companyservice.SelectUser();
+		
+		model.addAttribute("usersVO", usersVO);
 		model.addAttribute("CoworkVO", coworkVO);
 		model.addAttribute("companyList",companyList);
 		
@@ -164,6 +179,131 @@ public class CoworkController {
 		returnUrl = "redirect:/Cowork/List";
 		return returnUrl;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/Cowork/SelectManager", method = RequestMethod.POST)
+	public List<UserVO> managerList(@ModelAttribute UserVO userVO) throws Exception {
+		
+		String companycode = companyservice.SelectCompanyCode();
+		
+		System.out.println("companycode : " + companycode);
+		
+		String tmpstr = companycode.substring(1,8);
+		String tmpcodeStr = "C";
+		int tmpcode = Integer.parseInt(tmpstr,10);
+		tmpcode = tmpcode + 1;
+		
+		if( tmpcodeStr.length() < 7) {
+			for(int i = String.valueOf(tmpcode).length();i < 7; i++) {
+				tmpcodeStr = tmpcodeStr + 0;
+			}
+			
+		}
+		
+		String coworkcode = coworkservice.SelectCoworkCode();
+		
+		System.out.println("coworkcode : " + coworkcode);
+		
+		String tmpcoworknum = coworkcode.substring(2,15);
+		System.out.println("tmpcoworknum : " + tmpcoworknum);
+		String tmpcoworkStr = "CW";
+		System.out.println("tmpcoworkStr : " + tmpcoworkStr);
+		Long tmpcowork = Long.parseLong(tmpcoworknum);
+		System.out.println("tmpcowork : " + tmpcowork);
+		tmpcowork = tmpcowork + 1;
+		
+		
+		
+		System.out.println("tmpcowork : " + tmpcowork);
+		System.out.println("tmpcoworkStr : " + tmpcoworkStr);
+		
+		coworkcode = tmpcoworkStr + tmpcowork;
+		
+		// String tmpcodes = String.format("%07d", tmpcode);
+		
+		
+		System.out.println("tmpcode : " + tmpcode);
+		System.out.println("tmpcodeStr : " + tmpcodeStr);
+		
+		companycode = tmpcodeStr + tmpcode;
+		
+		/*
+		 * JSONObject managerList = new JSONObject();
+		 * 
+		 * managerList.put("userid", userid);
+		 */
+		
+		System.out.println("담당자 List 컨트롤러" + coworkcode);
+		
+		CoworkDTO coworkDTO = new CoworkDTO();
+		coworkDTO.setCoworkcode(coworkcode);
+		
+		List<UserVO> managerList = coworkservice.SelectCoworkUser(coworkDTO);
+		
+		System.out.println("managerList : " + managerList);
+		
+		return managerList;
+	}
+	
+	@RequestMapping(value = "/Cowork/InsertManager")
+	public void InsertManager(@RequestBody String body,HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
+
+		UserVO loginVO = (UserVO)session.getAttribute("login");
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+		
+		CoworkDTO coworkDTO = mapper.readValue(body, CoworkDTO.class);
+        String jsonStr = mapper.writeValueAsString(coworkDTO);
+        System.out.println("JsonTest"+jsonStr);
+
+        coworkservice.InsertCoworkManager(coworkDTO);
+        
+	}
+	
+	@RequestMapping(value = "/Cowork/DeleteManager")
+	public void DeleteManager(@RequestBody String body,HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
+
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+		CoworkDTO coworkDTO = mapper.readValue(body, CoworkDTO.class);
+        String jsonStr = mapper.writeValueAsString(coworkDTO);
+        System.out.println("JsonDeleteTest"+jsonStr);
+
+        coworkservice.DeleteCoworkManager(coworkDTO);
+        
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/Cowork/SelectManagerUpdate", method = RequestMethod.GET)
+	public List<UserVO> managerListUpdate(@ModelAttribute UserVO userVO, HttpServletRequest request) throws Exception {
+		
+		String companycode = (String)request.getParameter("companycode");
+		
+		System.out.println("companycode : " + companycode);
+		
+		String coworkcode = (String)request.getParameter("coworkcode");
+		
+		System.out.println("coworkcode : " + coworkcode);
+		
+		
+		
+		/*
+		 * JSONObject managerList = new JSONObject();
+		 * 
+		 * managerList.put("userid", userid);
+		 */
+		
+		System.out.println("담당자 List 컨트롤러" + coworkcode);
+		
+		CoworkDTO coworkDTO = new CoworkDTO();
+		coworkDTO.setCoworkcode(coworkcode);
+		
+		List<UserVO> managerList = coworkservice.SelectCoworkUser(coworkDTO);
+		
+		System.out.println("managerList : " + managerList);
+		
+		return managerList;
+	}
 
 	@RequestMapping(value = "/Cowork/Updateform")
 	public String CoworkUpdateform(HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
@@ -173,7 +313,11 @@ public class CoworkController {
 		String tmpcode = (String)request.getParameter("coworkcode");
 		CoworkDTO coworkDTO = new CoworkDTO();
 		coworkDTO.setCoworkcode(tmpcode);
-		CoworkVO coworkVO = coworkservice.CoworkViewSelect(coworkDTO);		
+		CoworkVO coworkVO = coworkservice.CoworkViewSelect(coworkDTO);	
+		
+		List<UserVO> usersVO = (List<UserVO>)companyservice.SelectUser();
+		
+		model.addAttribute("usersVO", usersVO);
 		model.addAttribute("CoworkVO", coworkVO);
 		model.addAttribute("companyList",companyList);
 		

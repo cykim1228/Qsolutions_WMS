@@ -3,6 +3,7 @@ package kr.co.qsolutions.cowork.Service;
 import java.util.Date;
 import java.util.List;
 
+import kr.co.qsolutions.cowork.DTO.CompanyDTO;
 import kr.co.qsolutions.cowork.DTO.CoworkDTO;
 import kr.co.qsolutions.cowork.DTO.SubCoworkDTO;
 import kr.co.qsolutions.cowork.VO.CompanyVO;
@@ -39,4 +40,14 @@ public interface CoworkService {
 
 	public CoworkVO CoworkCalendarSelect(CoworkDTO coworkDTO) throws Exception;
 
+	public List<CoworkVO> CoworkViewListCalendar(PagingVO pagingVO) throws Exception;
+
+	public String SelectCoworkCode() throws Exception;
+
+	public List<UserVO> SelectCoworkUser(CoworkDTO coworkDTO) throws Exception;
+
+	public int InsertCoworkManager(CoworkDTO coworkDTO) throws Exception;
+	
+	public int DeleteCoworkManager(CoworkDTO coworkDTO) throws Exception;
+	
 }

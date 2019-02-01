@@ -1,5 +1,9 @@
 package kr.co.qsolutions.cowork.Controller;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -16,12 +20,25 @@ import org.apache.ibatis.annotations.Mapper;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.spel.ast.TypeReference;
+import org.springframework.social.connect.Connection;
+import org.springframework.social.google.api.Google;
+import org.springframework.social.google.api.impl.GoogleTemplate;
+import org.springframework.social.google.api.plus.Person;
+import org.springframework.social.google.api.plus.PlusOperations;
+import org.springframework.social.google.connect.GoogleConnectionFactory;
+import org.springframework.social.oauth2.AccessGrant;
+import org.springframework.social.oauth2.OAuth2Parameters;
+import org.springframework.social.oauth2.OAuth2Operations;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -57,6 +74,13 @@ public class UserController {
 	
 	@Inject
 	private CoworkService coworkservice;
+	
+	@Autowired
+    private GoogleConnectionFactory googleConnectionFactory;
+    @Autowired
+    private OAuth2Parameters googleOAuth2Parameters;
+ 
+    private OAuth2Operations oauthOperations;
 	
 	String returnUrl;
 	
@@ -176,5 +200,8 @@ public class UserController {
 		returnUrl = "redirect:/User/List";
 		return returnUrl;
 	}
+	
+	
+
 
 }

@@ -68,6 +68,17 @@
 		</where>
 	</select>
 	
+	<select id="CoworkViewListCalendar" parameterType="PagingVO" resultType="CoworkVO">
+		select 
+			cw.userid, u.username ,c.companycode, c.companyname,cw.coworkcode, cw.coworktitle, date_format(cw.coworkdate, '%Y-%m-%d') AS coworkdate, cw.coworksubject, cw.startdate, cw.enddate
+		from
+			user u inner join cowork cw ON u.userid = cw.userid     
+		inner join company c ON cw.coworkcompany = c.companycode
+		WHERE cw.IsUse != 1
+		ORDER BY
+			coworkcode ASC
+	</select> 	
+	
 	<select id="CoworkCalendarSelect" parameterType="CoworkDTO" resultType="CoworkVO">
 			select
 				cw.userid, u.username,cw.coworktext,cw.coworkcode,cw.coworktitle,date_format(cw.coworkdate, '%Y-%m-%d') AS coworkdate,c.companycode,c.companyname,cw.coworksubject,cw.startdate,cw.enddate
@@ -155,4 +166,46 @@
 		where
 			coworkcode = #{coworkcode} and subcoworkcode = #{subcoworkcode}
 	</update>
+	
+	<select id="SelectCoworkCode" resultType="String">
+		select MAX(coworkcode) from cowork
+	</select>
+	
+	<select id="SelectCoworkUser" resultType="UserVO" parameterType="CompanyDTO">
+		select distinct
+			u.userid, u.username, u.usermobile, u.useremail
+		from 
+			user u inner join usercoworkcompany ucc ON u.userid = ucc.userid
+		    <!-- inner join company c ON uc.companycode = c.companycode -->
+		where
+			ucc.coworkcode = #{coworkcode}
+	</select>
+	
+	<select id="SelectCoworkManager" resultType="UserVO" parameterType="CompanyDTO">
+		select 
+			u.userid, u.username, u.usermobile, u.useremail, ucc.companycode
+		from 
+			user u inner join usercoworkcompany ucc ON u.userid = ucc.userid
+		    inner join cowork cw ON ucc.coworkcode = cw.coworkcode
+		where
+			ucc.coworkcode = #{coworkcode}
+	</select>
+	
+	<insert id="InsertCoworkManager" parameterType="CoworkDTO">
+		insert into usercoworkcompany
+			(userid, coworkcode, companycode)
+		select
+			#{userid},#{coworkcode},#{companycode}
+		from dual
+		where not exists
+			(select * from usercoworkcompany where userid = #{userid} and coworkcode = #{coworkcode})
+	
+	</insert>
+	
+	<delete id="DeleteCoworkManager" parameterType="CoworkDTO">
+		delete from usercoworkcompany
+		where 
+			userid=#{userid} and coworkcode=#{coworkcode};
+	</delete>
+	
 </mapper>

@@ -55,7 +55,7 @@
 		select 
 			*
 		from
-			company c inner join cowork cw ON c.companycode = cw.coworkcompany
+			cowork cw inner join company c ON c.companycode = cw.coworkcompany
 		where
 			c.companycode = #{companycode};
 	</select>

@@ -14,6 +14,7 @@
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/moment.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/fullcalendar.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/gcal.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/locale-all.js"></script>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/fullcalendar.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/fullcalendar.min.css">
@@ -35,12 +36,15 @@
 			header : {
 				left : 'prev,next today',
 				center : 'title',
-				right : 'month,agendaWeek,agendaDay' // basicDay
+				right : 'month,listWeek,timelineDay' // basicDay
 			},
 			editable : false,
 			eventLimit: true,
+			height: get_calendar_height,
 			/* eventClick: function() {
 				$("#layerpop").modal(); */
+			googleCalendarApiKey : "AIzaSyAAYTAR5Q5FNigkke8ATZ8O_3v7v8r64DI",
+			/* googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE", */
 			eventClick: function(calEvent, jsEvent, view) {
 				var coworktitle = calEvent.title;
 				console.log(coworktitle);
@@ -83,7 +87,8 @@
 				
 				
 			},
-			events : [ 
+			
+			/* events : [ 
 				<c:forEach items="${coworklistvo}" var="coworklistvo" varStatus="rowCount">
 					{
 						title : '${coworklistvo.coworktitle}',
@@ -111,10 +116,95 @@
 							</c:choose>
 					},
 				</c:forEach>
+			] */
+			
+			eventSources : [
+				{
+					googleCalendarId : "ko.south_korea#holiday@group.v.calendar.google.com", 
+					className : "휴일", 
+					color : "#FF0000", 
+					textColor : "#FFFFFF"
+				},
+				{
+					googleCalendarId : "cykim1228@gmail.com", 
+					className : "김찬영", 
+					color : "#FA5858", 
+					textColor : "#FFFFFF"
+				},
+				{
+					googleCalendarId : "kdog920825@gmail.com", 
+					className : "김도균", 
+					color : "#FF8000", 
+					textColor : "#FFFFFF"
+				},
+				{
+					googleCalendarId : "forgive0218@gmail.com", 
+					className : "박종신", 
+					color : "#FFBF00", 
+					textColor : "#FFFFFF"
+				},
+				{
+					googleCalendarId : "kasd1032@gmail.com", 
+					className : "홍재영", 
+					color : "#D7DF01", 
+					textColor : "#FFFFFF"
+				},
+				{
+					googleCalendarId : "rainnizm@gmail.com", 
+					className : "유지헌", 
+					color : "#04B404", 
+					textColor : "#FFFFFF"
+				},
+				{
+					googleCalendarId : "ydy000@gmail.com", 
+					className : "윤도영", 
+					color : "#088A68", 
+					textColor : "#FFFFFF"
+				},
+				{
+					googleCalendarId : "kleeeec@gmail.com", 
+					className : "이건수", 
+					color : "#01DFD7", 
+					textColor : "#FFFFFF"
+				},
+				{
+					googleCalendarId : "dahae3278@gmail.com", 
+					className : "이다해", 
+					color : "#01A9DB", 
+					textColor : "#FFFFFF"
+				},
+				{
+					googleCalendarId : "gkdlwmsj@gmail.com", 
+					className : "이준호", 
+					color : "#01A9DB", 
+					textColor : "#FFFFFF"
+				},
+				{
+					googleCalendarId : "qodrml@gmail.com", 
+					className : "임문혁", 
+					color : "#0080FF", 
+					textColor : "#FFFFFF"
+				},
+				{
+					googleCalendarId : "mansoo0612@gmail.com", 
+					className : "조만수", 
+					color : "#0040FF", 
+					textColor : "#FFFFFF"
+				}
 			]
 		});
+		
+		$(window).resize(function() {
+	        $('#calendar').fullCalendar('option', 'height', get_calendar_height());
+	    });
+
 
 	});
+	
+	function get_calendar_height() {
+	      return $(window).height() - 160;
+	}
+	
 </script>
 
 <style>
@@ -123,8 +213,8 @@
 	text-align: center;
 	font-size: 14px;
 	font-family: "Lucida Grande", Helvetica, Arial, Verdana, sans-serif;
-	width: 900px;
-	margin: 0 auto;
+	width: auto;
+	margin: 20px 200px 0px 200px;
 }
 
 .fc-day-number.fc-sat.fc-past { 
