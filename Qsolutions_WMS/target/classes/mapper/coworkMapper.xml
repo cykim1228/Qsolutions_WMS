@@ -28,7 +28,7 @@
 			AND cw.IsUse != 1
 		</trim>
 		ORDER BY
-			coworkcode ASC
+			coworkcode DESC
 		Limit #{start},#{last}
 	</select> 	
 	
@@ -111,7 +111,7 @@
 		update 
 			cowork 
 		set
-			coworksubject = #{coworksubject}, coworktitle = #{coworktitle}, coworktext = #{coworktext}, coworkcompany = #{companycode}
+			coworksubject = #{coworksubject}, coworktitle = #{coworktitle}, coworktext = #{coworktext}, startdate = #{startdate}, enddate = #{enddate}
 		<where>
 			coworkcode = #{coworkcode} 
 		</where>

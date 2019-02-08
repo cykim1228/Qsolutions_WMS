@@ -184,6 +184,30 @@ public class CoworkController {
 	@RequestMapping(value = "/Cowork/SelectManager", method = RequestMethod.POST)
 	public List<UserVO> managerList(@ModelAttribute UserVO userVO) throws Exception {
 		
+		String tmpcoworkcodeStr = "";
+		String tmpcoworkstr = "";
+		Date date = new Date();
+        SimpleDateFormat dt = new SimpleDateFormat("yyyyMMdd");
+    	String nowdate = dt.format(date.getTime());
+		//coworkcode생성 및 기본 입력 데이터 호출
+		String newcoworkcode = coworkservice.CoworkCodeSelect(nowdate);
+		if(newcoworkcode == null || newcoworkcode == "") {
+			tmpcoworkcodeStr = "CW" + nowdate + "00001";
+		}else {
+			tmpcoworkstr = newcoworkcode.substring(10,15);
+			int tmpcode = Integer.parseInt(tmpcoworkstr,10);
+			tmpcoworkcodeStr = newcoworkcode.substring(0, 10);
+			tmpcode = tmpcode + 1;
+			newcoworkcode = tmpcoworkcodeStr + tmpcode;
+			if( newcoworkcode.length() < 15) {
+				for(int i = newcoworkcode.length();i < 15; i++)
+				tmpcoworkcodeStr = tmpcoworkcodeStr + 0;
+			}
+			tmpcoworkcodeStr = tmpcoworkcodeStr + tmpcode;
+		}
+		System.out.println("tmpcoworkcodeStr=="+tmpcoworkcodeStr);
+		//coworkcode생성=========================================================
+		
 		String companycode = companyservice.SelectCompanyCode();
 		
 		System.out.println("companycode : " + companycode);
@@ -200,28 +224,6 @@ public class CoworkController {
 			
 		}
 		
-		String coworkcode = coworkservice.SelectCoworkCode();
-		
-		System.out.println("coworkcode : " + coworkcode);
-		
-		String tmpcoworknum = coworkcode.substring(2,15);
-		System.out.println("tmpcoworknum : " + tmpcoworknum);
-		String tmpcoworkStr = "CW";
-		System.out.println("tmpcoworkStr : " + tmpcoworkStr);
-		Long tmpcowork = Long.parseLong(tmpcoworknum);
-		System.out.println("tmpcowork : " + tmpcowork);
-		tmpcowork = tmpcowork + 1;
-		
-		
-		
-		System.out.println("tmpcowork : " + tmpcowork);
-		System.out.println("tmpcoworkStr : " + tmpcoworkStr);
-		
-		coworkcode = tmpcoworkStr + tmpcowork;
-		
-		// String tmpcodes = String.format("%07d", tmpcode);
-		
-		
 		System.out.println("tmpcode : " + tmpcode);
 		System.out.println("tmpcodeStr : " + tmpcodeStr);
 		
@@ -233,10 +235,8 @@ public class CoworkController {
 		 * managerList.put("userid", userid);
 		 */
 		
-		System.out.println("담당자 List 컨트롤러" + coworkcode);
-		
 		CoworkDTO coworkDTO = new CoworkDTO();
-		coworkDTO.setCoworkcode(coworkcode);
+		coworkDTO.setCoworkcode(tmpcoworkcodeStr);
 		
 		List<UserVO> managerList = coworkservice.SelectCoworkUser(coworkDTO);
 		

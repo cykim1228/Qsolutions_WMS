@@ -3,15 +3,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>[QSOLUTIONS]업무관리 시스템</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
-  <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-  <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/paging.js"></script>
-  <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/util.js"></script>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.css">
+
+<title>[QSOLUTIONS]업무관리 시스템</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-material-datetimepicker.css" />
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/paging.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/util.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.css">
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/material.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/moment-with-locales.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap-material-datetimepicker.js"></script>
+<script src="https://code.jquery.com/ui/1.9.1/jquery-ui.js" integrity="sha256-tXuytmakTtXe6NCDgoePBXiKe1gB+VA3xRvyBs/sq94=" crossorigin="anonymous"></script>
+
 <!-- Include Choices CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js@4/public/assets/styles/choices.min.css">
 <!-- Include Choices JavaScript -->
@@ -96,6 +107,39 @@
 	$(document).ready(function() {
 		
 		viewManager();
+		
+	});
+	
+	$(document).ready(function() {
+
+		$('#enddate').bootstrapMaterialDatePicker ({
+			weekStart: 0, 
+			format: 'YYYY-MM-DD HH:mm',
+			cancelText: 'Cancel',
+			okText: 'OK',
+			/* nowButton : true, */
+			switchOnClick : true,
+			lang: 'ko'
+		});
+		
+		$('#startdate').bootstrapMaterialDatePicker ({
+			weekStart: 0, 
+			format: 'YYYY-MM-DD HH:mm',
+			cancelText: 'Cancel',
+			okText: 'OK',
+			/* nowButton : true, */
+			switchOnClick : true,
+			lang: 'ko'
+		}).on('change', function(e, date) {
+			$('#enddate').bootstrapMaterialDatePicker('setMinDate', date);
+		});
+
+		$('#min-date').bootstrapMaterialDatePicker({ 
+			format : 'YYYY/MM/DD HH:mm', 
+			minDate : new Date() 
+		});
+		
+		$.material.init()
 		
 	});
 		

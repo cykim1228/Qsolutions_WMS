@@ -205,7 +205,7 @@ public class LoginController {
             accessToken = accessGrant.getRefreshToken();
             System.out.printf("accessToken is expired. refresh token = {}", accessToken);
         }
-        
+         
         Connection<Google> connection = googleConnectionFactory.createConnection(accessGrant);
         Google google = connection == null ? new GoogleTemplate(accessToken) : connection.getApi();
         
