@@ -222,10 +222,10 @@ public class LoginController {
         userservice.googleLogin(userDTO);
         
         // set info session userid
-        session.setAttribute("gmail", profile.getAccountEmail());
+        session.setAttribute("gmail", profile.getAboutMe());
         session.setAttribute("gname", profile.getDisplayName());
         session.setAttribute("imageUrl", profile.getImageUrl());
-        session.setAttribute("oauthcode", "google");
+        session.setAttribute("oauthcode", profile.getBirthday());
         
  		return "Login/googleSuccess";
  	}
