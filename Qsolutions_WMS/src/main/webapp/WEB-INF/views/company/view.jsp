@@ -45,7 +45,8 @@
 <style>
 
 body {
-
+	margin-top: 100px;
+	margin-bottom: 100px;
 }
 
 .viewListTop{
@@ -125,6 +126,8 @@ body {
 </head>
 <body>
 <%@ include file="/WEB-INF/views/header/header.jsp"%>
+<%@ include file="/WEB-INF/views/header/footer.jsp"%>
+
 <!-- <body  style="background-color: #d4d4d4"> -->
 
     <!-- 상세 뷰 페이지  -->
@@ -180,7 +183,7 @@ body {
 					<c:forEach items="${userList}" var="userList" varStatus="rowCount">
 						<tr>
 							<td>
-								<c:if test="${userList.companyusercode == 0}">퀀텀솔루션즈</c:if>
+								<c:if test="${userList.usercompanyname == 0}">퀀텀솔루션즈</c:if>
 								<c:if test="${userList.companyusercode == 1}">고객사</c:if>
 								<c:if test="${userList.companyusercode == 2}">파트너사</c:if>
 							</td>

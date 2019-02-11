@@ -209,6 +209,11 @@
 
 <style>
 
+body {
+	margin-top: 100px;
+	margin-bottom: 100px;
+}
+
 #calendar {
 	text-align: center;
 	font-size: 14px;
@@ -260,10 +265,12 @@
 </head>
 <body>
 <%@ include file="/WEB-INF/views/header/header.jsp"%>
+<%@ include file="/WEB-INF/views/header/footer.jsp"%>
+
 	<div class="viewListTop" style="margin-bottom: 20px;">
 		<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 30px; font-weight: bold;">업무 달력</span>
 	</div>
-	<div id='calendar'></div>
+	<div id='calendar' style="padding-bottom: 100px;"></div>
 	
 	
 	<!-- 모달 창 -->

@@ -269,6 +269,8 @@ body {
 </style>
 
 </head>
+<%@ include file="/WEB-INF/views/header/footer.jsp"%>
+
 <!-- <body  style="background-color: #d4d4d4"> -->
 	<!-- 네비에이션 부분 (검색 및 확인 필요) -->	
     <nav class="navbar navbar-inverse">

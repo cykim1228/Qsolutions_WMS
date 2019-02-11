@@ -93,7 +93,8 @@
 <style>
 
 body {
-
+	margin-top: 100px;
+	margin-bottom: 100px;
 }
 
 .viewListTop{
@@ -120,7 +121,7 @@ body {
 </head>
 <body>
 <%@ include file="/WEB-INF/views/header/header.jsp"%>
-
+<%@ include file="/WEB-INF/views/header/footer.jsp"%>
     
 	<!-- 상세 뷰 페이지 -->
 	<div class="viewListTop">

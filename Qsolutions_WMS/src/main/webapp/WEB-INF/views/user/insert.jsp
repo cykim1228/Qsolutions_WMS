@@ -55,7 +55,8 @@
 <style>
 
 body {
-
+	margin-top: 100px;
+	margin-bottom: 100px;
 }
 
 .viewListTop{
@@ -142,6 +143,8 @@ body {
 </head>
 <body>
 <%@ include file="/WEB-INF/views/header/header.jsp"%>
+<%@ include file="/WEB-INF/views/header/footer.jsp"%>
+
 <!-- <body  style="background-color: #d4d4d4"> -->
 
     <!-- 상세 뷰 페이지  -->
@@ -164,6 +167,9 @@ body {
 				<option id="companyusercode" value="0">퀀텀솔루션즈</option>
 				<option id="companyusercode" value="1">고객사</option>
 				<option id="companyusercode" value="2">파트너사</option>
+				<c:forEach var="companyVO" items="${companyVO}" varStatus="list">
+					<option id="companycode" value="${companyVO.companycode}">${companyVO.companyname}</option>
+				</c:forEach>
 			</select>
 			
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">부서</p>

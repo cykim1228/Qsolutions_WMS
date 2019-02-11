@@ -231,7 +231,8 @@
 <style>
 
 body {
-
+	margin-top: 100px;
+	margin-bottom: 100px;
 }
 
 .viewListTop{
@@ -318,10 +319,12 @@ body {
 </head>
 <body>
 <%@ include file="/WEB-INF/views/header/header.jsp"%>
+<%@ include file="/WEB-INF/views/header/footer.jsp"%>
+
 <!-- <body  style="background-color: #d4d4d4"> -->
 
     <!-- 상세 뷰 페이지  -->
-	<form action="${pageContext.request.contextPath}/Cowork/Insert" method="post" id="insertData" name="insertData">
+	<form action="${pageContext.request.contextPath}/Cowork/Insert" method="post" id="insertData" name="insertData"  style="padding-bottom: 100px;">
 	    <div class="viewListTop">
 	    	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 30px; font-weight: bold;">업무 수정</span>
 	    	<button type="button" id="save" class="btn btn-primary pull-right" onclick="updatedata()" style="margin-right: 10px; margin-top: 8px;">업무 수정</button>

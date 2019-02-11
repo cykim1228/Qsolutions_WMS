@@ -41,7 +41,8 @@
 <style>
 
 body {
-
+	margin-top: 100px;
+	margin-bottom: 100px;
 }
 
 .viewListTop{
@@ -68,6 +69,8 @@ body {
 </head>
 <body>
 <%@ include file="/WEB-INF/views/header/header.jsp"%>
+<%@ include file="/WEB-INF/views/header/footer.jsp"%>
+
 <!-- <body style="background-color:#d4d4d4"> -->
 
 	<!-- 상세 뷰 페이지 -->

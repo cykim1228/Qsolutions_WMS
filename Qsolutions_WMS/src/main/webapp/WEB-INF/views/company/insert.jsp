@@ -302,6 +302,7 @@ body {
 </style>
   
 </head>
+<%@ include file="/WEB-INF/views/header/footer.jsp"%>
 
 <!-- <body  style="background-color: #d4d4d4"> -->
 

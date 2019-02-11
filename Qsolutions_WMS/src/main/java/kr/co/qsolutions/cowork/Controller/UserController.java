@@ -118,13 +118,14 @@ public class UserController {
 	public String UserInsertform(HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
 		UserVO loginVO = (UserVO)session.getAttribute("login");
 		
-//		List<CompanyVO> companyVO = (List<CompanyVO>) coworkservice.CompanyAllSelect();
+		List<CompanyVO> companyVO = (List<CompanyVO>) coworkservice.CompanyAllSelect();
 		
 		List<UserVO> deptVO = (List<UserVO>)userservice.SelectDeptList();
 		List<UserVO> positionVO = (List<UserVO>)userservice.SelectPositionList();
 		
 		model.addAttribute("deptVO", deptVO);
 		model.addAttribute("positionVO", positionVO);
+		model.addAttribute("companyVO", companyVO);
 		
 		System.out.println("deptVO : " + deptVO);
 		

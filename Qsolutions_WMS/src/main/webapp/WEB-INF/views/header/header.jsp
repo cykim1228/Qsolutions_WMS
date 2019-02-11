@@ -17,6 +17,13 @@ body {
 	
 }
 
+.header {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 5;
+}
+
 .viewListTop {
 	width: 80%;
 	height: 80%;
@@ -93,7 +100,7 @@ body {
 </head>
 <body>
 	<!-- 네비에이션 부분 (검색 및 확인 필요) -->
-	<nav class="navbar navbar-inverse">
+	<nav class="navbar navbar-inverse header">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed"

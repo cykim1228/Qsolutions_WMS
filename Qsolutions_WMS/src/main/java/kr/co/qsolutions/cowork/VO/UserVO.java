@@ -11,7 +11,7 @@ public class UserVO {
 	private String deptname;
 	private String positioncode;
 	private String positionname;
-	private int companyusercode;
+	private String usercompanyname;
 	private boolean useCookie;
 	private String gmail;
 	private String gname;
@@ -44,9 +44,6 @@ public class UserVO {
 	public String getPositionname() {
 		return positionname;
 	}
-	public int getCompanyusercode() {
-		return companyusercode;
-	}
 	public void setUserid(String userid) {
 		this.userid = userid;
 	}
@@ -75,10 +72,6 @@ public class UserVO {
 	public void setPositionname(String positionname) {
 		this.positionname = positionname;
 	}
-	public void setCompanyusercode(int companyusercode) {
-		this.companyusercode = companyusercode;
-	}
-
 	public boolean isUseCookie() {
 		return useCookie;
 	}
@@ -103,14 +96,22 @@ public class UserVO {
 	public void setOauthcode(String oauthcode) {
 		this.oauthcode = oauthcode;
 	}
+	public String getUsercompanyname() {
+		return usercompanyname;
+	}
+	public void setUsercompanyname(String usercompanyname) {
+		this.usercompanyname = usercompanyname;
+	}
 	
 	@Override
 	public String toString() {
 		return "UserVO [userid=" + userid + ", username=" + username + ", userpasswd=" + userpasswd + ", usermobile="
 				+ usermobile + ", useremail=" + useremail + ", deptcode=" + deptcode + ", deptname=" + deptname
-				+ ", positioncode=" + positioncode + ", positionname=" + positionname + ", companyusercode="
-				+ companyusercode + ", useCookie=" + useCookie + ", gmail=" + gmail + ", gname=" + gname
+				+ ", positioncode=" + positioncode + ", positionname=" + positionname + ", usercompanyname="
+				+ usercompanyname + ", useCookie=" + useCookie + ", gmail=" + gmail + ", gname=" + gname
 				+ ", oauthcode=" + oauthcode + "]";
 	}
+	
+	
 	
 }
