@@ -46,4 +46,11 @@
 - 업무 리스트 출력 시 최신이 맨 위로 오도록 수정 :seedling:
 - 업무 수정 시 담당자 추가 기능 수정 :seedling:
 
+#### Release V0.22 20190211
+- Footer 추가 및 페이지 사이즈 조정 :seedling:
+- 사이트 등록 후 사용자에서 선택가능하도록 수정 :seedling:
+- 고객사명 및 업무명 잘 보이도록 수정 :seedling:
+- 카테고리 수정 :seedling:
+
+
 
