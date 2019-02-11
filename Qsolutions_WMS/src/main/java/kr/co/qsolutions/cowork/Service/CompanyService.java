@@ -39,5 +39,7 @@ public interface CompanyService {
     public int InsertManager(CoworkDTO coworkDTO) throws Exception;
     
     public int DeleteManager(CoworkDTO coworkDTO) throws Exception;
+
+	public List<UserVO> SelectUserCompany(CompanyDTO companyDTO) throws Exception;
     
 }

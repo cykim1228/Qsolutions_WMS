@@ -16,6 +16,8 @@ public class UserVO {
 	private String gmail;
 	private String gname;
 	private String oauthcode;
+	private String usercompanycode;
+	private String companyname;
 
 	public String getUserid() {
 		return userid;
@@ -102,6 +104,18 @@ public class UserVO {
 	public void setUsercompanyname(String usercompanyname) {
 		this.usercompanyname = usercompanyname;
 	}
+	public String getUsercompanycode() {
+		return usercompanycode;
+	}
+	public void setUsercompanycode(String usercompanycode) {
+		this.usercompanycode = usercompanycode;
+	}
+	public String getCompanyname() {
+		return companyname;
+	}
+	public void setCompanyname(String companyname) {
+		this.companyname = companyname;
+	}
 	
 	@Override
 	public String toString() {
@@ -109,9 +123,8 @@ public class UserVO {
 				+ usermobile + ", useremail=" + useremail + ", deptcode=" + deptcode + ", deptname=" + deptname
 				+ ", positioncode=" + positioncode + ", positionname=" + positionname + ", usercompanyname="
 				+ usercompanyname + ", useCookie=" + useCookie + ", gmail=" + gmail + ", gname=" + gname
-				+ ", oauthcode=" + oauthcode + "]";
+				+ ", oauthcode=" + oauthcode + ", usercompanycode=" + usercompanycode + ", companyname=" + companyname
+				+ "]";
 	}
-	
-	
 	
 }

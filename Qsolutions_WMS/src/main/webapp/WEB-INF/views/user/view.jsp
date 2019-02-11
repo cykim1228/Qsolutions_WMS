@@ -176,11 +176,7 @@ body {
 							<td><a href='mailto:${userVO.useremail}'>${userVO.useremail}</a></td>
 							<td>${userVO.deptname}</td>
 							<td>${userVO.positionname}</td>
-							<td>
-								<c:if test="${userVO.companyusercode == 1}">퀀텀솔루션즈</c:if>
-								<c:if test="${userVO.companyusercode == 0}">고객사</c:if>
-								<c:if test="${userVO.companyusercode == 2}">파트너사</c:if>
-							</td>
+							<td>${userVO.companyname}</td>
 						</tr>
 				</tbody>
 			</table>

@@ -143,10 +143,10 @@ body {
 		<table class="table table-striped">
 			<thead align="center">
 				<tr>
-					<th style="width: 10%; text-align: center;">카테고리</th>
-					<th style="width: 15%; text-align: center;">업무코드</th>
+					<!-- <th style="width: 15%; text-align: center;">업무코드</th> -->
 					<th style="width: 15%; text-align: center;">고객사명</th>
 					<th style="width: 20%; text-align: center;">제목</th>
+					<th style="width: 10%; text-align: center;">카테고리</th>
 					<th style="width: 20%; text-align: center;">등록자</th>
 					<th style="width: 20%; text-align: center;">작성일</th>
 				</tr>
@@ -154,10 +154,10 @@ body {
 			<tbody align="center">
 				<c:forEach items="${coworklistvo}" var="coworklistvo" varStatus="rowCount">
 					<tr>
+						<%-- <td>${coworklistvo.coworkcode}</td> --%>
+						<td style="font-weight: bold;"><a href='${pageContext.request.contextPath}/Company/View?companycode=${coworklistvo.companycode}'>${coworklistvo.companyname}</a></td>
+						<td style="font-weight: bold;"><a href='${pageContext.request.contextPath}/Cowork/View?coworkcode=${coworklistvo.coworkcode}'>${coworklistvo.coworktitle}</a></td>
 						<td>${coworklistvo.coworksubject}</td>
-						<td>${coworklistvo.coworkcode}</td>
-						<td><a href='${pageContext.request.contextPath}/Company/View?companycode=${coworklistvo.companycode}'>${coworklistvo.companyname}</a></td>
-						<td><a href='${pageContext.request.contextPath}/Cowork/View?coworkcode=${coworklistvo.coworkcode}'>${coworklistvo.coworktitle}</a></td>
 						<td><a href='${pageContext.request.contextPath}/User/View?userid=${coworklistvo.userid}'>${coworklistvo.username}</a></td>
 						<td><fmt:formatDate value="${coworklistvo.coworkdate}" pattern="yyyy/MM/dd"/></td>
 					</tr>

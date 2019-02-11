@@ -15,10 +15,11 @@
     </select>
     <select id="UserViewSelect" resultType="UserVO" parameterType="String">
     	select
-    		userid, username, usermobile,useremail,companyusercode,u.deptcode,d.deptname,u.positioncode,p.positionname
+    		userid, username, usermobile,useremail,usercompanycode,u.deptcode,d.deptname,u.positioncode,p.positionname,c.companyname
     	from 
     		user u left join dept d ON u.deptcode = d.deptcode
             left join positions p ON u.positioncode = p.positioncode 
+            left join company c ON u.usercompanycode = c.companycode
     	<where>
     		userid = #{userid}
     	</where>    
@@ -26,10 +27,11 @@
  	<!-- 전체 유저 검색 -->
     <select id="SelectUserList" resultType="UserVO" parameterType="PagingVO">
     	select
-    		userid, username, usermobile,useremail,companyusercode,u.deptcode,d.deptname,u.positioncode,p.positionname
+    		userid, username, usermobile,useremail,usercompanycode,u.deptcode,d.deptname,u.positioncode,p.positionname,c.companyname
     	from 
     		user u left join dept d ON u.deptcode = d.deptcode
             left join positions p ON u.positioncode = p.positioncode 
+            left join company c ON u.usercompanycode = c.companycode
     	<trim prefix="WHERE" prefixOverrides="AND |OR ">
 	       	<if test="searchType=='userid'">
 	       		userid like CONCAT('%',#{searchData},'%')
@@ -68,9 +70,9 @@
 	</select>    
    	<insert id="InsertUser" parameterType="UserDTO">
    		insert into user
-   			(userid,username,userpasswd,companyusercode,deptcode,positioncode,usermobile,useremail)
+   			(userid,username,userpasswd,usercompanycode,deptcode,positioncode,usermobile,useremail)
    		value
-   			(#{userid},#{username},#{userpasswd},#{companyusercode},#{deptcode},#{positioncode},#{usermobile},#{useremail})
+   			(#{userid},#{username},#{userpasswd},#{usercompanycode},#{deptcode},#{positioncode},#{usermobile},#{useremail})
    	</insert>
    	
    	<update id="UpdateUser" parameterType="UserDTO">
@@ -78,7 +80,7 @@
 			user
 		set
 			username = #{username}, userpasswd = #{userpasswd}, usermobile = #{usermobile}, useremail = #{useremail},
-			companyusercode = #{companyusercode}, deptcode = #{deptcode}, positioncode = #{positioncode}
+			usercompanycode = #{usercompanycode}, deptcode = #{deptcode}, positioncode = #{positioncode}
 		where
 			userid = #{userid}
    	</update>

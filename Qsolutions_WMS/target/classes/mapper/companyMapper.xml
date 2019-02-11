@@ -116,6 +116,17 @@
 			uc.companycode = #{companycode}
 	</select>
 	
+	<select id="SelectUserCompany" resultType="UserVO" parameterType="CompanyDTO">
+		select 
+			userid, username, usermobile,useremail,usercompanycode,u.deptcode,d.deptname,u.positioncode,p.positionname
+		from 
+    		user u left join dept d ON u.deptcode = d.deptcode
+            left join positions p ON u.positioncode = p.positioncode 
+            left join company c ON u.usercompanycode = c.companycode
+		where
+			usercompanycode = #{companycode}
+	</select>
+	
 	<insert id="InsertManager" parameterType="CoworkDTO">
 		insert into usercompany
 			(userid, companycode)

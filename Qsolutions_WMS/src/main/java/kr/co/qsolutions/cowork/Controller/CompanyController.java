@@ -79,13 +79,18 @@ public class CompanyController {
 		
 		UserVO loginVO = (UserVO)session.getAttribute("login");
 		String tmpcode = (String)request.getParameter("companycode");
+		String tmpname = (String)request.getParameter("companyname");
+		
 		CompanyDTO companyDTO = new CompanyDTO();
 		companyDTO.setCompanycode(tmpcode);
+		companyDTO.setCompanyname(tmpname);
 		
 		CoworkDTO coworkDTO = new CoworkDTO();
 		coworkDTO.setCoworkcompany(tmpcode);
 		
-		List<UserVO> userList = companyservice.SelectCompanyUser(companyDTO);
+		List<UserVO> userList = companyservice.SelectUserCompany(companyDTO);
+		
+		List<UserVO> companyuserList = companyservice.SelectCompanyUser(companyDTO);
 		
 		List<CoworkVO> coworkList = companyservice.CoworkViewSelectCompany(tmpcode);
 		
@@ -95,6 +100,8 @@ public class CompanyController {
 		
 		System.out.println("companyDTO : " + companyDTO);
 		
+		System.out.println("companyuserList : " + companyuserList);
+		
 		System.out.println("userList : " + userList);
 		
 		CompanyVO companyVO = companyservice.SelectCompanyView(companyDTO);
@@ -102,6 +109,7 @@ public class CompanyController {
 		model.addAttribute("userList", userList);
 		model.addAttribute("coworkList", coworkList);
 		model.addAttribute("companyVO", companyVO);
+		model.addAttribute("companyuserList", companyuserList);
 		
 		returnUrl = "company/view";
 		return returnUrl;

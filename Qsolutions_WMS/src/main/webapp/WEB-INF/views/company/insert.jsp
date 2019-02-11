@@ -357,6 +357,9 @@ body {
 				<option value="의료">의료</option>
 				<option value="금융">금융</option>
 				<option value="방송">방송</option>
+				<option value="SMB">SMB</option>
+				<option value="엔터프라이즈">엔터프라이즈</option>
+				<option value="외국계">외국계</option>
 				<option value="기타">기타</option>
 			</select>
 		<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">회사 주소</p>

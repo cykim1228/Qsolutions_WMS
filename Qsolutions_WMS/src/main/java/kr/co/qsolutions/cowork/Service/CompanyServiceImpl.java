@@ -108,6 +108,12 @@ public class CompanyServiceImpl implements CompanyService {
 		return dao.DeleteManager(coworkDTO);
 	}
 
+	@Override
+	public List<UserVO> SelectUserCompany(CompanyDTO companyDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.SelectUserCompany(companyDTO);
+	}
+
 	
 	
 }

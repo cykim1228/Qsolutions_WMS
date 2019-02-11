@@ -104,6 +104,12 @@ public class CompanyDaoImpl implements CompanyDao  {
 		return sqlSession.delete(Namespace+".DeleteManager",coworkDTO);
 	}
 
+	@Override
+	public List<UserVO> SelectUserCompany(CompanyDTO companyDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(Namespace+".SelectUserCompany",companyDTO);
+	}
+
 	
 }
 																																																																																																																																																																							

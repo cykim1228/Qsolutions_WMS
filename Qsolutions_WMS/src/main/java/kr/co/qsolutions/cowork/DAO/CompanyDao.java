@@ -43,4 +43,6 @@ public interface CompanyDao {
 	
 	public int DeleteManager(CoworkDTO coworkDTO) throws Exception;
 
+	public List<UserVO> SelectUserCompany(CompanyDTO companyDTO) throws Exception;
+
 }

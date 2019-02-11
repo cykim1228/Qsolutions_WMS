@@ -396,7 +396,8 @@ h2 {
 				<option value="이슈">이슈</option>
 				<option value="유지보수">유지보수</option>
 				<option value="정기점검">정기점검</option>
-				<option value="견적">견적</option>
+				<option value="상담">상담</option>
+				<option value="프로젝트">프로젝트</option>
 			</select>
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">작성자</p>
 			<input type="text" class="form-control" id="#" value="${CoworkVO.userid}(${CoworkVO.username})" name="writer" size="50" style="width: 100%; display: inline-block;" readonly="readonly">
@@ -417,30 +418,21 @@ h2 {
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">담당자</p>
 			<select class="selectpicker show-tick" data-style="btn-primary" name="manager" id="manager" data-live-search="true" title="담당자 선택.." data-width="100%" data-size="5" onchange="changeSelect()" style="display: inline-block;">
 				<optgroup label="퀀텀솔루션즈">
-					<c:forEach var="usersVO" items="${usersVO}" varStatus="list">
-						<c:if test="${usersVO.companyusercode eq 0}">
+						<c:forEach var="usersVO" items="${usersVO}" varStatus="list">
 							<option id="manager" value="${usersVO.userid}"><p id="managerName" value="${usersVO.username}">${usersVO.username}</p></option>
-							
-						</c:if>
-					</c:forEach>
-				</optgroup>
-				<optgroup label="고객사">
-					<c:forEach var="usersVO" items="${usersVO}" varStatus="list">
-						<c:if test="${usersVO.companyusercode eq 1}">
+						</c:forEach>
+					</optgroup>
+					<optgroup label="고객사">
+						<c:forEach var="usersVO" items="${usersVO}" varStatus="list">
 							<option id="manager" value="${usersVO.userid}">${usersVO.username}</option>
-							
-						</c:if>
-					</c:forEach>
-				</optgroup>
-					
-				<optgroup label="파트너사">
-					<c:forEach var="usersVO" items="${usersVO}" varStatus="list">
-						<c:if test="${usersVO.companyusercode eq 2}">
+						</c:forEach>
+					</optgroup>
+						
+					<optgroup label="파트너사">
+						<c:forEach var="usersVO" items="${usersVO}" varStatus="list">
 							<option id="manager" value="${usersVO.userid}"><p id="managerName" value="${usersVO.username}">${usersVO.username}</p></option>
-							
-						</c:if>
-					</c:forEach>
-				</optgroup>
+						</c:forEach>
+					</optgroup>
 			</select>
 			<div class="choices" data-type="select-multiple" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" dir="ltr">
 			<div id="choicess" class="choices__inner">

@@ -159,7 +159,9 @@ body {
 							${companyVO.companycode}
 							<input type="hidden" id="companycode" name="companycode" value="${companyVO.companycode}"/>
 							</td>
-							<td>${companyVO.companyname}</td>
+							<td>${companyVO.companyname}
+							<input type="hidden" id="companyname" name="companyname" value="${companyVO.companyname}"/>
+							</td>
 							<td><a href="${companyVO.companyhomepg}">${companyVO.companyhomepg}</a></td>
 							<td>[${companyVO.companyzipcode}] ${companyVO.companyaddress} ${companyVO.companyaddress2}</td>
 						</tr>
@@ -173,7 +175,7 @@ body {
 			<table class="table table-striped">
 				<thead align="center">
 					<tr>
-						<th style="width: 15%; text-align: center;">소속</th>
+						<th style="width: 15%; text-align: center;">직급</th>
 						<th style="width: 15%; text-align: center;">담당자</th>
 						<th style="width: 35%; text-align: center;">담당자연락처</th>
 						<th style="width: 35%; text-align: center;">담당자이메일</th>
@@ -182,11 +184,7 @@ body {
 				<tbody align="center">
 					<c:forEach items="${userList}" var="userList" varStatus="rowCount">
 						<tr>
-							<td>
-								<c:if test="${userList.usercompanyname == 0}">퀀텀솔루션즈</c:if>
-								<c:if test="${userList.companyusercode == 1}">고객사</c:if>
-								<c:if test="${userList.companyusercode == 2}">파트너사</c:if>
-							</td>
+							<td>${userList.positionname}</td>
 							<td>${userList.username}</td>
 							<td><a href='tel:${userList.usermobile}'>${userList.usermobile}</a></td>
 							<td><a href='mailto:${userList.useremail}'>${userList.useremail}</a></td>

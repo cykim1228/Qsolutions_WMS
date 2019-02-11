@@ -160,6 +160,8 @@ public class UserController {
 		UserVO loginVO = (UserVO)session.getAttribute("login");
 		String tmpID = request.getParameter("userid");
 		
+		List<CompanyVO> companyVO = (List<CompanyVO>) coworkservice.CompanyAllSelect();
+		
 		UserVO userVO = (UserVO)userservice.UserViewSelect(tmpID);
 		List<UserVO> deptVO = (List<UserVO>)userservice.SelectDeptList();
 		List<UserVO> positionVO = (List<UserVO>)userservice.SelectPositionList();
@@ -167,6 +169,7 @@ public class UserController {
 		model.addAttribute("deptVO", deptVO);
 		model.addAttribute("positionVO", positionVO);
 		model.addAttribute("userVO", userVO);
+		model.addAttribute("companyVO", companyVO);
 		
 		returnUrl = "user/modify";
 		return returnUrl;

@@ -84,7 +84,7 @@ body {
 					<tr>
 						<td>${companylistvo.companyclass}</td>
 						<td>${companylistvo.companycode}</td>
-						<td><a href='${pageContext.request.contextPath}/Company/View?companycode=${companylistvo.companycode}'>${companylistvo.companyname}</a></td>
+						<td style="font-weight: bold;"><a href='${pageContext.request.contextPath}/Company/View?companycode=${companylistvo.companycode}'>${companylistvo.companyname}</a></td>
 						<td><a href='${companylistvo.companyhomepg}'>${companylistvo.companyhomepg}</a></td>
 					</tr>
 				</c:forEach>

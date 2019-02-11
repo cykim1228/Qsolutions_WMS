@@ -17,7 +17,7 @@
 		    temp_obj["userid"] = $("#userid").val();
 		    temp_obj["username"] = $("#username").val();
 		    temp_obj["userpasswd"] = $("#userpasswd").val();
-		    temp_obj["companyusercode"] = $("#companyusercode").val();
+		    temp_obj["usercompanycode"] = $("#usercompanycode").val();
 		    temp_obj["deptcode"] = $("#deptcode").val();
 		    temp_obj["positioncode"] = $("#positioncode").val();
 		    temp_obj["usermobile"] = $("#usermobile").val();
@@ -158,10 +158,10 @@ body {
 			<input id="userpasswd" name="userpasswd" type="password" class="form-control" value="${userVO.userpasswd}" placeholder="PW 입력.." size="50" style="width: 100%; display: inline-block;">
 			
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">소속</p>
-			<select class="form-control" name="companyusercode" id="companyusercode">
-				<option id="companyusercode" value="0" <c:if test="${userVO.companyusercode eq 0}">selected</c:if>>퀀텀솔루션즈</option>
-				<option id="companyusercode" value="1" <c:if test="${userVO.companyusercode eq 1}">selected</c:if>>고객사</option>
-				<option id="companyusercode" value="2" <c:if test="${userVO.companyusercode eq 2}">selected</c:if>>파트너사</option>
+			<select class="form-control" name="usercompanycode" id="usercompanycode">
+				<c:forEach var="companyVO" items="${companyVO}" varStatus="list">
+					<option id="usercompanycode" value="${companyVO.companycode}" <c:if test="${userVO.usercompanycode == companyVO.companycode}">selected</c:if>>${companyVO.companyname}</option>
+				</c:forEach>
 			</select>
 			
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">부서</p>

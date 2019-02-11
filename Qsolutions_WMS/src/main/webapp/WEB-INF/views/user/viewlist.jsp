@@ -104,16 +104,12 @@ body {
 				<c:forEach items="${userVO}" var="userVO" varStatus="rowCount">
 					<tr>
 						<td>${userVO.userid}</td>
-						<td><a href="${pageContext.request.contextPath}/User/View?userid=${userVO.userid}">${userVO.username}</a></td>
+						<td style="font-weight: bold;"><a href="${pageContext.request.contextPath}/User/View?userid=${userVO.userid}">${userVO.username}</a></td>
 						<td><a href='tel:${userVO.usermobile}'>${userVO.usermobile}</a></td>
 						<td><a href='mailto:${userVO.useremail}'>${userVO.useremail}</a></td>
 						<td>${userVO.deptname}</td>
 						<td>${userVO.positionname}</td>
-						<td>
-							<c:if test="${userVO.companyusercode == 0}">퀀텀솔루션즈</c:if>
-							<c:if test="${userVO.companyusercode == 1}">고객사</c:if>
-							<c:if test="${userVO.companyusercode == 2}">파트너사</c:if>
-						</td>
+						<td>${userVO.companyname}</td>
 					</tr>
 				</c:forEach>
 			</tbody>
