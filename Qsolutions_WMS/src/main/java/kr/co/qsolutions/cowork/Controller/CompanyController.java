@@ -393,7 +393,10 @@ public class CompanyController {
 		CompanyDTO companyDTO = new CompanyDTO();
 		companyDTO.setCompanycode(tmpcode);
 		
+		System.out.println("tmpcode : " + tmpcode);
+		
 		companyservice.DeleteCompany(companyDTO);
+		companyservice.DeleteCompanyCowork(companyDTO);
 		
 		returnUrl = "redirect:/Company/List";
 		return returnUrl;

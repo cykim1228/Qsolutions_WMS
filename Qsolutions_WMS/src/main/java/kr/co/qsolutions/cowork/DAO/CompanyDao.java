@@ -45,4 +45,6 @@ public interface CompanyDao {
 
 	public List<UserVO> SelectUserCompany(CompanyDTO companyDTO) throws Exception;
 
+	public int DeleteCompanyCowork(CompanyDTO companyDTO) throws Exception;
+
 }

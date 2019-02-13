@@ -41,5 +41,7 @@ public interface CompanyService {
     public int DeleteManager(CoworkDTO coworkDTO) throws Exception;
 
 	public List<UserVO> SelectUserCompany(CompanyDTO companyDTO) throws Exception;
+
+	public int DeleteCompanyCowork(CompanyDTO companyDTO) throws Exception;
     
 }

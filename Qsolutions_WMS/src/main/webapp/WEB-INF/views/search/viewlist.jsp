@@ -143,9 +143,7 @@ body {
 						<td><a href='mailto:${searchuserlist.useremail}'>${searchuserlist.useremail}</a></td>
 						<td>${searchuserlist.deptname}</td>
 						<td>${searchuserlist.positionname}</td>
-						<td><c:if test="${searchuserlist.companyusercode == 0}">퀀텀솔루션즈</c:if>
-							<c:if test="${searchuserlist.companyusercode == 1}">고객사</c:if> <c:if
-								test="${searchuserlist.companyusercode == 2}">파트너사</c:if></td>
+						<td>${searchuserlist.companyname}</td>
 					</tr>
 				</c:forEach>
 			</tbody>

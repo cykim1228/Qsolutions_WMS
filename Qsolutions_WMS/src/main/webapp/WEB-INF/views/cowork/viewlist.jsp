@@ -7,10 +7,12 @@
 	<title>[QSOLUTIONS]업무관리 시스템</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/theme.ice.css">
 	<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/paging.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/util.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.tablesorter.js"></script>
 	<script type="text/javascript">
 
 	    $(document).ready(function(){
@@ -26,6 +28,10 @@
 		function insertView(){
 			location.href = "/qsolcowork/Cowork/Insertform";
 		}
+		
+		$(function() {
+			  $("#myTable").tablesorter();
+			});
 		
 		var list = '';
 		
@@ -140,7 +146,7 @@ body {
     </div>
     	<div class="viewList">
 		<div class="table-responsive">
-		<table class="table table-striped">
+		<table id="myTable" class="table table-striped tablesorter">
 			<thead align="center">
 				<tr>
 					<!-- <th style="width: 15%; text-align: center;">업무코드</th> -->

@@ -206,7 +206,7 @@
 			   	    index = index + 1;
 			    	temp_html = temp_html + '<div class="choices__list choices__list--multiple">';
 			    	temp_html = temp_html + '<div class="choices__item choices__item--selectable" data-item="" data-id="12" data-value="' + item.userid + '" data-deletable="" aria-selected="true">';
-				    temp_html = temp_html + item.username;
+				    temp_html = temp_html + '[' + item.positionname + '] ' + item.username;
 				    temp_html = temp_html + '<button id="managerId" name="' + item.userid + '" value="' + item.userid + '" type="button" class="choices__button" data-button="" aria-label="Remove item: managerName" onclick="deleteManager(this)">';
 				    temp_html = temp_html + item.userid;
 				   	temp_html = temp_html + '</button>';
@@ -382,7 +382,8 @@ h2 {
 	<form action="${pageContext.request.contextPath}/Cowork/Insert" method="post" id="insertData" name="insertData">
 	    <div class="viewListTop">
 	    	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 30px; font-weight: bold;">업무 등록</span>
-	    	<input type="submit" id="save" class="btn btn-primary pull-right" onclick="insertdata()" style="margin-right: 10px; margin-top: 8px;" value="업무 등록">
+	    	<!-- <input type="submit" id="save" class="btn btn-primary pull-right" onclick="insertdata()" style="margin-right: 10px; margin-top: 8px;" value="업무 등록"> -->
+	    	<button type="button" id="save" class="btn btn-primary pull-right" onclick="insertdata()" style="margin-right: 10px; margin-top: 8px;">업무 등록</button>
 	    </div>
 	
 		<div class="viewListCenter" id="insertform">
@@ -416,23 +417,23 @@ h2 {
 			<input id="startdate" name="startdate" type="text" class="form-control" placeholder="시작 시간.." value="" size="50" style="width: 49%; display: inline-block;">
 			<input id="enddate" name="enddate" type="text" class="form-control pull-right" placeholder="종료 시간.." value="" size="50" style="width: 49%; display: inline-block;">
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">담당자</p>
-			<select class="selectpicker show-tick" data-style="btn-primary" name="manager" id="manager" data-live-search="true" title="담당자 선택.." data-width="100%" data-size="5" onchange="changeSelect()" style="display: inline-block;">
-				<optgroup label="퀀텀솔루션즈">
+			<select class="selectpicker show-tick" data-style="btn-primary" name="manager" id="manager" data-live-search="true" title="담당자 선택.." data-width="100%" data-size="10" onchange="changeSelect()" style="display: inline-block;">
+				<c:forEach var="companyList" items="${companyList}" varStatus="list">
+					<optgroup label="${companyList.companyname}">
 						<c:forEach var="usersVO" items="${usersVO}" varStatus="list">
-							<option id="manager" value="${usersVO.userid}"><p id="managerName" value="${usersVO.username}">${usersVO.username}</p></option>
+							<c:if test="${companyList.companyname == usersVO.companyname}">
+								<option id="manager" value="${usersVO.userid}"><p id="managerName" value="${usersVO.username}">[${usersVO.positionname}] ${usersVO.username}</p></option>
+							</c:if>
 						</c:forEach>
 					</optgroup>
-					<optgroup label="고객사">
-						<c:forEach var="usersVO" items="${usersVO}" varStatus="list">
-							<option id="manager" value="${usersVO.userid}">${usersVO.username}</option>
-						</c:forEach>
-					</optgroup>
-						
-					<optgroup label="파트너사">
-						<c:forEach var="usersVO" items="${usersVO}" varStatus="list">
-							<option id="manager" value="${usersVO.userid}"><p id="managerName" value="${usersVO.username}">${usersVO.username}</p></option>
-						</c:forEach>
-					</optgroup>
+				</c:forEach>
+				<optgroup label="미분류">
+					<c:forEach var="usersVO" items="${usersVO}" varStatus="list">
+						<c:if test="${usersVO.companyname eq null}">
+							<option id="manager" value="${usersVO.userid}"><p id="managerName" value="${usersVO.username}">[${usersVO.positionname}] ${usersVO.username}</p></option>
+						</c:if>
+					</c:forEach>
+				</optgroup>
 			</select>
 			<div class="choices" data-type="select-multiple" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" dir="ltr">
 			<div id="choicess" class="choices__inner">

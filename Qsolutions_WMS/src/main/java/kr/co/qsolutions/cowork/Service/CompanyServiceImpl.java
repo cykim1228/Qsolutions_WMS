@@ -114,6 +114,13 @@ public class CompanyServiceImpl implements CompanyService {
 		return dao.SelectUserCompany(companyDTO);
 	}
 
+	@Override
+	public int DeleteCompanyCowork(CompanyDTO companyDTO) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("CoworkServiceImpl");
+    	return dao.DeleteCompanyCowork(companyDTO);
+	}
+
 	
 	
 }

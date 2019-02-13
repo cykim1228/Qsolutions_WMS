@@ -159,6 +159,8 @@ public class CoworkController {
 		
 		List<UserVO> usersVO = (List<UserVO>)companyservice.SelectUser();
 		
+		System.out.println("usersVO : " + usersVO);
+		
 		model.addAttribute("usersVO", usersVO);
 		model.addAttribute("CoworkVO", coworkVO);
 		model.addAttribute("companyList",companyList);

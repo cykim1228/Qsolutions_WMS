@@ -173,7 +173,7 @@
 			   	    index = index + 1;
 			    	temp_html = temp_html + '<div class="choices__list choices__list--multiple">';
 			    	temp_html = temp_html + '<div class="choices__item choices__item--selectable" data-item="" data-id="12" data-value="' + item.userid + '" data-deletable="" aria-selected="true">';
-				    temp_html = temp_html + item.username;
+				    temp_html = temp_html + '[' + item.positionname + '] ' + item.username;
 				    temp_html = temp_html + '<button id="managerId" name="' + item.userid + '" value="' + item.userid + '" type="button" class="choices__button" data-button="" aria-label="Remove item: managerName" onclick="deleteManager(this)">';
 				    temp_html = temp_html + item.userid;
 				   	temp_html = temp_html + '</button>';
@@ -338,11 +338,11 @@ body {
 			<input type="hidden" id="coworkcode" value="${CoworkVO.coworkcode}"  name="coworkcode" />
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">카테고리</p>
 			<select class="form-control" id="coworksubject" name="coworksubject">
-				<option value="이슈">이슈</option>
-				<option value="유지보수">유지보수</option>
-				<option value="정기점검">정기점검</option>
-				<option value="상담">상담</option>
-				<option value="프로젝트">프로젝트</option>
+				<option value="이슈" <c:if test="${CoworkVO.coworksubject eq '이슈'}">selected</c:if>>이슈</option>
+				<option value="유지보수" <c:if test="${CoworkVO.coworksubject eq '유지보수'}">selected</c:if>>유지보수</option>
+				<option value="정기점검" <c:if test="${CoworkVO.coworksubject eq '정기점검'}">selected</c:if>>정기점검</option>
+				<option value="상담" <c:if test="${CoworkVO.coworksubject eq '상담'}">selected</c:if>>상담</option>
+				<option value="프로젝트" <c:if test="${CoworkVO.coworksubject eq '프로젝트'}">selected</c:if>>프로젝트</option>
 			</select>
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">작성자</p>
 			<input type="text" class="form-control" id="#" value="${CoworkVO.userid}(${CoworkVO.username})" name="writer" size="50" style="width: 100%; display: inline-block;" readonly="readonly">
@@ -357,23 +357,23 @@ body {
 			<input id="startdate" name="startdate" value="${CoworkVO.startdate}" type="text" class="form-control" placeholder="시작 시간.." value="" size="50" style="width: 49%; display: inline-block;">
 			<input id="enddate" name="enddate" value="${CoworkVO.enddate}" type="text" class="form-control pull-right" placeholder="종료 시간.." value="" size="50" style="width: 49%; display: inline-block;">
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">담당자</p>
-				<select class="selectpicker show-tick" data-style="btn-primary" name="manager" id="manager" data-live-search="true" title="담당자 선택.." data-width="100%" data-size="5" onchange="changeSelect()">
-					<optgroup label="퀀텀솔루션즈">
+				<select class="selectpicker show-tick" data-style="btn-primary" name="manager" id="manager" data-live-search="true" title="담당자 선택.." data-width="100%" data-size="10" onchange="changeSelect()">
+					<c:forEach var="companyList" items="${companyList}" varStatus="list">
+					<optgroup label="${companyList.companyname}">
 						<c:forEach var="usersVO" items="${usersVO}" varStatus="list">
-							<option id="manager" value="${usersVO.userid}"><p id="managerName" value="${usersVO.username}">${usersVO.username}</p></option>
+							<c:if test="${companyList.companyname == usersVO.companyname}">
+								<option id="manager" value="${usersVO.userid}"><p id="managerName" value="${usersVO.username}">[${usersVO.positionname}] ${usersVO.username}</p></option>
+							</c:if>
 						</c:forEach>
 					</optgroup>
-					<optgroup label="고객사">
-						<c:forEach var="usersVO" items="${usersVO}" varStatus="list">
-							<option id="manager" value="${usersVO.userid}">${usersVO.username}</option>
-						</c:forEach>
-					</optgroup>
-						
-					<optgroup label="파트너사">
-						<c:forEach var="usersVO" items="${usersVO}" varStatus="list">
-							<option id="manager" value="${usersVO.userid}"><p id="managerName" value="${usersVO.username}">${usersVO.username}</p></option>
-						</c:forEach>
-					</optgroup>
+				</c:forEach>
+				<optgroup label="미분류">
+					<c:forEach var="usersVO" items="${usersVO}" varStatus="list">
+						<c:if test="${usersVO.companyname eq null}">
+							<option id="manager" value="${usersVO.userid}"><p id="managerName" value="${usersVO.username}">[${usersVO.positionname}] ${usersVO.username}</p></option>
+						</c:if>
+					</c:forEach>
+				</optgroup>
 				</select>
 				<div class="choices" data-type="select-multiple" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" dir="ltr">
 				<div id="choicess" class="choices__inner">

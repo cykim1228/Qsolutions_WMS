@@ -82,19 +82,27 @@
 				companycode = #{companycode}
 	</update>
 	<update id="DeleteCompany" parameterType="CompanyDTO">
+		UPDATE company c
+ 			SET c.IsUse = 1
+		WHERE c.companycode = #{companycode}
+	</update>
+	
+	<update id="DeleteCompanyCowork" parameterType="CompanyDTO">
 		UPDATE company c, cowork cw
  			SET c.IsUse = 1, cw.IsUse = 1
 		WHERE c.companycode = cw.coworkcompany
    			AND c.companycode = #{companycode}
 	</update>
+	
 	<select id="SelectCompanyCode" resultType="String">
 		select MAX(companycode) from company
 	</select>
 	<select id="SelectUser" resultType="UserVO">
 		select 
-			*
+			userid, username, usermobile, useremail, deptcode, p.positionname, usercompanycode, c.companyname
 		from 
-			user 
+			user u left join positions p ON u.positioncode = p.positioncode
+			left join company c ON u.usercompanycode = c.companycode
 	</select>
 	<select id="SelectCompanyUser" resultType="UserVO" parameterType="CompanyDTO">
 		select distinct

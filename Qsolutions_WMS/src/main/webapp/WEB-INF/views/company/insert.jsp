@@ -85,7 +85,7 @@
   		location.href = "/qsolcowork/Company/List";
 	}
 	
-	function changeSelect(){
+	/* function changeSelect(){
 		var userid = $("#manager").val();
 		var companycode = $("#companycode").val();
 		var managerName = $("#manager option:checked").text();
@@ -210,7 +210,7 @@
 	        return;
 	    }
 		
-	}
+	} */
 	
   </script>
 
@@ -370,7 +370,7 @@ body {
         <input type="text" class="form-control" id="companyaddress2" value="${companyVO.companyaddress2}" name="companyaddress2" placeholder="상세주소" size="50" style="width: 100%; display: inline-block;">
 		<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">회사 홈페이지</p>
 		<input id="companyhomepg" name="companyhomepg" type="text" class="form-control" placeholder="" value="https://" size="50" style="width: 100%; display: inline-block;">
-		<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">담당자</p>
+		<%-- <p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">담당자</p>
 		<select class="selectpicker show-tick" data-style="btn-primary" name="manager" id="manager" data-live-search="true" title="담당자 선택.." data-width="100%" data-size="5" onchange="changeSelect()">
 			<optgroup label="퀀텀솔루션즈">
 				<c:forEach var="usersVO" items="${usersVO}" varStatus="list">
@@ -401,7 +401,7 @@ body {
 		
 		<div class="choices" data-type="select-multiple" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" dir="ltr">
 			<div id="choicess" class="choices__inner">
-				<%-- <c:forEach var="managerList" items="${managerList}" varStatus="list">
+				<c:forEach var="managerList" items="${managerList}" varStatus="list">
 					<div class="choices__list choices__list--multiple ${managerList.userid}">
 						<div class="choices__item choices__item--selectable" data-item="" data-id="12" data-value="${managerList.username}" data-deletable="" aria-selected="true">
 						${managerList.username}
@@ -410,9 +410,9 @@ body {
 						</button>
 						</div>
 					</div>
-				</c:forEach> --%>
+				</c:forEach>
 			</div>
-		</div>
+		</div> --%>
 		
 		
 		
