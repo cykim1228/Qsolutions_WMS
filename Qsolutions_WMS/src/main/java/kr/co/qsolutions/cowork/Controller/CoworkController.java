@@ -100,6 +100,22 @@ public class CoworkController {
 		
 	}
 	
+	@RequestMapping(value = "/Cowork/CalendarGoogle")
+	public String CoworkCalendarGoogle(PagingVO pagingVO, HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
+
+		UserVO loginVO = (UserVO)session.getAttribute("login");
+
+		List<CoworkVO> listvo = coworkservice.CoworkViewListCalendar(pagingVO);
+
+		model.addAttribute("coworklistvo",listvo);
+		model.addAttribute("pagingVO", pagingVO);
+		model.addAttribute("userid", loginVO.getUserid());
+		
+		System.out.println("È®ÀÎ¿ë : " + listvo);
+		
+		return "cowork/calendarGoogle";
+	}
+	
 	@RequestMapping(value = "/Cowork/View")
 	public String CoworkView(HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
 		UserVO loginVO = (UserVO)session.getAttribute("login");
@@ -158,6 +174,8 @@ public class CoworkController {
 		coworkVO.setUsername(loginVO.getUsername());
 		
 		List<UserVO> usersVO = (List<UserVO>)companyservice.SelectUser();
+		
+		System.out.println("loginVO : " + loginVO);
 		
 		System.out.println("usersVO : " + usersVO);
 		
@@ -347,7 +365,7 @@ public class CoworkController {
 		System.out.println("coworkcode??=="+coworkcode);
         coworkservice.CoworkViewDelete(coworkcode);
         
-		returnUrl = "redirect:/cowork/List";
+		returnUrl = "redirect:/Cowork/List";
 		return returnUrl;
 	}
 

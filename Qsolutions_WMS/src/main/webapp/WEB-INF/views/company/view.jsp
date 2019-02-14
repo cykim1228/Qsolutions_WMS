@@ -171,6 +171,7 @@ body {
 	</div>
 	
 	<div class="viewList">
+	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 23px; font-weight: bold;">직원 목록</span>
 		<div class="table-responsive">
 			<table class="table table-striped">
 				<thead align="center">
@@ -185,7 +186,7 @@ body {
 					<c:forEach items="${userList}" var="userList" varStatus="rowCount">
 						<tr>
 							<td>${userList.positionname}</td>
-							<td>${userList.username}</td>
+							<td><a href="${pageContext.request.contextPath}/User/View?userid=${userList.userid}">${userList.username}</a></td>
 							<td><a href='tel:${userList.usermobile}'>${userList.usermobile}</a></td>
 							<td><a href='mailto:${userList.useremail}'>${userList.useremail}</a></td>
 						</tr>
@@ -196,6 +197,7 @@ body {
 	</div>
 	
 	<div class="viewList">
+	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 23px; font-weight: bold;">업무 목록</span>
 		<div>
 				<div class="table-responsive">
 					<table class="table table-striped">
@@ -214,7 +216,7 @@ body {
 									<td>${coworkList.coworksubject}</td>
 									<td>${coworkList.coworkcode}</td>
 									<td><a href='${pageContext.request.contextPath}/Cowork/View?coworkcode=${coworkList.coworkcode}'>${coworkList.coworktitle}</a></td>
-									<td><a href='${pageContext.request.contextPath}/User/View?userid=${coworkList.userid}'>${coworkList.userid}</a></td>
+									<td><a href='${pageContext.request.contextPath}/User/View?userid=${coworkList.userid}'>${coworkList.username}</a></td>
 									<td><fmt:formatDate value="${coworkList.coworkdate}" pattern="yyyy/MM/dd"/></td>
 								</tr>
 							</c:forEach>

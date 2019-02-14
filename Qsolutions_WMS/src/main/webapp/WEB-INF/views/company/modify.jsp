@@ -21,6 +21,34 @@
   <script type="text/javascript">
   
   function updatedata(){
+	  
+	  var formData = document.updateData;
+		
+		if(formData.companyname.value == "") {
+			alert("회사 이름을 입력해주세요.")
+			return formData.companyname.focus();
+		}
+		
+		if(formData.companyclass.value == "") {
+			alert("분류를 선택해주세요.")
+			return formData.companyclass.focus();
+		}
+		
+		if(formData.companyaddress.value == "") {
+			alert("회사 주소를 검색해주세요.")
+			return formData.companyaddress.focus();
+		}
+		
+		if(formData.companyaddress2.value == "") {
+			alert("회사 상세주소를 입력해주세요.")
+			return formData.companyaddress2.focus();
+		}
+		
+		if(formData.companyhomepg.value == "https://") {
+			alert("올바른 홈페이지 주소를 입력해주세요.")
+			return formData.companyhomepg.focus();
+		}
+	  
 	    var temp_obj = {};
 	    temp_obj["companyname"] = $("#companyname").val();
 	    temp_obj["companycode"] = $("#companycode").val();
@@ -291,7 +319,8 @@ body {
 					<li><a href="${pageContext.request.contextPath}/Cowork/List">업무</a></li>
 					<li><a href="${pageContext.request.contextPath}/Company/List">사이트</a></li>
 					<li><a href="${pageContext.request.contextPath}/User/List">사용자</a></li>
-					<li><a href="${pageContext.request.contextPath}/Cowork/Calendar">캘린더</a></li>
+					<li><a href="${pageContext.request.contextPath}/Cowork/Calendar">업무캘린더</a></li>
+					<li><a href="${pageContext.request.contextPath}/Cowork/CalendarGoogle">구글캘린더</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="${pageContext.request.contextPath}/Logout">LOGOUT</a></li>
@@ -305,6 +334,7 @@ body {
 	</nav>
 
 <!-- 상세 뷰 페이지  -->
+<form action="${pageContext.request.contextPath}/Company/Update" method="post" id="updateData" name="updateData">
     <div class="viewListTop">
     	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 30px; font-weight: bold;">회사 수정</span>
     	<button type="button" class="btn btn-primary pull-right" onclick="updatedata()" style="margin-right: 10px; margin-top: 8px;">회사 수정</button>
@@ -335,6 +365,7 @@ body {
         <input type="text" class="form-control" id="companyaddress2" value="${companyVO.companyaddress2}" name="companyaddress2" placeholder="상세주소" size="50" style="width: 100%; display: inline-block;">
 		<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">회사 홈페이지</p>
 		<input id="companyhomepg" name="companyhomepg" type="text" class="form-control" placeholder="" value="${companyVO.companyhomepg}" size="50" style="width: 100%; display: inline-block;">
+		
 		<!-- <p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">담당자</p> -->
 		<%-- <select class="selectpicker show-tick" data-style="btn-primary" name="manager" id="manager" data-live-search="true" title="담당자 선택.." data-width="100%" data-size="5" onchange="changeSelect()">
 			<optgroup label="퀀텀솔루션즈">
@@ -380,6 +411,7 @@ body {
 		</div> --%>
 		
 	</div>
+</form>
 
 	<%-- <!-- 상세 뷰 페이지  -->
 	<div class="container-fluid">

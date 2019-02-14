@@ -8,7 +8,10 @@
     
  	<!-- 특정유저 검색 -->
     <select id="UserCheckID" resultType="UserVO" parameterType="String">
-    	select userid,userpasswd from user
+    	select 
+    		userid, userpasswd, username
+    	from 
+    		user
     	<where>
     		userid = #{userid}
     	</where>    
@@ -42,7 +45,7 @@
 			AND u.IsUse = 0
 		</trim>
 		ORDER BY
-			userid ASC
+			usercompanycode desc
 		Limit #{start},#{last}
     </select>
     
@@ -114,5 +117,27 @@
 		where
 			username = #{gname}
    	</update>
+   	
+   	<select id="selectUserCowork" resultType="CoworkVO" parameterType="coworkDTO">
+   		SELECT distinct
+			co.coworkcode, co.coworksubject, co.coworktitle, co.coworkdate, co.userid, c.companycode, c.companyname, u.username
+		FROM
+			cowork co left join usercoworkcompany ucc ON co.coworkcode = ucc.coworkcode
+		    left join company c ON co.coworkcompany = c.companycode
+		    left join user u ON co.userid = u.userid
+		WHERE
+			co.userid = #{userid};
+   	</select>
+    
+    <select id="selectManagerCowork" resultType="CoworkVO" parameterType="coworkDTO">
+   		SELECT distinct
+			co.coworkcode, co.coworksubject, co.coworktitle, co.coworkdate, co.userid, c.companycode, c.companyname, u.username
+		FROM
+			cowork co left join usercoworkcompany ucc ON co.coworkcode = ucc.coworkcode
+		    left join company c ON co.coworkcompany = c.companycode
+		    left join user u ON co.userid = u.userid
+		WHERE
+			ucc.userid = #{userid};
+   	</select>
     
 </mapper>

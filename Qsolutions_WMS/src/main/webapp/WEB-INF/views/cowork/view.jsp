@@ -19,6 +19,28 @@
 		var url = "/qsolcowork/Cowork/Updateform?coworkcode="+coworkcode;
 		location.href = url;
 	}
+	
+	function deleteform() {
+		var answer = confirm("삭제하시겠습니까??")
+		var coworkcode = $("#coworkcode").val();
+		if (answer) {
+			$.ajax({
+	        url:"Delete",
+	        type:"get",
+	        data:{"coworkcode":coworkcode},
+	        datatype:"html",
+	        contentType:"application/html;charset=UTF-8",
+	        success:function(response){
+	            alert("삭제되었습니다.");
+	    		location.href = "/qsolcowork/Cowork/List";
+	        },
+	        error:function(jqXHR, textStatus, errorThrown){
+	            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
+	        }
+			});
+		}
+	}
+	
 	function insertsubcowork(){
 		var subcoworktext = $("#subcoworktext").val();
 		var coworkcode = $("#coworkcode").val();
@@ -218,10 +240,10 @@ body {
 					<tr>
 						<th style="width: 10%; text-align: center;">카테고리</th>
 						<th style="width: 15%; text-align: center;">업무코드</th>
-						<th style="width: 15%; text-align: center;">고객사명</th>
-						<th style="width: 20%; text-align: center;">제목</th>
-						<th style="width: 20%; text-align: center;">등록자</th>
-						<th style="width: 20%; text-align: center;">작성일</th>
+						<th style="width: 25%; text-align: center;">고객사명</th>
+						<th style="width: 30%; text-align: center;">제목</th>
+						<th style="width: 10%; text-align: center;">등록자</th>
+						<th style="width: 10%; text-align: center;">작성일</th>
 					</tr>
 				</thead>
 				<tbody align="center">
@@ -258,6 +280,7 @@ body {
 				</tbody>
 			</table>
 		</div>
+		<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 23px; font-weight: bold;">담당자 목록</span>
 		<div class="table-responsive">
 			<table class="table table-striped">
 				<thead align="center">
@@ -274,7 +297,7 @@ body {
 						<tr>
 							<td><a href='${pageContext.request.contextPath}/Company/View?companycode=${userList.usercompanycode}'>${userList.companyname}</a></td>
 							<td>${userList.positionname}</td>
-							<td>${userList.username}</td>
+							<td><a href="${pageContext.request.contextPath}/User/View?userid=${userList.userid}">${userList.username}</a></td>
 							<td><a href='tel:${userList.usermobile}'>${userList.usermobile}</a></td>
 							<td><a href='mailto:${userList.useremail}'>${userList.useremail}</a></td>
 						</tr>
@@ -305,7 +328,7 @@ body {
 		            	${SubCoworkVO.subcoworktext}
 		            </div>
 		            <div class="roundedSubName">
-		            	${SubCoworkVO.userid}
+		            	${SubCoworkVO.username}
 		            </div>
 		            <div class="roundedSubName">
 		            	<fmt:timeZone value="GMT">

@@ -6,7 +6,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import kr.co.qsolutions.cowork.DTO.CoworkDTO;
 import kr.co.qsolutions.cowork.DTO.UserDTO;
+import kr.co.qsolutions.cowork.VO.CoworkVO;
 import kr.co.qsolutions.cowork.VO.PagingVO;
 import kr.co.qsolutions.cowork.VO.UserVO;
 
@@ -37,5 +39,9 @@ public interface UserDao {
     public UserVO checkUserWithSessionKey(String sessionId);
 
 	public int googleLogin(UserDTO userDTO) throws Exception;
+
+	public List<CoworkVO> selectUserCowork(CoworkDTO coworkDTO) throws Exception;
+
+	public List<CoworkVO> selectManagerCowork(CoworkDTO coworkDTO) throws Exception;
 
 }

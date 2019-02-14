@@ -12,7 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import kr.co.qsolutions.cowork.DTO.CoworkDTO;
 import kr.co.qsolutions.cowork.DTO.UserDTO;
+import kr.co.qsolutions.cowork.VO.CoworkVO;
 import kr.co.qsolutions.cowork.VO.PagingVO;
 import kr.co.qsolutions.cowork.VO.UserVO;
  
@@ -101,6 +103,16 @@ public class UserDaoImpl implements UserDao  {
 	public int googleLogin(UserDTO userDTO) throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.update(Namespace+".googleLogin");
+	}
+	@Override
+	public List<CoworkVO> selectUserCowork(CoworkDTO coworkDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(Namespace+".selectUserCowork", coworkDTO);
+	}
+	@Override
+	public List<CoworkVO> selectManagerCowork(CoworkDTO coworkDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(Namespace+".selectManagerCowork", coworkDTO);
 	}
     
 }

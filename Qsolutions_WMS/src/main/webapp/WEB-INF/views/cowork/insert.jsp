@@ -61,9 +61,26 @@
 	// 		        .parent().addClass($.support.fileInput ? undefined : 'disabled');
 	// 		});
 	// 	}
-
+	
 	function insertdata() {
 
+		var formData = document.insertData;
+			
+			if(formData.coworktitle.value == "") {
+				alert("제목을 입력해주세요.")
+				return formData.coworktitle.focus();
+			}
+			
+			if(formData.coworksubject.value == "") {
+				alert("카테고리를 선택해주세요.")
+				return formData.coworksubject.focus();
+			}
+			
+			if(formData.companycode.value == "") {
+				alert("고객사 이름을 입력해주세요.")
+				return formData.companycode.focus();
+			}
+			
 		var temp_obj = {};
 		temp_obj["coworksubject"] = $("#coworksubject").val();
 		temp_obj["coworktitle"] = $("#coworktitle").val();
@@ -394,6 +411,7 @@ h2 {
 			<input type="hidden" id="coworkcode" value="${CoworkVO.coworkcode}"  name="coworkcode" />
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">카테고리</p>
 			<select class="form-control" id="coworksubject" name="coworksubject">
+				<option value="" selected disabled hidden>== 카테고리를 선택해주세요 ==</option>
 				<option value="이슈">이슈</option>
 				<option value="유지보수">유지보수</option>
 				<option value="정기점검">정기점검</option>
@@ -401,12 +419,11 @@ h2 {
 				<option value="프로젝트">프로젝트</option>
 			</select>
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">작성자</p>
-			<input type="text" class="form-control" id="#" value="${CoworkVO.userid}(${CoworkVO.username})" name="writer" size="50" style="width: 100%; display: inline-block;" readonly="readonly">
+			<input type="text" class="form-control" id="#" value="${CoworkVO.username}" name="writer" size="50" style="width: 100%; display: inline-block;" readonly="readonly">
 			<input type="hidden" id="userid" value="${CoworkVO.userid}" name="userid" />
 			<input type="hidden" id="username" value="${CoworkVO.username}" name="username" />
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">고객사 명</p>
-			<select class="form-control" name="companycode" id="companycode">
-				<option id="companycode" value="normal" selected>고객사 선택..</option>
+			<select class="selectpicker show-tick" data-style="btn-primary" name="companycode" id="companycode" data-live-search="true" data-width="100%" data-size="10" title="== 고객사를 선택해주세요 ==" style="display: inline-block;">
 				<c:forEach var="companyList" items="${companyList}" varStatus="list">
 					<option id="companycode" value="${companyList.companycode}">${companyList.companyname}</option>
 				</c:forEach>
@@ -417,7 +434,7 @@ h2 {
 			<input id="startdate" name="startdate" type="text" class="form-control" placeholder="시작 시간.." value="" size="50" style="width: 49%; display: inline-block;">
 			<input id="enddate" name="enddate" type="text" class="form-control pull-right" placeholder="종료 시간.." value="" size="50" style="width: 49%; display: inline-block;">
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">담당자</p>
-			<select class="selectpicker show-tick" data-style="btn-primary" name="manager" id="manager" data-live-search="true" title="담당자 선택.." data-width="100%" data-size="10" onchange="changeSelect()" style="display: inline-block;">
+			<select class="selectpicker show-tick" data-style="btn-primary" name="manager" id="manager" data-live-search="true" title="== 담당자를 선택해주세요 ==" data-width="100%" data-size="10" onchange="changeSelect()" style="display: inline-block;">
 				<c:forEach var="companyList" items="${companyList}" varStatus="list">
 					<optgroup label="${companyList.companyname}">
 						<c:forEach var="usersVO" items="${usersVO}" varStatus="list">

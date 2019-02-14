@@ -3,7 +3,9 @@ package kr.co.qsolutions.cowork.Service;
 import java.util.Date;
 import java.util.List;
 
+import kr.co.qsolutions.cowork.DTO.CoworkDTO;
 import kr.co.qsolutions.cowork.DTO.UserDTO;
+import kr.co.qsolutions.cowork.VO.CoworkVO;
 import kr.co.qsolutions.cowork.VO.PagingVO;
 import kr.co.qsolutions.cowork.VO.UserVO;
 
@@ -33,5 +35,9 @@ public interface UserService {
 	public UserVO checkUserWithSessionKey(String sessionId);
    
 	public int googleLogin(UserDTO userDTO) throws Exception;
+
+	public List<CoworkVO> selectUserCowork(CoworkDTO coworkDTO) throws Exception;
+
+	public List<CoworkVO> selectManagerCowork(CoworkDTO coworkDTO) throws Exception;
     
 }

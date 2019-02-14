@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -180,7 +181,65 @@ body {
 						</tr>
 				</tbody>
 			</table>
+		</div>
 	</div>
+	<div class="viewList">
+	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 23px; font-weight: bold;">작성 업무 목록</span>
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead align="center">
+					<tr>
+						<th style="width: 20%; text-align: center;">고객사명</th>
+						<th style="width: 30%; text-align: center;">제목</th>
+						<th style="width: 10%; text-align: center;">카테고리</th>
+						<th style="width: 10%; text-align: center;">등록자</th>
+						<th style="width: 15%; text-align: center;">업무코드</th>
+						<th style="width: 15%; text-align: center;">작성일</th>
+					</tr>
+				</thead>
+				<tbody align="center">
+					<c:forEach items="${coworkVO}" var="coworkVO" varStatus="rowCount">
+					<tr>
+						<td style="font-weight: bold;"><a href='${pageContext.request.contextPath}/Company/View?companycode=${coworkVO.companycode}'>${coworkVO.companyname}</a></td>
+						<td style="font-weight: bold;"><a href='${pageContext.request.contextPath}/Cowork/View?coworkcode=${coworkVO.coworkcode}'>${coworkVO.coworktitle}</a></td>
+						<td>${coworkVO.coworksubject}</td>
+						<td><a href='${pageContext.request.contextPath}/User/View?userid=${coworkVO.userid}'>${coworkVO.username}</a></td>
+						<td>${coworkVO.coworkcode}</td>
+						<td><fmt:formatDate value="${coworkVO.coworkdate}" pattern="yyyy/MM/dd"/></td>
+					</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="viewList">
+	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 23px; font-weight: bold;">담당 업무 목록</span>
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead align="center">
+					<tr>
+						<th style="width: 20%; text-align: center;">고객사명</th>
+						<th style="width: 30%; text-align: center;">제목</th>
+						<th style="width: 10%; text-align: center;">카테고리</th>
+						<th style="width: 10%; text-align: center;">등록자</th>
+						<th style="width: 15%; text-align: center;">업무코드</th>
+						<th style="width: 15%; text-align: center;">작성일</th>
+					</tr>
+				</thead>
+				<tbody align="center">
+					<c:forEach items="${managerCoworkVO}" var="managerCoworkVO" varStatus="rowCount">
+					<tr>
+						<td style="font-weight: bold;"><a href='${pageContext.request.contextPath}/Company/View?companycode=${managerCoworkVO.companycode}'>${managerCoworkVO.companyname}</a></td>
+						<td style="font-weight: bold;"><a href='${pageContext.request.contextPath}/Cowork/View?coworkcode=${managerCoworkVO.coworkcode}'>${managerCoworkVO.coworktitle}</a></td>
+						<td>${managerCoworkVO.coworksubject}</td>
+						<td><a href='${pageContext.request.contextPath}/User/View?userid=${managerCoworkVO.userid}'>${managerCoworkVO.username}</a></td>
+						<td>${managerCoworkVO.coworkcode}</td>
+						<td><fmt:formatDate value="${managerCoworkVO.coworkdate}" pattern="yyyy/MM/dd"/></td>
+					</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
 	</div>
 	
 	<%-- <div class="viewList">

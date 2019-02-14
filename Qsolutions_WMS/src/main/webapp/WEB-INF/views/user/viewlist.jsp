@@ -86,8 +86,8 @@ body {
 	    <button type="button" class="btn btn-primary pull-right" onclick="insertView()" style="margin-left:10px; margin-right: 10px; margin-top: 8px;">사용자 등록</button>
 	    <form class="navbar-form navbar-right" style="border-right-width: 2px; border-right-style: solid; border-right-color: gray; margin-right: 5px;">
 			<select class="btn btn-primary" name="SearchType">
-	            <option value="userid" <c:if test="${pagingVO.searchType == 'userid'}">seleted</c:if> >사용자ID</option>
 	            <option value="username"<c:if test="${pagingVO.searchType == 'username'}">seleted</c:if> >사용자명</option>
+	            <option value="userid" <c:if test="${pagingVO.searchType == 'userid'}">seleted</c:if> >사용자ID</option>
 	        </select>
             <input type="text" class="form-control" placeholder="Search..." value="${SearchData}" name="SearchData">
             <input type="submit" class="btn btn-primary" value="검색">
@@ -101,10 +101,10 @@ body {
 					<th style="width: 15%; text-align: center;">사용자ID</th>
 					<th style="width: 10%; text-align: center;">사용자명</th>
 					<th style="width: 15%; text-align: center;">H.P</th>
-					<th style="width: 15%; text-align: center;">EMail</th>
-					<th style="width: 15%; text-align: center;">부서</th>
-					<th style="width: 15%; text-align: center;">직급</th>
-					<th style="width: 15%; text-align: center;">소속</th>
+					<th style="width: 20%; text-align: center;">EMail</th>
+					<th style="width: 10%; text-align: center;">부서</th>
+					<th style="width: 10%; text-align: center;">직급</th>
+					<th style="width: 20%; text-align: center;">소속</th>
 				</tr>	
 			</thead>
 			<tbody align="center">

@@ -11,7 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import kr.co.qsolutions.cowork.DAO.UserDao;
+import kr.co.qsolutions.cowork.DTO.CoworkDTO;
 import kr.co.qsolutions.cowork.DTO.UserDTO;
+import kr.co.qsolutions.cowork.VO.CoworkVO;
 import kr.co.qsolutions.cowork.VO.PagingVO;
 import kr.co.qsolutions.cowork.VO.UserVO;
 
@@ -82,5 +84,15 @@ public class UserServiceImpl implements UserService {
     public int googleLogin(UserDTO userDTO) throws Exception {
         return dao.googleLogin(userDTO);
     }
+	@Override
+	public List<CoworkVO> selectUserCowork(CoworkDTO coworkDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.selectUserCowork(coworkDTO);
+	}
+	@Override
+	public List<CoworkVO> selectManagerCowork(CoworkDTO coworkDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.selectManagerCowork(coworkDTO);
+	}
 
 }

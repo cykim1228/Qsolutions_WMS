@@ -30,6 +30,19 @@
 
 <script type="text/javascript">
 	function updatedata(){
+		
+		var formData = document.updateData;
+		
+		if(formData.coworktitle.value == "") {
+			alert("제목을 입력해주세요.")
+			return formData.coworktitle.focus();
+		}
+		
+		if(formData.coworksubject.value == "") {
+			alert("카테고리를 선택해주세요.")
+			return formData.coworksubject.focus();
+		}
+		
 	    var temp_obj = {};
 	    
 	    temp_obj["coworksubject"] = $("#coworksubject").val();
@@ -324,7 +337,7 @@ body {
 <!-- <body  style="background-color: #d4d4d4"> -->
 
     <!-- 상세 뷰 페이지  -->
-	<form action="${pageContext.request.contextPath}/Cowork/Insert" method="post" id="insertData" name="insertData"  style="padding-bottom: 100px;">
+	<form action="${pageContext.request.contextPath}/Cowork/Update" method="post" id="updateData" name="updateData"  style="padding-bottom: 100px;">
 	    <div class="viewListTop">
 	    	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 30px; font-weight: bold;">업무 수정</span>
 	    	<button type="button" id="save" class="btn btn-primary pull-right" onclick="updatedata()" style="margin-right: 10px; margin-top: 8px;">업무 수정</button>
@@ -338,6 +351,7 @@ body {
 			<input type="hidden" id="coworkcode" value="${CoworkVO.coworkcode}"  name="coworkcode" />
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">카테고리</p>
 			<select class="form-control" id="coworksubject" name="coworksubject">
+				<option value="" selected disabled hidden>== 카테고리를 선택해주세요 ==</option>
 				<option value="이슈" <c:if test="${CoworkVO.coworksubject eq '이슈'}">selected</c:if>>이슈</option>
 				<option value="유지보수" <c:if test="${CoworkVO.coworksubject eq '유지보수'}">selected</c:if>>유지보수</option>
 				<option value="정기점검" <c:if test="${CoworkVO.coworksubject eq '정기점검'}">selected</c:if>>정기점검</option>
@@ -345,7 +359,7 @@ body {
 				<option value="프로젝트" <c:if test="${CoworkVO.coworksubject eq '프로젝트'}">selected</c:if>>프로젝트</option>
 			</select>
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">작성자</p>
-			<input type="text" class="form-control" id="#" value="${CoworkVO.userid}(${CoworkVO.username})" name="writer" size="50" style="width: 100%; display: inline-block;" readonly="readonly">
+			<input type="text" class="form-control" id="#" value="${CoworkVO.username}" name="writer" size="50" style="width: 100%; display: inline-block;" readonly="readonly">
 			<input type="hidden" id="userid" value="${CoworkVO.userid}" name="userid" />
 			<input type="hidden" id="username" value="${CoworkVO.username}" name="username" />
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">고객사 명</p>

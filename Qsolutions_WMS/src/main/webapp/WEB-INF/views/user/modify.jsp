@@ -3,15 +3,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>[QSOLUTIONS]업무관리 시스템</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
-  <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-  <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/paging.js"></script>
-  <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/util.js"></script>
-  <script type="text/javascript">
+
+<title>[QSOLUTIONS]업무관리 시스템</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
+<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/paging.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/util.js"></script>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.css">
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap-select.min.js"></script>
+<!-- Include Choices CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js@4/public/assets/styles/choices.min.css">
+<!-- Include Choices JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/choices.js@4/public/assets/scripts/choices.min.js"></script>
+
+<script type="text/javascript">
   		function updateuserform(){
+  			
+			var formData = document.insertData;
+  			
+  			if(formData.userid.value == "") {
+  				alert("아이디를 입력해주세요.")
+  				return formData.userid.focus();
+  			}
+  			
+  			if(formData.username.value == "") {
+  				alert("이름을 입력해주세요.")
+  				return formData.username.focus();
+  			}
+  			
+  			if(formData.userpasswd.value == "") {
+  				alert("비밀번호를 입력해주세요.")
+  				return formData.userpasswd.focus();
+  			}
+  			
+  			if(formData.usercompanycode.value == "") {
+  				alert("소속 회사를 선택해주세요.")
+  				return formData.usercompanycode.focus();
+  			}
+  		
+  			if(formData.positioncode.value == "") {
+  				alert("직급을 선택해주세요.")
+  				return formData.positioncode.focus();
+  			}
+  			
+  			if(formData.usermobile.value == "") {
+  				alert("연락처를 입력해주세요.")
+  				return formData.usermobile.focus();
+  			}
+  			
 			var temp_obj = {};
 			
 		    temp_obj["userid"] = $("#userid").val();
@@ -158,7 +201,8 @@ body {
 			<input id="userpasswd" name="userpasswd" type="password" class="form-control" value="${userVO.userpasswd}" placeholder="PW 입력.." size="50" style="width: 100%; display: inline-block;">
 			
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">소속</p>
-			<select class="form-control" name="usercompanycode" id="usercompanycode">
+			<select class="selectpicker show-tick" data-style="btn-primary" name="usercompanycode" id="usercompanycode" data-live-search="true" data-width="100%" data-size="10" title="== 소속 회사를 선택해주세요 ==" style="display: inline-block;">
+				<option value="" selected disabled hidden>== 소속 회사를 선택해주세요 ==</option>
 				<c:forEach var="companyVO" items="${companyVO}" varStatus="list">
 					<option id="usercompanycode" value="${companyVO.companycode}" <c:if test="${userVO.usercompanycode == companyVO.companycode}">selected</c:if>>${companyVO.companyname}</option>
 				</c:forEach>
@@ -166,6 +210,7 @@ body {
 			
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">부서</p>
 			<select class="form-control" name="deptcode" id="deptcode">
+				<option value="" selected disabled hidden>== 소속 혹은 부서를 선택해주세요 ==</option>
 				<c:forEach var="deptVO" items="${deptVO}" varStatus="list">
 					<option id="deptcode" value="${deptVO.deptcode}" <c:if test="${userVO.deptcode == deptVO.deptcode}">selected</c:if>>${deptVO.deptname}</option>
 				</c:forEach>
@@ -173,6 +218,7 @@ body {
 			
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">직급</p>
 			<select class="form-control" name="deptcode" id="positioncode">
+				<option value="" selected disabled hidden>== 직급을 선택해주세요 ==</option>
 				<c:forEach var="positionVO" items="${positionVO}" varStatus="list">
 					<option id="positioncode" value="${positionVO.positioncode}" <c:if test="${userVO.positioncode == positionVO.positioncode}">selected</c:if>>
 					${positionVO.positionname}

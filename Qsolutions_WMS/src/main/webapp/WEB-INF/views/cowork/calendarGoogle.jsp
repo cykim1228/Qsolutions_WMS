@@ -60,7 +60,7 @@
 						console.log(data);
 						console.log(data.coworktitle);
 						
-						var str = '';
+						/* var str = '';
 						str += '<tr>';
 						str += '<td>' + data.coworksubject + '</td>';
 						str += '<td><a href="${pageContext.request.contextPath}/Cowork/View?coworkcode=' + data.coworkcode + '">' + data.coworktitle + '</a></td>';
@@ -79,7 +79,7 @@
 						
 						$('#cowork_texts').html(strs);
 						
-						$("#layerpop").modal(); 
+						$("#layerpop").modal();  */
 					}
 				});
 				
@@ -88,7 +88,7 @@
 				
 			},
 			
-			events : [ 
+			/* events : [ 
 				<c:forEach items="${coworklistvo}" var="coworklistvo" varStatus="rowCount">
 					{
 						title : '${coworklistvo.coworktitle}',
@@ -116,9 +116,9 @@
 							</c:choose>
 					},
 				</c:forEach>
-			]
+			] */
 			
-			/* eventSources : [
+			eventSources : [
 				{
 					googleCalendarId : "ko.south_korea#holiday@group.v.calendar.google.com", 
 					className : "휴일", 
@@ -191,7 +191,7 @@
 					color : "#0040FF", 
 					textColor : "#FFFFFF"
 				}
-			] */
+			]
 		});
 		
 		$(window).resize(function() {

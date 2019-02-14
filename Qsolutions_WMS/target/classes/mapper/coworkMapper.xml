@@ -92,7 +92,12 @@
 	
 	
 	<select id="CompanyAllSelect" resultType="CompanyVO">
-		select companycode,companyname from company
+		select 
+			companycode, companyname 
+		from 
+			company
+		where
+			IsUse != 1
 	</select>
 	<select id="CoworkCodeSelect" resultType="String" parameterType="String">
 		select max(coworkcode) from cowork

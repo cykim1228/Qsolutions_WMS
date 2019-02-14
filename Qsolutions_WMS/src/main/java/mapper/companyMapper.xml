@@ -24,7 +24,7 @@
 			AND IsUse != 1
 		</trim>
 		order by
-			companyname asc
+			companycode desc
 		Limit #{start},#{last}
 	</select>
  	<select id="SelectCompanyCount" parameterType="PagingVO" resultType="java.lang.Integer">
@@ -53,9 +53,10 @@
 	
 	<select id="CoworkViewSelectCompany" resultType="CoworkVO" parameterType="CoworkDTO">
 		select 
-			*
+			cw.userid, u.username, c.companycode, cw.coworkcode, cw.coworktext, cw.coworktitle, cw.coworkdate, cw.coworksubject, cw.startdate, cw.enddate
 		from
 			cowork cw inner join company c ON c.companycode = cw.coworkcompany
+			left join user u ON cw.userid = u.userid
 		where
 			c.companycode = #{companycode};
 	</select>
@@ -103,6 +104,8 @@
 		from 
 			user u left join positions p ON u.positioncode = p.positioncode
 			left join company c ON u.usercompanycode = c.companycode
+		where
+			u.IsUse != 1
 	</select>
 	<select id="SelectCompanyUser" resultType="UserVO" parameterType="CompanyDTO">
 		select distinct
@@ -153,6 +156,11 @@
 	</delete>
 	
 	<select id="CompanyAllSelect" resultType="CompanyVO">
-		select companycode,companyname from company
+		select 
+			companycode,companyname 
+		from 
+			company
+		where
+			IsUse != 1
 	</select>
 </mapper>

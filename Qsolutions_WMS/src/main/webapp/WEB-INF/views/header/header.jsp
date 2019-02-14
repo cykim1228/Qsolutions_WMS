@@ -118,7 +118,8 @@ body {
 					<li><a href="${pageContext.request.contextPath}/Cowork/List">업무</a></li>
 					<li><a href="${pageContext.request.contextPath}/Company/List">사이트</a></li>
 					<li><a href="${pageContext.request.contextPath}/User/List">사용자</a></li>
-					<li><a href="${pageContext.request.contextPath}/Cowork/Calendar">캘린더</a></li>
+					<li><a href="${pageContext.request.contextPath}/Cowork/Calendar">업무캘린더</a></li>
+					<li><a href="${pageContext.request.contextPath}/Cowork/CalendarGoogle">구글캘린더</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="${pageContext.request.contextPath}/Logout">LOGOUT</a></li>

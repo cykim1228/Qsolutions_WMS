@@ -11,18 +11,20 @@
 			company c
 		WHERE
 			(c.companyclass LIKE CONCAT('%',#{searchData},'%') OR c.companyname LIKE CONCAT('%',#{searchData},'%') OR c.companyaddress LIKE CONCAT('%',#{searchData},'%'))
-			AND IsUse != 1
+			AND c.IsUse != 1
  	</select>
     
     <!-- user테이블 통합 검색 -->
     <select id="SearchUserAll" parameterType="PagingVO" resultType="UserVO">
  		SELECT 
-			*
+			userid, username, usermobile,useremail,usercompanycode,u.deptcode,d.deptname,u.positioncode,p.positionname,c.companyname
 		FROM
-			user u
+			user u left join dept d ON u.deptcode = d.deptcode
+            left join positions p ON u.positioncode = p.positioncode 
+            left join company c ON u.usercompanycode = c.companycode
 		WHERE
-			(u.userid LIKE CONCAT('%',#{searchData},'%') OR u.username LIKE CONCAT('%',#{searchData},'%') OR u.useremail LIKE CONCAT('%',#{searchData},'%'))
-			AND IsUse != 1
+			(u.userid LIKE CONCAT('%',#{searchData},'%') OR u.username LIKE CONCAT('%',#{searchData},'%') OR u.useremail LIKE CONCAT('%',#{searchData},'%') OR c.companyname LIKE CONCAT('%',#{searchData},'%'))
+			AND u.IsUse != 1
  	</select>
     
     <!-- cowork테이블 통합 검색 -->
@@ -32,8 +34,9 @@
 		FROM
 			cowork co
 		inner join company c ON co.coworkcompany = c.companycode
+		inner join user u ON co.userid = u.userid
 		WHERE
-			(co.coworksubject LIKE CONCAT('%',#{searchData},'%') OR co.coworktitle LIKE CONCAT('%',#{searchData},'%') OR co.coworktext LIKE CONCAT('%',#{searchData},'%') OR co.userid LIKE CONCAT('%',#{searchData},'%'))
+			(co.coworksubject LIKE CONCAT('%',#{searchData},'%') OR co.coworktitle LIKE CONCAT('%',#{searchData},'%') OR co.coworktext LIKE CONCAT('%',#{searchData},'%') OR u.username LIKE CONCAT('%',#{searchData},'%'))
 			AND co.IsUse != 1
  	</select>
  	
@@ -64,10 +67,10 @@
  		SELECT 
 			count(*)
 		FROM
-			cowork co
+			cowork co inner join user u ON co.userid = u.userid
 		WHERE
-			co.coworksubject LIKE CONCAT('%',#{searchData},'%') OR co.coworktitle LIKE CONCAT('%',#{searchData},'%') OR co.coworktext LIKE CONCAT('%',#{searchData},'%') OR co.userid LIKE CONCAT('%',#{searchData},'%')
-			AND IsUse != 1
+			co.coworksubject LIKE CONCAT('%',#{searchData},'%') OR co.coworktitle LIKE CONCAT('%',#{searchData},'%') OR co.coworktext LIKE CONCAT('%',#{searchData},'%') OR u.username LIKE CONCAT('%',#{searchData},'%')
+			AND co.IsUse != 1
  	</select>
  	
  	<!-- company테이블 통합 검색 갯수 -->
@@ -77,7 +80,7 @@
 		FROM
 			company c
 		WHERE
-			(c.companyclass LIKE CONCAT('%',#{searchData},'%') OR c.companyname LIKE CONCAT('%',#{searchData},'%') OR c.companyaddress LIKE CONCAT('%',#{searchData},'%'))
+			(c.companyclass LIKE CONCAT('%',#{searchData},'%') OR c.companyname LIKE CONCAT('%',#{searchData},'%') OR c.companyaddress LIKE CONCAT('%',#{searchData},'%') OR c.companyname LIKE CONCAT('%',#{searchData},'%'))
 			AND IsUse != 1
  	</select>
  	
@@ -97,10 +100,10 @@
  		SELECT 
 			count(*) AS count
 		FROM
-			cowork co
+			cowork co inner join user u ON co.userid = u.userid
 		WHERE
-			(co.coworksubject LIKE CONCAT('%',#{searchData},'%') OR co.coworktitle LIKE CONCAT('%',#{searchData},'%') OR co.coworktext LIKE CONCAT('%',#{searchData},'%') OR co.userid LIKE CONCAT('%',#{searchData},'%'))
-			AND IsUse != 1
+			(co.coworksubject LIKE CONCAT('%',#{searchData},'%') OR co.coworktitle LIKE CONCAT('%',#{searchData},'%') OR co.coworktext LIKE CONCAT('%',#{searchData},'%') OR u.username LIKE CONCAT('%',#{searchData},'%'))
+			AND co.IsUse != 1
  	</select>
  	
 </mapper>

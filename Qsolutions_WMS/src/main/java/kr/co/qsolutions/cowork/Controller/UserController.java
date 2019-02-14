@@ -106,10 +106,22 @@ public class UserController {
 		UserVO loginVO = (UserVO)session.getAttribute("login");
 		
 		String viewuserid = request.getParameter("userid");
-        
+		
+		CoworkDTO coworkDTO = new CoworkDTO();
+		coworkDTO.setUserid(viewuserid);
+		
+		List<CoworkVO> coworkVO  = userservice.selectUserCowork(coworkDTO);
+		
+		List<CoworkVO> managerCoworkVO  = userservice.selectManagerCowork(coworkDTO);
 
 		UserVO userVO = userservice.UserViewSelect(viewuserid);
+		
 		model.addAttribute("userVO", userVO);
+		model.addAttribute("coworkVO", coworkVO);
+		model.addAttribute("managerCoworkVO", managerCoworkVO);
+		
+		System.out.println("coworkVO : " + coworkVO);
+		System.out.println("managerCoworkVO : " + managerCoworkVO);
 		
 		returnUrl = "user/view";
 		return returnUrl;

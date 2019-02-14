@@ -175,7 +175,7 @@ body {
 						<td><a
 							href='${pageContext.request.contextPath}/Cowork/View?coworkcode=${searchcoworklist.coworkcode}'>${searchcoworklist.coworktitle}</a></td>
 						<td><a
-							href='${pageContext.request.contextPath}/User/View?userid=${searchcoworklist.userid}'>${searchcoworklist.userid}</a></td>
+							href='${pageContext.request.contextPath}/User/View?userid=${searchcoworklist.userid}'>${searchcoworklist.username}</a></td>
 						<td>${searchcoworklist.coworkdate}</td>
 					</tr>
 				</c:forEach>
