@@ -253,7 +253,7 @@ body {
 
     <!-- 상세 뷰 페이지  -->
     <div class="viewListTop">
-    	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 30px; font-weight: bold;">고객사 상세 조회</span>
+    	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 30px; font-weight: bold;">${companyVO.companyname}</span>
     	<button type="button" class="btn btn-danger pull-right" onclick="deleteform()" style="margin-right: 10px; margin-top: 8px;">고객사 삭제</button>
     	<button type="button" class="btn btn-primary pull-right" onclick="updateform()" style="margin-right: 10px; margin-top: 8px;">고객사 수정</button>
     </div>
@@ -263,11 +263,10 @@ body {
 			<table class="table table-striped">
 				<thead align="center">
 					<tr>
-						<th style="width: 10%; text-align: center;">분류</th>
-						<th style="width: 15%; text-align: center;">고객사코드</th>
-						<th style="width: 15%; text-align: center;">고객사명</th>
-						<th style="width: 30%; text-align: center;">홈페이지</th>
-						<th style="width: 30%; text-align: center;">주소</th>
+						<th style="width: 15%; text-align: center;">분류</th>
+						<th style="width: 20%; text-align: center;">고객사코드</th>
+						<th style="width: 35%; text-align: center;">홈페이지</th>
+						<th style="width: 40%; text-align: center;">주소</th>
 					</tr>
 				</thead>
 				<tbody align="center">
@@ -279,8 +278,6 @@ body {
 							<td>
 							${companyVO.companycode}
 							<input type="hidden" id="companycode" name="companycode" value="${companyVO.companycode}"/>
-							</td>
-							<td>${companyVO.companyname}
 							<input type="hidden" id="companyname" name="companyname" value="${companyVO.companyname}"/>
 							</td>
 							<td><a href="${companyVO.companyhomepg}">${companyVO.companyhomepg}</a></td>

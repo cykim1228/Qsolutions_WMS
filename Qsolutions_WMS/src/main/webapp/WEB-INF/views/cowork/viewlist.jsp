@@ -35,65 +35,6 @@
 		
 		var list = '';
 		
-		//전체 업무리스트 출력
-		function getAllUserList(){
-			$.ajax({
-				type : 'get',
-				url : '${pageContext.request.contextPath}/admin/userList/all',
-				success : function(data){
-					$(data).each(function(index, item) {
-						list += '<tr>';
-						list += '<td>'+ item.user_id +'</td>';
-						list += '<td>'+ item.user_name +'</td>';
-						list += '<td>'+ item.user_phone +'</td>';
-						list += '<td>'+ item.user_birth +'</td>';
-						list += '</tr>';
-						$('#userListBody').html(list);
-					});
-					list = '';
-				}
-			});
-		};
-		
-		function sorting(sortName, orderBy){
-			var that = (this);		
-			
-			$.ajax({
-				type : 'get',
-				url : '${pageContext.request.contextPath}/Cowork/List/sort',
-				data : {
-					sortName : sortName,
-					orderBy : orderBy,
-				},
-				success : function(data){
-					
-					if($('#coworkcodeTh').attr('onclick') == "sorting('user_id', 'desc')"){
-						$('#coworkcodeTh').attr('onclick', "sorting('user_id', 'asc')");
-					} else {
-						$('#coworkcodeTh').attr('onclick', "sorting('user_id', 'desc')");
-					}
-					
-					if($('#userNameTh').attr('onclick') == "sorting('user_Name', 'desc')"){
-						$('#userNameTh').attr('onclick', "sorting('user_Name', 'asc')");
-					} else {
-						$('#userNameTh').attr('onclick', "sorting('user_Name', 'desc')");
-					}
-					
-					if($('#useridTh').attr('onclick') == "sorting('userid', 'desc')"){
-						$('#useridTh').attr('onclick', "sorting('userid', 'asc')");
-					} else {
-						$('#useridTh').attr('onclick', "sorting('userid', 'desc')");
-					}
-					
-					if($('#userBirthTh').attr('onclick') == "sorting('user_Birth', 'desc')"){
-						$('#userBirthTh').attr('onclick', "sorting('user_Birth', 'asc')");
-					} else {
-						$('#userBirthTh').attr('onclick', "sorting('user_Birth', 'desc')");
-					}
-				}
-			});
-		};
-		
 </script>
 
 <style>
@@ -138,11 +79,10 @@ body {
 	            <option value="coworktitle"<c:if test="${pagingVO.searchType == 'coworktitle'}">seleted</c:if> >업무명</option>
 	            <option value="companyname"<c:if test="${pagingVO.searchType == 'companyname'}">seleted</c:if> >사이트명</option>
 	            <option value="username"<c:if test="${pagingVO.searchType == 'username'}">seleted</c:if> >사용자명</option>
-	            <option value="userid" <c:if test="${pagingVO.searchType == 'userid'}">seleted</c:if> >사용자ID</option>
 	        </select>
             <input type="text" class="form-control" placeholder="Search..." value="${SearchData}" name="SearchData">
             <input type="submit" class="btn btn-primary" value="검색">
-          </form>
+		</form>
     </div>
     	<div class="viewList">
 		<div class="table-responsive">

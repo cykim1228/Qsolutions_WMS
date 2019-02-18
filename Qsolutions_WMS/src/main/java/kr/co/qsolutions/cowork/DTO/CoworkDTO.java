@@ -21,6 +21,7 @@ public class CoworkDTO {
 	private String coworksubject;
 	private String startdate;
 	private String enddate;
+	private String coworkstep;
 	
 
 	public String getUserid() {
@@ -169,6 +170,12 @@ public class CoworkDTO {
 	public void setEnddate(String enddate) {
 		this.enddate = enddate;
 	}
+	public String getCoworkstep() {
+		return coworkstep;
+	}
+	public void setCoworkstep(String coworkstep) {
+		this.coworkstep = coworkstep;
+	}
 	
 	@Override
 	public String toString() {
@@ -177,9 +184,8 @@ public class CoworkDTO {
 				+ usercompanycode + ", companycode=" + companycode + ", companyname=" + companyname + ", coworkcode="
 				+ coworkcode + ", coworktext=" + coworktext + ", coworkcompany=" + coworkcompany + ", coworktitle="
 				+ coworktitle + ", coworkdate=" + coworkdate + ", coworksubject=" + coworksubject + ", startdate="
-				+ startdate + ", enddate=" + enddate + "]";
+				+ startdate + ", enddate=" + enddate + ", coworkstep=" + coworkstep + "]";
 	}
-	
 	
 }
 

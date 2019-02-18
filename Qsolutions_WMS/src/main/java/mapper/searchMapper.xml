@@ -89,10 +89,10 @@
  		SELECT 
 			count(*) AS count
 		FROM
-			user u
+			user u left join company c ON u.usercompanycode = c.companycode
 		WHERE
-			(u.userid LIKE CONCAT('%',#{searchData},'%') OR u.username LIKE CONCAT('%',#{searchData},'%') OR u.useremail LIKE CONCAT('%',#{searchData},'%'))
-			AND IsUse != 1
+			(u.userid LIKE CONCAT('%',#{searchData},'%') OR u.username LIKE CONCAT('%',#{searchData},'%') OR u.useremail LIKE CONCAT('%',#{searchData},'%') OR c.companyname LIKE CONCAT('%',#{searchData},'%'))
+			AND u.IsUse != 1
  	</select>
  	
  	<!-- cowork테이블 통합 검색 갯수 -->

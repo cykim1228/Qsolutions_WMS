@@ -22,8 +22,8 @@
 	       	<if test="searchType=='companyname'">
 	       		c.companyname like CONCAT('%',#{searchData},'%')
 	       	</if>
-			<if test="searchType=='coworkcode'">
-				cw.cowortitle like CONCAT('%',#{searchData},'%')
+			<if test="searchType=='coworktitle'">
+				cw.coworktitle like CONCAT('%',#{searchData},'%')
 			</if>
 			AND cw.IsUse != 1
 		</trim>
@@ -48,8 +48,8 @@
 	       	<if test="searchType=='companyname'">
 	       		c.companyname like CONCAT('%',#{searchData},'%')
 	       	</if>
-			<if test="searchType=='coworkcode'">
-				cw.cowortitle like CONCAT('%',#{searchData},'%')
+			<if test="searchType=='coworktitle'">
+				cw.coworktitle like CONCAT('%',#{searchData},'%')
 			</if>
 			AND cw.IsUse != 1
 		</trim>
@@ -59,7 +59,7 @@
 	
 	<select id="CoworkViewSelect" parameterType="CoworkDTO" resultType="CoworkVO">
 			select
-				cw.userid, u.username,cw.coworktext,cw.coworkcode,cw.coworktitle,date_format(cw.coworkdate, '%Y-%m-%d') AS coworkdate,c.companycode,c.companyname,cw.coworksubject,cw.startdate,cw.enddate
+				cw.userid, u.username,cw.coworktext,cw.coworkcode,cw.coworktitle,date_format(cw.coworkdate, '%Y-%m-%d') AS coworkdate,c.companycode,c.companyname,cw.coworksubject,cw.startdate,cw.enddate,cw.coworkstep
 			from
 			user u inner join cowork cw ON u.userid = cw.userid     
 			inner join company c ON cw.coworkcompany = c.companycode
@@ -70,7 +70,7 @@
 	
 	<select id="CoworkViewListCalendar" parameterType="PagingVO" resultType="CoworkVO">
 		select 
-			cw.userid, u.username ,c.companycode, c.companyname,cw.coworkcode, cw.coworktitle, date_format(cw.coworkdate, '%Y-%m-%d') AS coworkdate, cw.coworksubject, cw.startdate, cw.enddate
+			cw.userid, u.username ,c.companycode, c.companyname,cw.coworkcode, cw.coworktitle, date_format(cw.coworkdate, '%Y-%m-%d') AS coworkdate, cw.coworksubject, cw.startdate, cw.enddate, cw.coworkstep
 		from
 			user u inner join cowork cw ON u.userid = cw.userid     
 		inner join company c ON cw.coworkcompany = c.companycode
@@ -81,7 +81,7 @@
 	
 	<select id="CoworkCalendarSelect" parameterType="CoworkDTO" resultType="CoworkVO">
 			select
-				cw.userid, u.username,cw.coworktext,cw.coworkcode,cw.coworktitle,date_format(cw.coworkdate, '%Y-%m-%d') AS coworkdate,c.companycode,c.companyname,cw.coworksubject,cw.startdate,cw.enddate
+				cw.userid, u.username,cw.coworktext,cw.coworkcode,cw.coworktitle,date_format(cw.coworkdate, '%Y-%m-%d') AS coworkdate,c.companycode,c.companyname,cw.coworksubject,cw.startdate,cw.enddate,cw.coworkstep
 			from
 			user u inner join cowork cw ON u.userid = cw.userid     
 			inner join company c ON cw.coworkcompany = c.companycode
@@ -108,15 +108,15 @@
 
 	<insert id="CoworkViewInsert" parameterType="CoworkDTO">
 		insert into cowork
-			(coworksubject,coworkcode,coworktitle,coworktext,coworkcompany,userid,startdate,enddate) 
+			(coworksubject,coworkcode,coworktitle,coworktext,coworkcompany,userid,startdate,enddate,coworkstep) 
 		value 
-			(#{coworksubject},#{coworkcode},#{coworktitle},#{coworktext},#{companycode},#{userid},#{startdate},#{enddate});
+			(#{coworksubject},#{coworkcode},#{coworktitle},#{coworktext},#{companycode},#{userid},#{startdate},#{enddate},#{coworkstep});
 	</insert>	
 	<update id="CoworkViewUpdate" parameterType="CoworkDTO">
 		update 
 			cowork 
 		set
-			coworksubject = #{coworksubject}, coworktitle = #{coworktitle}, coworktext = #{coworktext}, startdate = #{startdate}, enddate = #{enddate}
+			coworksubject = #{coworksubject}, coworktitle = #{coworktitle}, coworktext = #{coworktext}, startdate = #{startdate}, enddate = #{enddate}, coworkstep = #{coworkstep}
 		<where>
 			coworkcode = #{coworkcode} 
 		</where>

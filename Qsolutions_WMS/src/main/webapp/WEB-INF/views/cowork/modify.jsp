@@ -54,6 +54,21 @@
 	    temp_obj["startdate"] = $("#startdate").val();
 		temp_obj["enddate"] = $("#enddate").val();
 
+		var selectdata = $('#coworksubject option:selected').val();
+		console.log("selectdata : " + selectdata);
+		
+		if (selectdata == "이슈") {
+			temp_obj["coworkstep"] = $("#coworkstep1").val();
+		} else if (selectdata == "유지보수") {
+			temp_obj["coworkstep"] = $("#coworkstep2").val();
+		} else if (selectdata == "정기점검") {
+			temp_obj["coworkstep"] = $("#coworkstep3").val();
+		} else if (selectdata == "상담") {
+			temp_obj["coworkstep"] = $("#coworkstep4").val();
+		} else {
+			temp_obj["coworkstep"] = $("#coworkstep5").val();
+		}
+		
 	    $.ajax({
 	        url:"Update",
 	        type:"post",
@@ -239,6 +254,54 @@
 		
 	}
 	
+	function showSelect() {
+		
+		// var selectData = document.forms.insertData;
+		
+		var selectdata = $('#coworksubject option:selected').val();
+		
+		console.log("selectdata : " + selectdata);
+		
+		if (selectdata == "이슈") {
+			$('.coworkstep1').css("display","");
+			$('.coworkstep2').css("display","none");
+			$('.coworkstep3').css("display","none");
+			$('.coworkstep4').css("display","none");
+			$('.coworkstep5').css("display","none");
+		} else if (selectdata == "유지보수") {
+			$('.coworkstep1').css("display","none");
+			$('.coworkstep2').css("display","");
+			$('.coworkstep3').css("display","none");
+			$('.coworkstep4').css("display","none");
+			$('.coworkstep5').css("display","none");
+		} else if (selectdata == "정기점검") {
+			$('.coworkstep1').css("display","none");
+			$('.coworkstep2').css("display","none");
+			$('.coworkstep3').css("display","");
+			$('.coworkstep4').css("display","none");
+			$('.coworkstep5').css("display","none");
+		} else if (selectdata == "상담") {
+			$('.coworkstep1').css("display","none");
+			$('.coworkstep2').css("display","none");
+			$('.coworkstep3').css("display","none");
+			$('.coworkstep4').css("display","");
+			$('.coworkstep5').css("display","none");
+		} else {
+			$('.coworkstep1').css("display","none");
+			$('.coworkstep2').css("display","none");
+			$('.coworkstep3').css("display","none");
+			$('.coworkstep4').css("display","none");
+			$('.coworkstep5').css("display","");
+		}
+		
+	}
+	
+	$(document).ready(function() {
+		
+		showSelect();
+		
+	});
+	
   </script>
 
 <style>
@@ -350,13 +413,49 @@ body {
 			<input id="coworkcode" name="coworkcode" type="text" class="form-control" placeholder="${CoworkVO.coworkcode}" value="${CoworkVO.coworkcode}" size="50" style="width: 100%; display: inline-block;" readonly="readonly">
 			<input type="hidden" id="coworkcode" value="${CoworkVO.coworkcode}"  name="coworkcode" />
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">카테고리</p>
-			<select class="form-control" id="coworksubject" name="coworksubject">
+			<select class="form-control" id="coworksubject" name="coworksubject" onChange="showSelect()">
 				<option value="" selected disabled hidden>== 카테고리를 선택해주세요 ==</option>
 				<option value="이슈" <c:if test="${CoworkVO.coworksubject eq '이슈'}">selected</c:if>>이슈</option>
 				<option value="유지보수" <c:if test="${CoworkVO.coworksubject eq '유지보수'}">selected</c:if>>유지보수</option>
 				<option value="정기점검" <c:if test="${CoworkVO.coworksubject eq '정기점검'}">selected</c:if>>정기점검</option>
 				<option value="상담" <c:if test="${CoworkVO.coworksubject eq '상담'}">selected</c:if>>상담</option>
 				<option value="프로젝트" <c:if test="${CoworkVO.coworksubject eq '프로젝트'}">selected</c:if>>프로젝트</option>
+			</select>
+			<select class="form-control coworkstep1" id="coworkstep1" name="coworkstep1" style="display: none;">
+				<option value="" selected disabled hidden>== 진행단계를 선택해주세요 ==</option>
+				<option value="이슈발생" <c:if test="${CoworkVO.coworkstep eq '이슈발생'}">selected</c:if>>이슈발생</option>
+				<option value="원인파악" <c:if test="${CoworkVO.coworkstep eq '원인파악'}">selected</c:if>>원인파악</option>
+				<option value="작업진행" <c:if test="${CoworkVO.coworkstep eq '작업진행'}">selected</c:if>>작업진행</option>
+				<option value="완료" <c:if test="${CoworkVO.coworkstep eq '완료'}">selected</c:if>>완료</option>
+			</select>
+			<select class="form-control coworkstep2" id="coworkstep2" name="coworkstep2" style="display: none;">
+				<option value="" selected disabled hidden>== 진행단계를 선택해주세요 ==</option>
+				<option value="유지보수전" <c:if test="${CoworkVO.coworkstep eq '유지보수전'}">selected</c:if>>유지보수전</option>
+				<option value="작업진행" <c:if test="${CoworkVO.coworkstep eq '작업진행'}">selected</c:if>>작업진행</option>
+				<option value="완료" <c:if test="${CoworkVO.coworkstep eq '완료'}">selected</c:if>>완료</option>
+			</select>
+			<select class="form-control coworkstep3" id="coworkstep3" name="coworkstep3" style="display: none;">
+				<option value="" selected disabled hidden>== 진행단계를 선택해주세요 ==</option>
+				<option value="점검전" <c:if test="${CoworkVO.coworkstep eq '점검전'}">selected</c:if>>점검전</option>
+				<option value="점검중" <c:if test="${CoworkVO.coworkstep eq '점검중'}">selected</c:if>>점검중</option>
+				<option value="완료" <c:if test="${CoworkVO.coworkstep eq '완료'}">selected</c:if>>완료</option>
+			</select>
+			<select class="form-control coworkstep4" id="coworkstep4" name="coworkstep4" style="display: none;">
+				<option value="" selected disabled hidden>== 진행단계를 선택해주세요 ==</option>
+				<option value="견적" <c:if test="${CoworkVO.coworkstep eq '견적'}">selected</c:if>>견적</option>
+				<option value="입찰" <c:if test="${CoworkVO.coworkstep eq '입찰'}">selected</c:if>>입찰</option>
+				<option value="수주" <c:if test="${CoworkVO.coworkstep eq '수주'}">selected</c:if>>수주</option>
+				<option value="계약" <c:if test="${CoworkVO.coworkstep eq '계약'}">selected</c:if>>계약</option>
+				<option value="계약" <c:if test="${CoworkVO.coworkstep eq '완료'}">selected</c:if>>완료</option>
+			</select>
+			<select class="form-control coworkstep5" id="coworkstep5" name="coworkstep5" style="display: none;">
+				<option value="" selected disabled hidden>== 진행단계를 선택해주세요 ==</option>
+				<option value="0" <c:if test="${CoworkVO.coworkstep eq '0%'}">selected</c:if>>0%</option>
+				<option value="20" <c:if test="${CoworkVO.coworkstep eq '20%'}">selected</c:if>>20%</option>
+				<option value="40" <c:if test="${CoworkVO.coworkstep eq '40%'}">selected</c:if>>40%</option>
+				<option value="60" <c:if test="${CoworkVO.coworkstep eq '60%'}">selected</c:if>>60%</option>
+				<option value="80" <c:if test="${CoworkVO.coworkstep eq '80%'}">selected</c:if>>80%</option>
+				<option value="100" <c:if test="${CoworkVO.coworkstep eq '완료'}">selected</c:if>>완료</option>
 			</select>
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">작성자</p>
 			<input type="text" class="form-control" id="#" value="${CoworkVO.username}" name="writer" size="50" style="width: 100%; display: inline-block;" readonly="readonly">

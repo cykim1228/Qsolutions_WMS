@@ -226,7 +226,7 @@ body {
 
 	<!-- 상세 뷰 페이지  -->
     <div class="viewListTop">
-    	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 30px; font-weight: bold;">업무 상세 조회</span>
+    	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 30px; font-weight: bold;">${CoworkVO.coworktitle}</span>
     	<button type="button" class="btn btn-danger pull-right" onclick="deleteform()" style="margin-right: 10px; margin-top: 8px;">업무 삭제</button>
     	<button type="button" class="btn btn-primary pull-right" onclick="updateform()" style="margin-right: 10px; margin-top: 8px;">업무 수정</button>
     	<button type="button" class="btn btn-info pull-right" onclick="mailSend()" style="margin-right: 10px; margin-top: 8px;">메일 전송</button>
@@ -238,12 +238,11 @@ body {
 			<table class="table table-striped">
 				<thead align="center">
 					<tr>
-						<th style="width: 10%; text-align: center;">카테고리</th>
-						<th style="width: 15%; text-align: center;">업무코드</th>
-						<th style="width: 25%; text-align: center;">고객사명</th>
-						<th style="width: 30%; text-align: center;">제목</th>
-						<th style="width: 10%; text-align: center;">등록자</th>
-						<th style="width: 10%; text-align: center;">작성일</th>
+						<th style="width: 15%; text-align: center;">카테고리</th>
+						<th style="width: 20%; text-align: center;">업무코드</th>
+						<th style="width: 30%; text-align: center;">고객사명</th>
+						<th style="width: 15%; text-align: center;">등록자</th>
+						<th style="width: 20%; text-align: center;">작성일</th>
 					</tr>
 				</thead>
 				<tbody align="center">
@@ -254,7 +253,6 @@ body {
 							</td>
 							<td>${CoworkVO.coworkcode}</td>
 							<td><a href='${pageContext.request.contextPath}/Company/View?companycode=${CoworkVO.companycode}'>${CoworkVO.companyname}</a></td>
-							<td>${CoworkVO.coworktitle}</td>
 							<td><a href='${pageContext.request.contextPath}/User/View?userid=${CoworkVO.userid}'>${CoworkVO.username}</a></td>
 							<td><fmt:formatDate value="${CoworkVO.coworkdate}" pattern="yyyy/MM/dd"/></td>
 						</tr>
@@ -268,12 +266,14 @@ body {
 			<table class="table table-striped">
 				<thead align="center">
 					<tr>
-						<th style="width: 50%; text-align: center;">시작시간</th>
-						<th style="width: 50%; text-align: center;">종료시간</th>
+						<th style="width: 20%; text-align: center;">진행단계</th>
+						<th style="width: 40%; text-align: center;">시작시간</th>
+						<th style="width: 40%; text-align: center;">종료시간</th>
 					</tr>
 				</thead>
 				<tbody align="center">
 					<tr>
+						<td>${CoworkVO.coworkstep}</td>
 						<td>${CoworkVO.startdate}</td>
 						<td>${CoworkVO.enddate}</td>
 					</tr>

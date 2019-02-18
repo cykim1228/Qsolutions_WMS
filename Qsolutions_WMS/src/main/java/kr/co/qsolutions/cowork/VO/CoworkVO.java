@@ -20,6 +20,7 @@ public class CoworkVO {
 	private String coworksubject;
 	private String startdate;
 	private String enddate;
+	private String coworkstep;
 	
 
 	public String getStartdate() {
@@ -59,105 +60,92 @@ public class CoworkVO {
 		this.deptname = deptname;
 	}
 
-
 	public String getPositionname() {
 		return positionname;
 	}
-
 
 	public void setPositionname(String positionname) {
 		this.positionname = positionname;
 	}
 
-
 	public String getUsermobile() {
 		return usermobile;
 	}
-
 
 	public void setUsermobile(String usermobile) {
 		this.usermobile = usermobile;
 	}
 
-
 	public String getUseremail() {
 		return useremail;
 	}
-
 
 	public void setUseremail(String useremail) {
 		this.useremail = useremail;
 	}
 
-
 	public String getUsercompanycode() {
 		return usercompanycode;
 	}
-
 
 	public void setUsercompanycode(String usercompanycode) {
 		this.usercompanycode = usercompanycode;
 	}
 
-
 	public String getCompanycode() {
 		return companycode;
 	}
-
 
 	public void setCompanycode(String companycode) {
 		this.companycode = companycode;
 	}
 
-
 	public String getCompanyname() {
 		return companyname;
 	}
-
 
 	public void setCompanyname(String companyname) {
 		this.companyname = companyname;
 	}
 
-
 	public String getCoworkcode() {
 		return coworkcode;
 	}
-
 
 	public void setCoworkcode(String coworkcode) {
 		this.coworkcode = coworkcode;
 	}
 
-
 	public String getCoworktext() {
 		return coworktext;
 	}
-
 
 	public void setCoworktext(String coworktext) {
 		this.coworktext = coworktext;
 	}
 
-
 	public String getCoworktitle() {
 		return coworktitle;
 	}
-
 
 	public void setCoworktitle(String coworktitle) {
 		this.coworktitle = coworktitle;
 	}
 
-
 	public Date getCoworkdate() {
 		return coworkdate;
 	}
 
-
 	public void setCoworkdate(Date coworkdate) {
 		this.coworkdate = coworkdate;
 	}
+	public String getCoworkstep() {
+		return coworkstep;
+	}
+	public void setCoworkstep(String coworkstep) {
+		this.coworkstep = coworkstep;
+	}
+	
 	@Override
 	public String toString() {
 		return "CoworkVO [userid=" + userid + ", username=" + username + ", deptname=" + deptname + ", positionname="
@@ -165,7 +153,6 @@ public class CoworkVO {
 				+ usercompanycode + ", companycode=" + companycode + ", companyname=" + companyname + ", coworkcode="
 				+ coworkcode + ", coworktext=" + coworktext + ", coworktitle=" + coworktitle + ", coworkdate="
 				+ coworkdate + ", coworksubject=" + coworksubject + ", startdate=" + startdate + ", enddate=" + enddate
-				+ "]";
+				+ ", coworkstep=" + coworkstep + "]";
 	}
-	
 }
