@@ -4,14 +4,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>[QSOLUTIONS]업무관리 시스템</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
-  <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-  <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/util.js"></script>
-  <script type="text/javascript">
-	function updateuserform(){
+
+<title>[QSOLUTIONS]업무관리 시스템</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/theme.bootstrap_4.css">
+<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/util.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.tablesorter.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.tablesorter.widgets.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery.tablesorter.pager.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.tablesorter.pager.js"></script>
+<script type="text/javascript">
+function updateuserform(){
 		var userid = $("#userid").val();
 		var url = "/qsolcowork/User/Updateform?userid="+userid;
 		alert(url);
@@ -53,6 +60,114 @@
 	function googleLogin() {
 		location.href = "/qsolcowork/User/googleCallback";
 	}
+	
+	$(function() {
+
+		$(".tableWrite").tablesorter(
+			{
+				theme : "bootstrap",
+
+				widthFixed : true,
+
+				// widget code contained in the jquery.tablesorter.widgets.js file
+				// use the zebra stripe widget if you plan on hiding any rows (filter widget)
+				// the uitheme widget is NOT REQUIRED!
+				widgets : [ "filter", "columns", "zebra" ],
+
+				widgetOptions : {
+					// using the default zebra striping class name, so it actually isn't included in the theme variable above
+					// this is ONLY needed for bootstrap theming if you are using the filter widget, because rows are hidden
+					zebra : [ "even", "odd" ],
+
+					// class names added to columns when sorted
+					columns : [ "primary", "secondary", "tertiary" ],
+
+					// reset filters button
+					filter_reset : ".reset",
+
+					// extra css class name (string or array) added to the filter element (input or select)
+					filter_cssFilter : [ 
+						'form-control', 
+						'form-control',
+						'form-control custom-select', // select needs custom class names :(
+						'form-control', 
+						'form-control', 
+						'form-control',
+						'form-control' 
+						]
+
+					}
+				}).tablesorterPager({
+
+			// target the pager markup - see the HTML block below
+			container : $(".ts-pagerWrite"),
+
+			// target the pager page select dropdown - choose a page
+			cssGoto : ".pagenum",
+
+			// remove rows from the table to speed up the sort of large tables.
+			// setting this to false, only hides the non-visible rows; needed if you plan to add/remove rows with the pager enabled.
+			removeRows : false,
+
+			// output string - default is '{page}/{totalPages}';
+			// possible variables: {page}, {totalPages}, {filteredPages}, {startRow}, {endRow}, {filteredRows} and {totalRows}
+			output : '{startRow} - {endRow} / {filteredRows} ({totalRows})'
+
+		});
+		
+		$(".tableCowork").tablesorter(
+				{
+					theme : "bootstrap",
+
+					widthFixed : true,
+
+					// widget code contained in the jquery.tablesorter.widgets.js file
+					// use the zebra stripe widget if you plan on hiding any rows (filter widget)
+					// the uitheme widget is NOT REQUIRED!
+					widgets : [ "filter", "columns", "zebra" ],
+
+					widgetOptions : {
+						// using the default zebra striping class name, so it actually isn't included in the theme variable above
+						// this is ONLY needed for bootstrap theming if you are using the filter widget, because rows are hidden
+						zebra : [ "even", "odd" ],
+
+						// class names added to columns when sorted
+						columns : [ "primary", "secondary", "tertiary" ],
+
+						// reset filters button
+						filter_reset : ".reset",
+
+						// extra css class name (string or array) added to the filter element (input or select)
+						filter_cssFilter : [ 
+							'form-control', 
+							'form-control',
+							'form-control custom-select', // select needs custom class names :(
+							'form-control', 
+							'form-control', 
+							'form-control',
+							'form-control' 
+							]
+
+						}
+					}).tablesorterPager({
+
+				// target the pager markup - see the HTML block below
+				container : $(".ts-pagerCowork"),
+
+				// target the pager page select dropdown - choose a page
+				cssGoto : ".pagenum",
+
+				// remove rows from the table to speed up the sort of large tables.
+				// setting this to false, only hides the non-visible rows; needed if you plan to add/remove rows with the pager enabled.
+				removeRows : false,
+
+				// output string - default is '{page}/{totalPages}';
+				// possible variables: {page}, {totalPages}, {filteredPages}, {startRow}, {endRow}, {filteredRows} and {totalRows}
+				output : '{startRow} - {endRow} / {filteredRows} ({totalRows})'
+
+			});
+		
+	});
 	
   </script>
 
@@ -135,6 +250,10 @@ body {
 	-webkit-border-radius: 0.5em;
 }
 
+.tablesorter-pager .btn-group-sm .btn {
+	font-size: 1.2em; /* make pager arrows more visible */
+}
+
 </style>
 
 </head>
@@ -186,23 +305,53 @@ body {
 	<div class="viewList">
 	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 23px; font-weight: bold;">작성 업무 목록</span>
 		<div class="table-responsive">
-			<table class="table table-striped">
+			<table class="table table-striped tableWrite">
 				<thead align="center">
 					<tr>
+						<th style="width: 10%; text-align: center;" class="filter-select filter-exact" data-placeholder="카테고리">카테고리</th>
 						<th style="width: 20%; text-align: center;">고객사명</th>
 						<th style="width: 30%; text-align: center;">제목</th>
-						<th style="width: 10%; text-align: center;">카테고리</th>
 						<th style="width: 10%; text-align: center;">등록자</th>
 						<th style="width: 15%; text-align: center;">업무코드</th>
 						<th style="width: 15%; text-align: center;">작성일</th>
 					</tr>
 				</thead>
+				<tfoot>
+					<tr>
+						<th colspan="6" class="ts-pagerWrite">
+							<div class="form-inline" align="center">
+								<div class="btn-group btn-group-sm mx-1" role="group">
+									<button type="button" class="btn btn-primary first"
+										title="first">⇤</button>
+									<button type="button" class="btn btn-primary prev"
+										title="previous">←</button>
+								</div>
+								<span class="pagedisplay"></span>
+								<div class="btn-group btn-group-sm mx-1" role="group">
+									<button type="button" class="btn btn-primary next"
+										title="next">→</button>
+									<button type="button" class="btn btn-primary last"
+										title="last">⇥</button>
+								</div>
+								<!-- <select class="form-control-sm custom-select btn btn-primary px-1 pagesize" 
+									title="Select page size" style="width: 50px; height: 37px;">
+									<option selected="selected" value="5">5</option>
+									<option value="10">10</option>
+									<option value="15">15</option>
+								</select> -->
+								<select class="form-control-sm btn btn-primary custom-select pagenum"
+									title="Select page number" style="width: 50px; height: 37px;">
+								</select>
+							</div>
+						</th>
+					</tr>
+				</tfoot>
 				<tbody align="center">
 					<c:forEach items="${coworkVO}" var="coworkVO" varStatus="rowCount">
 					<tr>
+						<td>${coworkVO.coworksubject}</td>
 						<td style="font-weight: bold;"><a href='${pageContext.request.contextPath}/Company/View?companycode=${coworkVO.companycode}'>${coworkVO.companyname}</a></td>
 						<td style="font-weight: bold;"><a href='${pageContext.request.contextPath}/Cowork/View?coworkcode=${coworkVO.coworkcode}'>${coworkVO.coworktitle}</a></td>
-						<td>${coworkVO.coworksubject}</td>
 						<td><a href='${pageContext.request.contextPath}/User/View?userid=${coworkVO.userid}'>${coworkVO.username}</a></td>
 						<td>${coworkVO.coworkcode}</td>
 						<td><fmt:formatDate value="${coworkVO.coworkdate}" pattern="yyyy/MM/dd"/></td>
@@ -215,23 +364,53 @@ body {
 	<div class="viewList">
 	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 23px; font-weight: bold;">담당 업무 목록</span>
 		<div class="table-responsive">
-			<table class="table table-striped">
+			<table class="table table-striped tableCowork">
 				<thead align="center">
 					<tr>
+						<th style="width: 10%; text-align: center;" class="filter-select filter-exact" data-placeholder="카테고리">카테고리</th>
 						<th style="width: 20%; text-align: center;">고객사명</th>
 						<th style="width: 30%; text-align: center;">제목</th>
-						<th style="width: 10%; text-align: center;">카테고리</th>
 						<th style="width: 10%; text-align: center;">등록자</th>
 						<th style="width: 15%; text-align: center;">업무코드</th>
 						<th style="width: 15%; text-align: center;">작성일</th>
 					</tr>
 				</thead>
+				<tfoot>
+					<tr>
+						<th colspan="6" class="ts-pagerCowork">
+							<div class="form-inline" align="center">
+								<div class="btn-group btn-group-sm mx-1" role="group">
+									<button type="button" class="btn btn-primary first"
+										title="first">⇤</button>
+									<button type="button" class="btn btn-primary prev"
+										title="previous">←</button>
+								</div>
+								<span class="pagedisplay"></span>
+								<div class="btn-group btn-group-sm mx-1" role="group">
+									<button type="button" class="btn btn-primary next"
+										title="next">→</button>
+									<button type="button" class="btn btn-primary last"
+										title="last">⇥</button>
+								</div>
+								<!-- <select class="form-control-sm custom-select btn btn-primary px-1 pagesize" 
+									title="Select page size" style="width: 50px; height: 37px;">
+									<option selected="selected" value="5">5</option>
+									<option value="10">10</option>
+									<option value="15">15</option>
+								</select> -->
+								<select class="form-control-sm btn btn-primary custom-select pagenum"
+									title="Select page number" style="width: 50px; height: 37px;">
+								</select>
+							</div>
+						</th>
+					</tr>
+				</tfoot>
 				<tbody align="center">
 					<c:forEach items="${managerCoworkVO}" var="managerCoworkVO" varStatus="rowCount">
 					<tr>
+						<td>${managerCoworkVO.coworksubject}</td>
 						<td style="font-weight: bold;"><a href='${pageContext.request.contextPath}/Company/View?companycode=${managerCoworkVO.companycode}'>${managerCoworkVO.companyname}</a></td>
 						<td style="font-weight: bold;"><a href='${pageContext.request.contextPath}/Cowork/View?coworkcode=${managerCoworkVO.coworkcode}'>${managerCoworkVO.coworktitle}</a></td>
-						<td>${managerCoworkVO.coworksubject}</td>
 						<td><a href='${pageContext.request.contextPath}/User/View?userid=${managerCoworkVO.userid}'>${managerCoworkVO.username}</a></td>
 						<td>${managerCoworkVO.coworkcode}</td>
 						<td><fmt:formatDate value="${managerCoworkVO.coworkdate}" pattern="yyyy/MM/dd"/></td>
