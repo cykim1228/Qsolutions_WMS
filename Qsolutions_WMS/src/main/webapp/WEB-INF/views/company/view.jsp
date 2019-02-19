@@ -156,6 +156,11 @@
 		
 	});
 	
+	$(document).ready(function() {
+		$("#excelConvertBtn").on('click', function() {
+			location.href = "../toExcel/companyViewToExcel?companycode=${companyVO.companycode}";
+		})
+	})
 						
   </script>
 
@@ -256,6 +261,7 @@ body {
     	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 30px; font-weight: bold;">${companyVO.companyname}</span>
     	<button type="button" class="btn btn-danger pull-right" onclick="deleteform()" style="margin-right: 10px; margin-top: 8px;">고객사 삭제</button>
     	<button type="button" class="btn btn-primary pull-right" onclick="updateform()" style="margin-right: 10px; margin-top: 8px;">고객사 수정</button>
+    	<input type="button" class="btn btn-success pull-right" name="excelConvertBtn" id="excelConvertBtn" value="엑셀 출력" style="cursor:hand; margin-right:10px; margin-top: 8px;" />
     </div>
 <!--  -->
 	<div class="viewList">

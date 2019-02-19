@@ -3,6 +3,7 @@ package kr.co.qsolutions.cowork.Util;
 import javax.mail.Message.RecipientType;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,7 +18,7 @@ public class EmailSender {
     @Autowired
     private JavaMailSender mailSender;
     
-    public void sendEmail(EmailForm emailForm) throws Exception{
+    public void sendEmail(String userId, String userName, String filePath, HttpSession session) throws Exception{
         //皋老 惯价 扁瓷 力傍
         MimeMessage msg = mailSender.createMimeMessage();
         msg.setSubject(emailForm.getSubject(), "utf-8"); //皋老 力格

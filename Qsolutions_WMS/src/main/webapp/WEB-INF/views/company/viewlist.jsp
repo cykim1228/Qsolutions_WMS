@@ -25,6 +25,12 @@
 			  $("#myTable").tablesorter();
 			});
 		
+		$(document).ready(function() {
+			$("#excelConvertBtn").on('click', function() {
+				location.href = "../toExcel/companyListToExcel";
+			})
+		})
+		
 </script>
 
 <style>
@@ -65,6 +71,7 @@ body {
 	<div class="viewListTop">
 		<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 30px; font-weight: bold;">회사 리스트</span>
 	    <button type="button" class="btn btn-primary pull-right" onclick="insertView()" style="margin-left:10px; margin-right: 10px; margin-top: 8px;">회사 등록</button>
+	    <input type="button" class="btn btn-success pull-right" name="excelConvertBtn" id="excelConvertBtn" value="엑셀 출력" style="cursor:hand; margin-left:10px; margin-top: 8px;" />
 	    <form class="navbar-form navbar-right" style="border-right-width: 2px; border-right-style: solid; border-right-color: gray; margin-right: 5px;">
 			<select class="btn btn-primary" name="SearchType">
 				<option value="companyname" <c:if test="${pagingVO.searchType == 'companyname'}">seleted</c:if> >회사명</option>
@@ -73,7 +80,7 @@ body {
 			</select>
             <input type="text" class="form-control" placeholder="Search..." value="${SearchData}" name="SearchData">
             <input type="submit" class="btn btn-primary" value="검색">
-        	</form>
+        </form>
 		</div>
 	<div class="viewList">
 	<div class="table-responsive">

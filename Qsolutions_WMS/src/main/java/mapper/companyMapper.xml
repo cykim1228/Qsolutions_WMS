@@ -5,7 +5,7 @@
 	
 	<select id="SelectCompanyList" parameterType="PagingVO" resultType="CompanyVO">
 		select 
-			companycode, companyname, companyhomepg, companyaddress, IsUse, companyclass
+			companycode, companyname, companyhomepg, companyaddress, IsUse, companyclass, companyaddress2, companyzipcode
 		from
 			company
 		<trim prefix="WHERE" prefixOverrides="AND |OR ">

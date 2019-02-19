@@ -23,6 +23,8 @@ public class EmailController {
         public String submit(EmailForm form) throws Exception{
             emailSender.sendEmail(form);
             
+            
+            
             return "redirect:/Cowork/List";
         }
         
