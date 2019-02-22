@@ -49,5 +49,7 @@ public interface CoworkService {
 	public int InsertCoworkManager(CoworkDTO coworkDTO) throws Exception;
 	
 	public int DeleteCoworkManager(CoworkDTO coworkDTO) throws Exception;
+
+	public List<CoworkVO> CoworkMyList(CoworkDTO coworkDTO) throws Exception;
 	
 }

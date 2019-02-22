@@ -218,4 +218,30 @@
 			userid=#{userid} and coworkcode=#{coworkcode};
 	</delete>
 	
+	<select id ="CoworkMyList" parameterType="CoworkDTO" resultType="CoworkVO">
+		select
+			cw.userid, u.username ,c.companycode, c.companyname,cw.coworkcode, cw.coworktitle, date_format(cw.coworkdate, '%Y-%m-%d') AS coworkdate, cw.coworksubject, cw.startdate, cw.enddate, cw.coworkstep
+		from
+			user u inner join cowork cw ON u.userid = cw.userid
+			inner join company c ON cw.coworkcompany = c.companycode
+		where
+			u.userid = #{userid}
+			and cw.IsUse = 0
+		order by coworkcode desc
+		limit 5
+	</select>
+	
+	<select id="SubCoworkDashboardList" resultType="SubCoworkVO" parameterType="CoworkDTO">
+		select
+			sc.subcoworkcode, date_format(sc.subcoworkdate, '%Y-%m-%d'), sc.subcoworktext, sc.coworkcode,u.userid,u.username, sc.IsUse 
+		from 
+			subcowork sc left join user u ON sc.userid = u.userid
+		where
+			date_format(sc.subcoworkdate, '%Y-%m-%d')=
+			(select date_format(sc.subcoworkdate, '%Y-%m-%d') from subcowork sc left join user u ON sc.userid = u.userid order by limit)
+			and sc.IsUse = 0
+		order by subcoworkcode desc
+		limit 5
+	</select>
+	
 </mapper>

@@ -52,4 +52,6 @@ public interface CoworkDao {
 
 	public int DeleteCoworkManager(CoworkDTO coworkDTO) throws Exception;
 
+	public List<CoworkVO> CoworkMyList(CoworkDTO coworkDTO) throws Exception;
+
 }

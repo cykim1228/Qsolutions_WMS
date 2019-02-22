@@ -117,7 +117,7 @@ public class LoginController {
 		            userservice.keepLogin(userDTO.getUserid(), session.getId(), sessionLimit);
 		        }
 				
-    			returnUrl = "redirect:/Cowork/List/";
+    			returnUrl = "redirect:/Dashboard/";
     			
     		}else {
     			errorcode = "ERR000002";

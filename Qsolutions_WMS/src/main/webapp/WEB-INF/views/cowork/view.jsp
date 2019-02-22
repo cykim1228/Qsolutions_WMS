@@ -6,13 +6,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>[QSOLUTIONS]업무관리 시스템</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
-  <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-  <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/util.js"></script>
-  <script type="text/javascript">
+<title>[QSOLUTIONS]업무관리 시스템</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
+<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/util.js"></script>
+
+<script type="text/javascript">
 	function updateform(){
 		//var coworkcode = document.getElementById("coworkcode").value
 		var coworkcode = $("#coworkcode").val();
@@ -111,6 +113,29 @@
 	function mailSend(){
 		
 		var receiver = $("#receiver").val(); // 받는사람
+		
+		$.ajax({
+	        url:"/qsolcowork/toMail/coworkViewToMail",
+	        type:"post",
+	        data:{
+	        	receiver:receiver
+	        },
+	        success:function(data){
+	            alert("메일이 전송되었습니다.");
+	            
+	            location.reload();
+	            
+	        },
+	        error:function(jqXHR, textStatus, errorThrown){
+	            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
+	        }
+		});
+		
+	}
+	
+	/* function mailSend(){
+		
+		var receiver = $("#receiver").val(); // 받는사람
 		var subject = $("#subject").val(); // 제목
 		var content = $("#content").val(); // 내용
 		
@@ -133,7 +158,7 @@
 	        }
 			});
 		
-	}
+	} */
 	
 	
   </script>
@@ -230,7 +255,13 @@ body {
     	<button type="button" class="btn btn-danger pull-right" onclick="deleteform()" style="margin-right: 10px; margin-top: 8px;">업무 삭제</button>
     	<button type="button" class="btn btn-primary pull-right" onclick="updateform()" style="margin-right: 10px; margin-top: 8px;">업무 수정</button>
     	<button type="button" class="btn btn-info pull-right" onclick="mailSend()" style="margin-right: 10px; margin-top: 8px;">메일 전송</button>
-    	<input type="text" class="form-control pull-right" id="receiver" placeholder="받는 사람..." value="" style="width: 150px; height: 34px; display: inline-block; margin-right: 10px; margin-top: 8px;"/>
+		<select class="form-control pull-right" id="receiver" name="receiver" style="width: 150px; height: 34px; display: inline-block; margin-right: 10px; margin-top: 8px;">
+			<option value="" selected disabled hidden>== 받는사람 ==</option>
+			<option value="we@qsolutions.co.kr">전체</option>
+			<c:forEach items="${userList}" var="userList" varStatus="rowCount">
+				<option id="useremail" value="${userList.useremail}">${userList.username}</option>
+			</c:forEach>
+		</select>
     </div>
 <!--  -->
 	<div class="viewList">
@@ -315,8 +346,6 @@ body {
 		<textarea id="subcoworktext" name="subcoworktext" class="form-control" rows="3" placeholder="추가 업무 내용을 입력해주세요." style="width: 90%; display: inline-block;"></textarea>
 		<button type="button" class="btn btn-primary pull-right" onclick="insertsubcowork()" style="width: 9%; height: 74px;">작성</button>
 	</div>
-	
-	
 	        	<c:forEach var="SubCoworkVO" items="${SubCoworkVO}" varStatus="linenum">
 	        	<div class="viewList">
 					<div class="roundedSubNo">
@@ -341,7 +370,7 @@ body {
 	
 	<!-- 메일 전송 부분 -->        	
 	
-	<form action="send" method="post">
+	<%-- <form action="send" method="post">
 		<input type="hidden" id="subject" type="text" name="subject" value="${CoworkVO.companyname} - ${CoworkVO.coworktitle}"><br>
 		<input type="hidden" id="content" name="content" value='<div style="width: 80%; height: 80%; margin: 0 auto; margin-top: 15px;">
 			<table border="1">
@@ -383,7 +412,7 @@ body {
 				</tbody>
 			</table>
 		</div>
-		<%-- <div class="table-responsive">
+		<div class="table-responsive">
 			<table class="table table-striped">
 				<thead align="center">
 					<tr>
@@ -406,11 +435,11 @@ body {
 					</c:forEach>
 				</tbody>
 			</table>
-		</div> --%>
+		</div>
 		<div style="width: 80%; height: 80%; background-color: #E6E6E6; border:2px solid #ddd; padding:0.5em; line-height: 1em; border-radius:0.5em; -moz-border-radius: 0.5em; -webkit-border-radius: 0.5em;">
 			${CoworkVO.coworktext}
 		</div>
-		<%-- <c:forEach var="SubCoworkVO" items="${SubCoworkVO}" varStatus="linenum">
+		<c:forEach var="SubCoworkVO" items="${SubCoworkVO}" varStatus="linenum">
 	        	<div class="viewList">
 					<div class="roundedSubNo">
 						No. ${SubCoworkVO.subcoworkcode}
@@ -429,9 +458,9 @@ body {
 					</div>
 		    	<button type="button" class="btn btn-danger pull-right" onclick="deletesubcowork()" style="width: 9%; height: 74px; display: inline-block;">삭제</button>
 	        </div>
-	    </c:forEach> --%>
+	    </c:forEach>
 		'>
-	</form>
+	</form> --%>
 	        	
 	        	
 	<%-- <div class="container-fluid">

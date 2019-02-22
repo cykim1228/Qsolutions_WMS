@@ -139,6 +139,12 @@ public class CoworkServiceImpl implements CoworkService {
 		// TODO Auto-generated method stub
 		return dao.DeleteCoworkManager(coworkDTO);
 	}
+
+	@Override
+	public List<CoworkVO> CoworkMyList(CoworkDTO coworkDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.CoworkMyList(coworkDTO);
+	}
 	
 	
 }

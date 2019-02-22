@@ -138,5 +138,11 @@ public class CoworkDaoImpl implements CoworkDao  {
 		return sqlSession.delete(Namespace+".DeleteCoworkManager",coworkDTO);
 	}
 
+	@Override
+	public List<CoworkVO> CoworkMyList(CoworkDTO coworkDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(Namespace+".CoworkMyList",coworkDTO);
+	}
+
 	
 }

@@ -39,12 +39,14 @@
 			<mapping path="/Admin/**"/>
 			<mapping path="/User/**"/> 
 			<mapping path="/Search/**"/>
+			<mapping path="/Dashboard"/>
 			<beans:ref bean="authenticationInterceptor"></beans:ref>
 		</interceptor>
 	</interceptors>
 	
 	<context:component-scan base-package="pack" />
 
+	<!-- Email 관련 -->
 	<beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<beans:property name="host" value="smtp.gmail.com" /> <!-- smtp 서버명 -->
 		<beans:property name="port" value="587" /> <!-- 포트 번호 -->
