@@ -114,6 +114,11 @@ public class UserDaoImpl implements UserDao  {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(Namespace+".selectManagerCowork", coworkDTO);
 	}
+	@Override
+	public String UserIdSelect(String nowdate) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(Namespace+".UserIdSelect", nowdate);
+	}
     
 }
 																																																																																																																																																																							

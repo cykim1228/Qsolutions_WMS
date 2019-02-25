@@ -233,15 +233,16 @@
 	
 	<select id="SubCoworkDashboardList" resultType="SubCoworkVO" parameterType="CoworkDTO">
 		select
-			sc.subcoworkcode, date_format(sc.subcoworkdate, '%Y-%m-%d'), sc.subcoworktext, sc.coworkcode,u.userid,u.username, sc.IsUse 
+			sc.subcoworkcode, date_format(sc.subcoworkdate, '%Y-%m-%d'), sc.subcoworktext, sc.coworkcode,u.userid,u.username, c.companyname, co.coworktitle, sc.IsUse 
 		from 
 			subcowork sc left join user u ON sc.userid = u.userid
+		    inner join cowork co ON sc.coworkcode = co.coworkcode
+		    inner join company c ON co.coworkcompany = c.companycode
 		where
-			date_format(sc.subcoworkdate, '%Y-%m-%d')=
-			(select date_format(sc.subcoworkdate, '%Y-%m-%d') from subcowork sc left join user u ON sc.userid = u.userid order by limit)
+			date_format(sc.subcoworkdate, '%Y-%m-%d') >= date_add(NOW(), INTERVAL -5 DAY)
 			and sc.IsUse = 0
 		order by subcoworkcode desc
-		limit 5
+		limit 5;
 	</select>
 	
 </mapper>

@@ -14,11 +14,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.co.qsolutions.cowork.DTO.CoworkDTO;
+import kr.co.qsolutions.cowork.DTO.SubCoworkDTO;
 import kr.co.qsolutions.cowork.Service.CompanyService;
 import kr.co.qsolutions.cowork.Service.CoworkService;
 import kr.co.qsolutions.cowork.Service.UserService;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
 import kr.co.qsolutions.cowork.VO.PagingVO;
+import kr.co.qsolutions.cowork.VO.SubCoworkVO;
 import kr.co.qsolutions.cowork.VO.UserVO;
 
 @Controller
@@ -56,11 +58,17 @@ public class DashboardController {
 		
 		List<CoworkVO> coworkMyListVO = coworkservice.CoworkMyList(coworkDTO);
 
+		List<SubCoworkVO> subcoworkListVO = coworkservice.SubCoworkDashboardList();
+		
+		
+		System.out.println("subcoworkListVO : " + subcoworkListVO);
+		
 		model.addAttribute("coworkMyListVO",coworkMyListVO);
 		model.addAttribute("coworklistvo",listvo);
 		model.addAttribute("pagingVO", pagingVO);
 		model.addAttribute("userVO", userVO);
 		model.addAttribute("userid", loginVO.getUserid());
+		model.addAttribute("subcoworkListVO",subcoworkListVO);
 		
 		return "Login/dashboard";
 	}

@@ -20,7 +20,7 @@ public interface UserDao {
     public UserVO UserViewSelect(String userid) throws Exception;
     
     public int SelectUserCount() throws Exception;
-    
+   
 	public UserVO UserCheckID(String userid) throws Exception;
 
 	public UserVO UserCheckPW(String userid) throws Exception;
@@ -43,5 +43,7 @@ public interface UserDao {
 	public List<CoworkVO> selectUserCowork(CoworkDTO coworkDTO) throws Exception;
 
 	public List<CoworkVO> selectManagerCowork(CoworkDTO coworkDTO) throws Exception;
+
+	public String UserIdSelect(String nowdate) throws Exception;
 
 }

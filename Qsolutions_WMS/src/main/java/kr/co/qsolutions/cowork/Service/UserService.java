@@ -39,5 +39,7 @@ public interface UserService {
 	public List<CoworkVO> selectUserCowork(CoworkDTO coworkDTO) throws Exception;
 
 	public List<CoworkVO> selectManagerCowork(CoworkDTO coworkDTO) throws Exception;
+
+	public String UserIdSelect(String nowdate) throws Exception;
     
 }

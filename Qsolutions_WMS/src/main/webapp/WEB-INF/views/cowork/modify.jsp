@@ -430,16 +430,15 @@ body {
 			</select>
 			<select class="form-control coworkstep2" id="coworkstep2" name="coworkstep2" style="display: none;">
 				<option value="" selected disabled hidden>== 진행단계를 선택해주세요 ==</option>
-				<option value="유지보수전" <c:if test="${CoworkVO.coworkstep eq '유지보수전'}">selected</c:if>>유지보수전</option>
-				<option value="작업진행" <c:if test="${CoworkVO.coworkstep eq '작업진행'}">selected</c:if>>작업진행</option>
+				<option value="진행중" <c:if test="${CoworkVO.coworkstep eq '진행중'}">selected</c:if>>진행중</option>
 				<option value="완료" <c:if test="${CoworkVO.coworkstep eq '완료'}">selected</c:if>>완료</option>
 			</select>
-			<select class="form-control coworkstep3" id="coworkstep3" name="coworkstep3" style="display: none;">
+			<%-- <select class="form-control coworkstep3" id="coworkstep3" name="coworkstep3" style="display: none;">
 				<option value="" selected disabled hidden>== 진행단계를 선택해주세요 ==</option>
 				<option value="점검전" <c:if test="${CoworkVO.coworkstep eq '점검전'}">selected</c:if>>점검전</option>
 				<option value="점검중" <c:if test="${CoworkVO.coworkstep eq '점검중'}">selected</c:if>>점검중</option>
 				<option value="완료" <c:if test="${CoworkVO.coworkstep eq '완료'}">selected</c:if>>완료</option>
-			</select>
+			</select> --%>
 			<select class="form-control coworkstep4" id="coworkstep4" name="coworkstep4" style="display: none;">
 				<option value="" selected disabled hidden>== 진행단계를 선택해주세요 ==</option>
 				<option value="견적" <c:if test="${CoworkVO.coworkstep eq '견적'}">selected</c:if>>견적</option>

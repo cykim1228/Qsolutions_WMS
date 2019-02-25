@@ -11,6 +11,7 @@ import kr.co.qsolutions.cowork.DTO.CoworkDTO;
 import kr.co.qsolutions.cowork.DTO.SubCoworkDTO;
 import kr.co.qsolutions.cowork.VO.CompanyVO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
+import kr.co.qsolutions.cowork.VO.ManagerVO;
 import kr.co.qsolutions.cowork.DTO.UserDTO;
 import kr.co.qsolutions.cowork.VO.PagingVO;
 import kr.co.qsolutions.cowork.VO.SubCoworkVO;
@@ -53,5 +54,9 @@ public interface CoworkDao {
 	public int DeleteCoworkManager(CoworkDTO coworkDTO) throws Exception;
 
 	public List<CoworkVO> CoworkMyList(CoworkDTO coworkDTO) throws Exception;
+
+	public List<SubCoworkVO> SubCoworkDashboardList() throws Exception;
+
+	public List<ManagerVO> SelectCoworkManager() throws Exception;
 
 }

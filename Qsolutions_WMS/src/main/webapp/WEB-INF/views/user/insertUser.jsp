@@ -206,11 +206,11 @@ body {
 	
 		<div class="viewListCenter" id="insertform">
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">사용자 ID</p>
-			<input id="userid" name="userid" type="text" class="form-control" placeholder="${userVO.userid}" value="${userVO.userid}" size="50" style="width: 100%; display: inline-block;" readonly="readonly">
+			<input id="userid" name="userid" type="text" class="form-control" placeholder="ID 입력.." size="50" style="width: 100%; display: inline-block;">
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">사용자 이름</p>
 			<input id="username" name="username" type="text" class="form-control" placeholder="이름 입력.." size="50" style="width: 100%; display: inline-block;">
-			<!-- <p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">비밀번호</p> -->
-			<input id="userpasswd" name="userpasswd" type="hidden" class="form-control" placeholder="1234" value="1234" size="50" style="width: 100%; display: inline-block;" readonly="readonly">
+			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">비밀번호</p>
+			<input id="userpasswd" name="userpasswd" type="password" class="form-control" placeholder="PW 입력.." size="50" style="width: 100%; display: inline-block;">
 			
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">소속</p>
 			<select class="selectpicker show-tick" data-style="btn-primary" name="usercompanycode" id="usercompanycode" data-live-search="true" data-width="100%" data-size="10" title="== 소속 회사를 선택해주세요 ==" style="display: inline-block;">

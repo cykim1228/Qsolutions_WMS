@@ -15,6 +15,7 @@ import kr.co.qsolutions.cowork.DTO.CoworkDTO;
 import kr.co.qsolutions.cowork.DTO.SubCoworkDTO;
 import kr.co.qsolutions.cowork.VO.CompanyVO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
+import kr.co.qsolutions.cowork.VO.ManagerVO;
 import kr.co.qsolutions.cowork.VO.PagingVO;
 import kr.co.qsolutions.cowork.VO.SubCoworkVO;
 import kr.co.qsolutions.cowork.VO.UserVO;
@@ -142,6 +143,18 @@ public class CoworkDaoImpl implements CoworkDao  {
 	public List<CoworkVO> CoworkMyList(CoworkDTO coworkDTO) throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(Namespace+".CoworkMyList",coworkDTO);
+	}
+
+	@Override
+	public List<SubCoworkVO> SubCoworkDashboardList() throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(Namespace+".SubCoworkDashboardList");
+	}
+
+	@Override
+	public List<ManagerVO> SelectCoworkManager() throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(Namespace+".SelectCoworkManager");
 	}
 
 	

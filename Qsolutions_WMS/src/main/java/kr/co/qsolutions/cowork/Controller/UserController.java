@@ -130,6 +130,32 @@ public class UserController {
 	public String UserInsertform(HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
 		UserVO loginVO = (UserVO)session.getAttribute("login");
 		
+		String tmpcodeStr = "";
+		String tmpstr = "";
+		Date date = new Date();
+        SimpleDateFormat dt = new SimpleDateFormat("yyyyMMdd");
+    	String nowdate = dt.format(date.getTime());
+		// userid 생성 및 기본 입력 데이터 호출
+		String newuserid = userservice.UserIdSelect(nowdate);
+		if(newuserid == null || newuserid == "") {
+			tmpcodeStr = "U" + nowdate + "00001";
+		} else {
+			tmpstr = newuserid.substring(9,14);
+			int tmpcode = Integer.parseInt(tmpstr,9);
+			tmpcodeStr = newuserid.substring(0, 9);
+			tmpcode = tmpcode + 1;
+			newuserid = tmpcodeStr + tmpcode;
+			if( newuserid.length() < 14) {
+				for(int i = newuserid.length();i < 14; i++)
+				tmpcodeStr = tmpcodeStr + 0;
+			}
+			tmpcodeStr = tmpcodeStr + tmpcode;
+		}
+		System.out.println("tmpcodeStr=="+tmpcodeStr);
+		//coworkcode생성=========================================================
+		UserVO userVO = new UserVO();
+		userVO.setUserid(tmpcodeStr);
+		
 		List<CompanyVO> companyVO = (List<CompanyVO>) coworkservice.CompanyAllSelect();
 		
 		List<UserVO> deptVO = (List<UserVO>)userservice.SelectDeptList();
@@ -138,6 +164,7 @@ public class UserController {
 		model.addAttribute("deptVO", deptVO);
 		model.addAttribute("positionVO", positionVO);
 		model.addAttribute("companyVO", companyVO);
+		model.addAttribute("userVO", userVO);
 		
 		System.out.println("deptVO : " + deptVO);
 		
@@ -186,6 +213,27 @@ public class UserController {
 		returnUrl = "user/modify";
 		return returnUrl;
 	}
+	
+	@RequestMapping(value = "/User/Updateforms")
+	public String UsersUpdateform(HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
+		UserVO loginVO = (UserVO)session.getAttribute("login");
+		String tmpID = request.getParameter("userid");
+		
+		List<CompanyVO> companyVO = (List<CompanyVO>) coworkservice.CompanyAllSelect();
+		
+		UserVO userVO = (UserVO)userservice.UserViewSelect(tmpID);
+		List<UserVO> deptVO = (List<UserVO>)userservice.SelectDeptList();
+		List<UserVO> positionVO = (List<UserVO>)userservice.SelectPositionList();
+		
+		model.addAttribute("deptVO", deptVO);
+		model.addAttribute("positionVO", positionVO);
+		model.addAttribute("userVO", userVO);
+		model.addAttribute("companyVO", companyVO);
+		
+		returnUrl = "user/modifyUser";
+		return returnUrl;
+	}
+	
 	@RequestMapping(value = "/User/Update")
 	public String UserUpdate(@RequestBody String body,HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
 		UserVO loginVO = (UserVO)session.getAttribute("login");

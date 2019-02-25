@@ -94,5 +94,10 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return dao.selectManagerCowork(coworkDTO);
 	}
+	@Override
+	public String UserIdSelect(String nowdate) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.UserIdSelect(nowdate);
+	}
 
 }

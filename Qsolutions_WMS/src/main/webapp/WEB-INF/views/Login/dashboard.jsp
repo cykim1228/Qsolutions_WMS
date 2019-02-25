@@ -16,7 +16,7 @@
 <script type="text/javascript">
 function updateuserform(){
 		var userid = $("#userid").val();
-		var url = "/qsolcowork/User/Updateform?userid="+userid;
+		var url = "/qsolcowork/User/Updateforms?userid="+userid;
 		alert(url);
 		location.href = url;
 	}
@@ -162,7 +162,18 @@ h2 {
 	<div class="roundedMessage pull-right">
 		<h3 style="text-align: center; font-weight: bold;">최신 메시지</h3>
 		<br>
-		<p style="color: #d9534f;">메시지가 없습니다.</p>
+		
+		<c:if test="${subcoworkListVO.isEmpty()}">
+			<p style="color: #d9534f;">메시지가 없습니다.</p>
+		</c:if>
+		
+		<c:forEach items="${subcoworkListVO}" var="subcoworkListVO" varStatus="rowCount">
+			<span style="color: #FAAC58; font-weight: bold;">${subcoworkListVO.companyname}</span>
+			<span>-</span>
+			<span style="color: #58ACFA; font-weight: bold;">${subcoworkListVO.coworktitle}</span>
+			<span>${subcoworkListVO.subcoworktext}</span>
+			<br><br>
+		</c:forEach>
 	</div>
 </div>
 
@@ -190,12 +201,12 @@ h2 {
 					<td>
 						<c:if test="${coworkMyListVO.coworkstep == '견적'}">
 							<div class="progress" style="margin-bottom: 0px;">
-								<div class="progress-bar progress-bar-success" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">20%</div>
+								<div class="progress-bar progress-bar-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">20%</div>
 							</div>
 						</c:if>
 						<c:if test="${coworkMyListVO.coworkstep == '입찰'}">
 							<div class="progress" style="margin-bottom: 0px;">
-								<div class="progress-bar progress-bar-success" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">40%</div>
+								<div class="progress-bar progress-bar-info" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">40%</div>
 							</div>
 						</c:if>
 						<c:if test="${coworkMyListVO.coworkstep == '수주'}">
@@ -210,7 +221,7 @@ h2 {
 						</c:if>
 						<c:if test="${coworkMyListVO.coworkstep == '이슈발생'}">
 							<div class="progress" style="margin-bottom: 0px;">
-								<div class="progress-bar progress-bar-info role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+								<div class="progress-bar progress-bar-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
 							</div>
 						</c:if>
 						<c:if test="${coworkMyListVO.coworkstep == '원인파악'}">
@@ -220,37 +231,52 @@ h2 {
 						</c:if>
 						<c:if test="${coworkMyListVO.coworkstep == '작업진행'}">
 							<div class="progress" style="margin-bottom: 0px;">
-								<div class="progress-bar progress-bar-info" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>
+								<div class="progress-bar progress-bar-success" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>
 							</div>
 						</c:if>
-						<c:if test="${coworkMyListVO.coworkstep == '유지보수전'}">
+						<c:if test="${coworkMyListVO.coworkstep == '진행중'}">
+							<div class="progress" style="margin-bottom: 0px;">
+								<div class="progress-bar progress-bar-success" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
+							</div>
+						</c:if>
+						<%-- <c:if test="${coworkMyListVO.coworkstep == '유지보수전'}">
 							<div class="progress" style="margin-bottom: 0px;">
 								<div class="progress-bar progress-bar-info" role="progressbar" style="width: 25%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">25%</div>
+							</div>
+						</c:if> --%>
+						<c:if test="${coworkMyListVO.coworkstep == '점검전'}">
+							<div class="progress" style="margin-bottom: 0px;">
+								<div class="progress-bar progress-bar-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">20%</div>
+							</div>
+						</c:if>
+						<c:if test="${coworkMyListVO.coworkstep == '점검중'}">
+							<div class="progress" style="margin-bottom: 0px;">
+								<div class="progress-bar progress-bar-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
 							</div>
 						</c:if>
 						<c:if test="${coworkMyListVO.coworkstep == '0%'}">
 							<div class="progress" style="margin-bottom: 0px;">
-								<div class="progress-bar progress-bar-warning" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+								<div class="progress-bar progress-bar-info" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
 							</div>
 						</c:if>
 						<c:if test="${coworkMyListVO.coworkstep == '20%'}">
 							<div class="progress" style="margin-bottom: 0px;">
-								<div class="progress-bar progress-bar-warning" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">20%</div>
+								<div class="progress-bar progress-bar-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">20%</div>
 							</div>
 						</c:if>
 						<c:if test="${coworkMyListVO.coworkstep == '40%'}">
 							<div class="progress" style="margin-bottom: 0px;">
-								<div class="progress-bar progress-bar-warning" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">40%</div>
+								<div class="progress-bar progress-bar-info" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">40%</div>
 							</div>
 						</c:if>
 						<c:if test="${coworkMyListVO.coworkstep == '60%'}">
 							<div class="progress" style="margin-bottom: 0px;">
-								<div class="progress-bar progress-bar-warning" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div>
+								<div class="progress-bar progress-bar-success" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div>
 							</div>
 						</c:if>
 						<c:if test="${coworkMyListVO.coworkstep == '80%'}">
 							<div class="progress" style="margin-bottom: 0px;">
-								<div class="progress-bar progress-bar-warning" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">80%</div>
+								<div class="progress-bar progress-bar-success" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">80%</div>
 							</div>
 						</c:if>
 						<c:if test="${coworkMyListVO.coworkstep == '완료'}">

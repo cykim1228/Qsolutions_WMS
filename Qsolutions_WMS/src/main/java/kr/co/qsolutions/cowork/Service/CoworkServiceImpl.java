@@ -16,6 +16,7 @@ import kr.co.qsolutions.cowork.DTO.CoworkDTO;
 import kr.co.qsolutions.cowork.DTO.SubCoworkDTO;
 import kr.co.qsolutions.cowork.VO.CompanyVO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
+import kr.co.qsolutions.cowork.VO.ManagerVO;
 import kr.co.qsolutions.cowork.DAO.UserDao;
 import kr.co.qsolutions.cowork.VO.PagingVO;
 import kr.co.qsolutions.cowork.VO.SubCoworkVO;
@@ -144,6 +145,18 @@ public class CoworkServiceImpl implements CoworkService {
 	public List<CoworkVO> CoworkMyList(CoworkDTO coworkDTO) throws Exception {
 		// TODO Auto-generated method stub
 		return dao.CoworkMyList(coworkDTO);
+	}
+
+	@Override
+	public List<SubCoworkVO> SubCoworkDashboardList() throws Exception {
+		// TODO Auto-generated method stub
+		return dao.SubCoworkDashboardList();
+	}
+
+	@Override
+	public List<ManagerVO> SelectCoworkManager(CoworkDTO coworkDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.SelectCoworkManager();
 	}
 	
 	

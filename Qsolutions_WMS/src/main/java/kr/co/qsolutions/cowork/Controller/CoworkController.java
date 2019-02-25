@@ -37,8 +37,10 @@ import kr.co.qsolutions.cowork.DTO.SubCoworkDTO;
 import kr.co.qsolutions.cowork.DTO.UserDTO;
 import kr.co.qsolutions.cowork.Service.CompanyService;
 import kr.co.qsolutions.cowork.Service.CoworkService;
+import kr.co.qsolutions.cowork.Service.ManagerService;
 import kr.co.qsolutions.cowork.VO.CompanyVO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
+import kr.co.qsolutions.cowork.VO.ManagerVO;
 import kr.co.qsolutions.cowork.VO.PagingVO;
 import kr.co.qsolutions.cowork.VO.SubCoworkVO;
 import kr.co.qsolutions.cowork.VO.UserVO;
@@ -54,6 +56,9 @@ public class CoworkController {
 	
 	@Inject
 	private CoworkService coworkservice;
+	
+	@Inject
+	private ManagerService managerservice;
 	
 	String returnUrl;
 	
@@ -173,12 +178,15 @@ public class CoworkController {
 		coworkVO.setUserid(loginVO.getUserid());
 		coworkVO.setUsername(loginVO.getUsername());
 		
+		List<ManagerVO> managerVO = (List<ManagerVO>)managerservice.SelectManager();
+		
 		List<UserVO> usersVO = (List<UserVO>)companyservice.SelectUser();
 		
 		System.out.println("loginVO : " + loginVO);
-		
+		System.out.println("managerVO : " + managerVO);
 		System.out.println("usersVO : " + usersVO);
 		
+		model.addAttribute("managerVO", managerVO);
 		model.addAttribute("usersVO", usersVO);
 		model.addAttribute("CoworkVO", coworkVO);
 		model.addAttribute("companyList",companyList);

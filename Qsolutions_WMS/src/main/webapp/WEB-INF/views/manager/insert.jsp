@@ -31,51 +31,39 @@
   			
   			var formData = document.insertData;
   			
-  			if(formData.userid.value == "") {
-  				alert("아이디를 입력해주세요.")
-  				return formData.userid.focus();
-  			}
-  			
-  			if(formData.username.value == "") {
+  			if(formData.managername.value == "") {
   				alert("이름을 입력해주세요.")
-  				return formData.username.focus();
+  				return formData.managername.focus();
   			}
   			
-  			if(formData.userpasswd.value == "") {
-  				alert("비밀번호를 입력해주세요.")
-  				return formData.userpasswd.focus();
-  			}
-  			
-  			if(formData.usercompanycode.value == "") {
+  			if(formData.managercompanycode.value == "") {
   				alert("소속 회사를 선택해주세요.")
-  				return formData.usercompanycode.focus();
+  				return formData.managercompanycode.focus();
   			}
   			
-  			if(formData.deptcode.value == "") {
-  				alert("소속 혹은 부서를 선택해주세요.")
-  				return formData.deptcode.focus();
+  			if(formData.managerdeptname.value == "") {
+  				alert("분류를 선택해주세요.")
+  				return formData.managerdeptname.focus();
   			}
   			
-  			if(formData.positioncode.value == "") {
+  			if(formData.managerpositioncode.value == "") {
   				alert("직급을 선택해주세요.")
-  				return formData.positioncode.focus();
+  				return formData.managerpositioncode.focus();
   			}
   			
-  			if(formData.usermobile.value == "") {
+  			if(formData.managermobile.value == "") {
   				alert("연락처를 입력해주세요.")
-  				return formData.usermobile.focus();
+  				return formData.managermobile.focus();
   			}
   			
 			var temp_obj = {};
 			
-		    temp_obj["userid"] = $("#userid").val();
-		    temp_obj["username"] = $("#username").val();
-		    temp_obj["userpasswd"] = $("#userpasswd").val();
-		    temp_obj["usercompanycode"] = $("#usercompanycode").val();
-		    temp_obj["deptcode"] = $("#deptcode").val();
-		    temp_obj["positioncode"] = $("#positioncode").val();
-		    temp_obj["usermobile"] = $("#usermobile").val();
-		    temp_obj["useremail"] = $("#useremail").val();
+		    temp_obj["managername"] = $("#managername").val();
+		    temp_obj["managercompanycode"] = $("#managercompanycode").val();
+		    temp_obj["managerdeptname"] = $("#managerdeptname").val();
+		    temp_obj["managerpositioncode"] = $("#managerpositioncode").val();
+		    temp_obj["managermobile"] = $("#managermobile").val();
+		    temp_obj["manageremail"] = $("#manageremail").val();
 
   			alert(JSON.stringify(temp_obj));
 
@@ -88,7 +76,7 @@
   		        contentType:"application/json; charset=UTF-8",
   		        success:function(resqonse){
   		            alert("업데이트 처리되었습니다.");
-  		            location.href="/qsolcowork/User/List";
+  		            location.href="/qsolcowork/Manager/List";
   		        },
   		        error:function(jqXHR, textStatus, errorThrown){
   		            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
@@ -97,7 +85,7 @@
   		}
   		
   		function cancel(){
-  			location.href = "/qsolcowork/User/List";
+  			location.href = "/qsolcowork/Manager/List";
   		}
   		
   </script>
@@ -205,40 +193,37 @@ body {
 	    </div>
 	
 		<div class="viewListCenter" id="insertform">
-			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">사용자 ID</p>
-			<input id="userid" name="userid" type="text" class="form-control" placeholder="${userVO.userid}" value="${userVO.userid}" size="50" style="width: 100%; display: inline-block;" readonly="readonly">
-			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">사용자 이름</p>
-			<input id="username" name="username" type="text" class="form-control" placeholder="이름 입력.." size="50" style="width: 100%; display: inline-block;">
-			<!-- <p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">비밀번호</p> -->
-			<input id="userpasswd" name="userpasswd" type="hidden" class="form-control" placeholder="1234" value="1234" size="50" style="width: 100%; display: inline-block;" readonly="readonly">
+			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">담당자 이름</p>
+			<input id="managername" name="managername" type="text" class="form-control" placeholder="이름 입력.." size="50" style="width: 100%; display: inline-block;">
 			
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">소속</p>
-			<select class="selectpicker show-tick" data-style="btn-primary" name="usercompanycode" id="usercompanycode" data-live-search="true" data-width="100%" data-size="10" title="== 소속 회사를 선택해주세요 ==" style="display: inline-block;">
+			<select class="selectpicker show-tick" data-style="btn-primary" name="managercompanycode" id="managercompanycode" data-live-search="true" data-width="100%" data-size="10" title="== 소속 회사를 선택해주세요 ==" style="display: inline-block;">
+				<option value="" selected disabled hidden>== 소속 회사를 선택해주세요 ==</option>
 				<c:forEach var="companyVO" items="${companyVO}" varStatus="list">
-					<option id="usercompanycode" value="${companyVO.companycode}">${companyVO.companyname}</option>
+					<option id="managercompanycode" value="${companyVO.companycode}">${companyVO.companyname}</option>
 				</c:forEach>
 			</select>
 			
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">부서</p>
-			<select class="form-control" name="deptcode" id="deptcode">
-				<option value="" selected disabled hidden>== 소속 혹은 부서를 선택해주세요 ==</option>
-				<c:forEach var="deptVO" items="${deptVO}" varStatus="list">
-					<option id="deptcode" value="${deptVO.deptcode}">${deptVO.deptname}</option>
-				</c:forEach>
+			<select class="form-control" name="managerdeptname" id="managerdeptname">
+				<option value="" selected disabled hidden>== 분류를 선택해주세요 ==</option>
+				<option id="managerdeptname" value="고객사">고객사</option>
+				<option id="managerdeptname" value="파트너사">파트너사</option>
+				<option id="managerdeptname" value="기타">기타</option>
 			</select>
 			
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">직급</p>
-			<select class="form-control" name="positioncode" id="positioncode">
+			<select class="form-control" name="managerpositioncode" id="managerpositioncode">
 				<option value="" selected disabled hidden>== 직급을 선택해주세요 ==</option>
 				<c:forEach var="positionVO" items="${positionVO}" varStatus="list">
-					<option id="positioncode" value="${positionVO.positioncode}">${positionVO.positionname}</option>
+					<option id="managerpositioncode" value="${positionVO.positioncode}">${positionVO.positionname}</option>
 				</c:forEach>
 			</select>
 			
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">연락처</p>
-			<input id="usermobile" name="usermobile" type="text" class="form-control" placeholder="연락처 입력.." size="50" style="width: 100%; display: inline-block;">
+			<input id="managermobile" name="managermobile" type="text" class="form-control" placeholder="연락처 입력.." size="50" style="width: 100%; display: inline-block;">
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">이메일</p>
-			<input id="useremail" name="useremail" type="text" class="form-control" placeholder="이메일 입력.." size="50" style="width: 100%; display: inline-block;">
+			<input id="manageremail" name="manageremail" type="text" class="form-control" placeholder="이메일 입력.." size="50" style="width: 100%; display: inline-block;">
 			
 		</div>
 	</form>

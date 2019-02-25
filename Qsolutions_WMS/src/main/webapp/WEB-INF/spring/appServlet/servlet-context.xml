@@ -39,7 +39,7 @@
 			<mapping path="/Admin/**"/>
 			<mapping path="/User/**"/> 
 			<mapping path="/Search/**"/>
-			<mapping path="/Dashboard"/>
+			<mapping path="/Dashboard/**"/>
 			<beans:ref bean="authenticationInterceptor"></beans:ref>
 		</interceptor>
 	</interceptors>

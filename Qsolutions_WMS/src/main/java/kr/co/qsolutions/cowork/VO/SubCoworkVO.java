@@ -10,6 +10,8 @@ public class SubCoworkVO {
 	private String coworkcode;
 	private String userid;
 	private String username;
+	private String companyname;
+	private String coworktitle;
 	
 
 	public int getSubcoworkcode() {
@@ -69,15 +71,31 @@ public class SubCoworkVO {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	
+	public String getCompanyname() {
+		return companyname;
+	}
 
+
+	public void setCompanyname(String companyname) {
+		this.companyname = companyname;
+	}
+
+	public String getCoworktitle() {
+		return coworktitle;
+	}
+
+
+	public void setCoworktitle(String coworktitle) {
+		this.coworktitle = coworktitle;
+	}
 
 	@Override
 	public String toString() {
 		return "SubCoworkVO [subcoworkcode=" + subcoworkcode + ", subcoworktext=" + subcoworktext + ", subcoworkdate="
-				+ subcoworkdate + ", coworkcode=" + coworkcode + ", userid=" + userid + ", username=" + username + "]";
+				+ subcoworkdate + ", coworkcode=" + coworkcode + ", userid=" + userid + ", username=" + username
+				+ ", companyname=" + companyname + ", coworktitle=" + coworktitle + "]";
 	}
-
-	
 
 }
 

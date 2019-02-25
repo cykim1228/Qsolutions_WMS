@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/paging.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/util.js"></script>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.css">
@@ -20,16 +21,9 @@
 <script src="https://cdn.jsdelivr.net/npm/choices.js@4/public/assets/scripts/choices.min.js"></script>
 
 <script type="text/javascript">
-// 		function checkcompany(){
-// 			  $("select[id=companycode]").prop('disabled',false);
-// 		}
-// 		function checknocompany(){
-// 			  $("select[id=companycode]").prop('disabled',true);
-// 		}
-		
-  		function insertdata(){
+  		function updateuserform(){
   			
-  			var formData = document.insertData;
+			var formData = document.insertData;
   			
   			if(formData.userid.value == "") {
   				alert("아이디를 입력해주세요.")
@@ -50,12 +44,7 @@
   				alert("소속 회사를 선택해주세요.")
   				return formData.usercompanycode.focus();
   			}
-  			
-  			if(formData.deptcode.value == "") {
-  				alert("소속 혹은 부서를 선택해주세요.")
-  				return formData.deptcode.focus();
-  			}
-  			
+  		
   			if(formData.positioncode.value == "") {
   				alert("직급을 선택해주세요.")
   				return formData.positioncode.focus();
@@ -80,7 +69,7 @@
   			alert(JSON.stringify(temp_obj));
 
   			$.ajax({
-  		        url:"Insert",
+  		        url:"Update",
   		        type:"post",
   		        data:JSON.stringify(temp_obj),
   		        datatype:"json",
@@ -94,14 +83,13 @@
   		            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
   		        }
   		    });
+  			
   		}
-  		
   		function cancel(){
   			location.href = "/qsolcowork/User/List";
   		}
-  		
   </script>
-  
+
 <style>
 
 body {
@@ -198,24 +186,25 @@ body {
 <!-- <body  style="background-color: #d4d4d4"> -->
 
     <!-- 상세 뷰 페이지  -->
-	<form action="${pageContext.request.contextPath}/User/Insert" method="post" id="insertData" name="insertData">
+	<form action="${pageContext.request.contextPath}/Cowork/Insert" method="post" id="insertData" name="insertData">
 	    <div class="viewListTop">
-	    	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 30px; font-weight: bold;">사용자 등록</span>
-	    	<button type="button" id="save" class="btn btn-primary pull-right" onclick="insertdata()" style="margin-right: 10px; margin-top: 8px;">사용자 등록</button>
+	    	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 30px; font-weight: bold;">사용자 수정</span>
+	    	<button type="button" id="save" class="btn btn-primary pull-right" onclick="updateuserform()" style="margin-right: 10px; margin-top: 8px;">사용자 수정</button>
 	    </div>
 	
 		<div class="viewListCenter" id="insertform">
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">사용자 ID</p>
-			<input id="userid" name="userid" type="text" class="form-control" placeholder="${userVO.userid}" value="${userVO.userid}" size="50" style="width: 100%; display: inline-block;" readonly="readonly">
+			<input id="userid" name="userid" type="text" class="form-control" value="${userVO.userid}" placeholder="ID 입력.." size="50" style="width: 100%; display: inline-block;" readonly="readonly">
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">사용자 이름</p>
-			<input id="username" name="username" type="text" class="form-control" placeholder="이름 입력.." size="50" style="width: 100%; display: inline-block;">
-			<!-- <p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">비밀번호</p> -->
-			<input id="userpasswd" name="userpasswd" type="hidden" class="form-control" placeholder="1234" value="1234" size="50" style="width: 100%; display: inline-block;" readonly="readonly">
+			<input id="username" name="username" type="text" class="form-control" value="${userVO.username}" placeholder="이름 입력.." size="50" style="width: 100%; display: inline-block;">
+			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">비밀번호</p>
+			<input id="userpasswd" name="userpasswd" type="password" class="form-control" value="${userVO.userpasswd}" placeholder="PW 입력.." size="50" style="width: 100%; display: inline-block;">
 			
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">소속</p>
 			<select class="selectpicker show-tick" data-style="btn-primary" name="usercompanycode" id="usercompanycode" data-live-search="true" data-width="100%" data-size="10" title="== 소속 회사를 선택해주세요 ==" style="display: inline-block;">
+				<option value="" selected disabled hidden>== 소속 회사를 선택해주세요 ==</option>
 				<c:forEach var="companyVO" items="${companyVO}" varStatus="list">
-					<option id="usercompanycode" value="${companyVO.companycode}">${companyVO.companyname}</option>
+					<option id="usercompanycode" value="${companyVO.companycode}" <c:if test="${userVO.usercompanycode == companyVO.companycode}">selected</c:if>>${companyVO.companyname}</option>
 				</c:forEach>
 			</select>
 			
@@ -223,81 +212,88 @@ body {
 			<select class="form-control" name="deptcode" id="deptcode">
 				<option value="" selected disabled hidden>== 소속 혹은 부서를 선택해주세요 ==</option>
 				<c:forEach var="deptVO" items="${deptVO}" varStatus="list">
-					<option id="deptcode" value="${deptVO.deptcode}">${deptVO.deptname}</option>
+					<option id="deptcode" value="${deptVO.deptcode}" <c:if test="${userVO.deptcode == deptVO.deptcode}">selected</c:if>>${deptVO.deptname}</option>
 				</c:forEach>
 			</select>
 			
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">직급</p>
-			<select class="form-control" name="positioncode" id="positioncode">
+			<select class="form-control" name="deptcode" id="positioncode">
 				<option value="" selected disabled hidden>== 직급을 선택해주세요 ==</option>
 				<c:forEach var="positionVO" items="${positionVO}" varStatus="list">
-					<option id="positioncode" value="${positionVO.positioncode}">${positionVO.positionname}</option>
+					<option id="positioncode" value="${positionVO.positioncode}" <c:if test="${userVO.positioncode == positionVO.positioncode}">selected</c:if>>
+					${positionVO.positionname}
+					</option>
 				</c:forEach>
 			</select>
 			
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">연락처</p>
-			<input id="usermobile" name="usermobile" type="text" class="form-control" placeholder="연락처 입력.." size="50" style="width: 100%; display: inline-block;">
+			<input id="usermobile" name="usermobile" type="text" class="form-control" value="${userVO.usermobile}" placeholder="연락처 입력.." size="50" style="width: 100%; display: inline-block;">
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">이메일</p>
-			<input id="useremail" name="useremail" type="text" class="form-control" placeholder="이메일 입력.." size="50" style="width: 100%; display: inline-block;">
+			<input id="useremail" name="useremail" type="text" class="form-control" value="${userVO.useremail}" placeholder="이메일 입력.." size="50" style="width: 100%; display: inline-block;">
 			
 		</div>
 	</form>
     
 	<%-- <!-- 상세 뷰 페이지  -->
-	<form action="${pageContext.request.contextPath}/Cowork/Insert" method="post" id="insertData" name="insertData">
 	<div class="container-fluid">
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="insertform">
-          <h1 class="page-header">사용자등록</h1>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">사용자ID : ${userVO.userid}</h1>
           <div class="row placeholders">
             <div class="col-xs-12 col-sm-4 placeholder">
-              <h4>사용자ID : <input type="text" id="userid" name="userid"></h4>
+              <h4>사용자 이름 : <input type="text" id="username" name="username"  value="${userVO.username}"></h4>
+              <input type="hidden" id="userid" value="${userVO.userid}"/>
             </div>
             <div class="col-xs-12 col-sm-4 placeholder">
-              <h4>사용자명  :  <input type="text" id="username" name="username"></h4>
-            </div>
-            <div class="col-xs-12 col-sm-4 placeholder">
-              <h4>패스워드 : <input type="password" id="userpasswd" name="userpasswd"></h4>
-            </div>
-          </div>
-          <br><br>
-          <div class="row placeholders">
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <h4>소속<br> </h4>
-				<select class="form-control" id="companyusercode" name="companyusercode">
-					<option id="companyusercode" value="0">(주)퀀텀솔루션즈</option>
-					<option id="companyusercode" value="1">고객사</option>
-				</select>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <h4>부서</h4>
+              <h4>부서 :
 	              <select class="form-control" name="deptcode" id="deptcode">
 	              	<c:forEach var="deptVO" items="${deptVO}" varStatus="list">
-					  <option id="deptcode" value="${deptVO.deptcode}">${deptVO.deptname}</option>
+					  <option id="deptcode" value="${deptVO.deptcode}" <c:if test="${userVO.deptcode == deptVO.deptcode}">seleted</c:if>>${deptVO.deptname}</option>
 	              	</c:forEach>
 				</select>
+				</h4>
             </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <h4>직급</h4>
-	              <select class="form-control" name="positioncode" id="positioncode">
+            <div class="col-xs-12 col-sm-4 placeholder">
+              <h4>직급 :
+	              <select class="form-control" name="deptcode" id="deptcode">
 	              	<c:forEach var="positionVO" items="${positionVO}" varStatus="list">
-					  <option id="positioncode" value="${positionVO.positioncode}">${positionVO.positionname}</option>
+						<option id="positioncode" value="${positionVO.positionname}" <c:if test="${positionVO.positionname == positionVO.positionname}">seleted</c:if>>
+							${positionVO.positionname}
+						</option>
 	              	</c:forEach>
-				</select>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <h4>연락처 : <input type="text" id="usermobile" name="usermobile"> </h4>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <h4>이메일 : <input type="text" id="useremail" name="useremail"></h4>
+				</select></h4>
             </div>
           </div>
           <br><br>
-			<div>
-		        <button type="button" class="btn btn-primary" onclick="insertdata()">저장</button>
-		        <button type="button" class="btn btn-primary" onclick="cancel()">취소</button>
+          <div class="row placeholders">
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <h4>핸드폰 번호 : <input type="text" id="usermobile" name="usermobile"  value="${userVO.usermobile}"></h4>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <h4>이메일주소 : <input type="text" id="useremail" name="useremail"  value="${userVO.useremail}"></h4>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <h4>
+              	소속 : 
+              	  <select class="form-control" name="companyusercode" id="companyusercode">
+              	 	 <option id="companyusercode" value="${userVO.companyusercode}" <c:if test="${userVO.companyusercode == 1}">seleted</c:if>>퀀텀솔루션즈</option>
+              	 	 <option id="companyusercode" value="${userVO.companyusercode}" <c:if test="${userVO.companyusercode == 0}">seleted</c:if>>고객사</option>
+              	  </select>
+              </h4>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <h4></h4>
+            </div>
+          </div>
+          <br><br>
+			<div class="row">
+				<div class="col-xs-12 col-sm-6 placeholder">
+			        <button type="button" class="btn btn-primary" onclick="updateuserform()">수정</button>
+				</div>
+				<div class="col-xs-12 col-sm-6 placeholder right">
+				    <button type="button" class="btn btn-primary" onclick="cancel()">취소</button>
+				</div>
 			</div>
         </div>
-	</div>
-	</form> --%>
+	</div> --%>
 </body>
 </html>

@@ -18,18 +18,18 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery.tablesorter.pager.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.tablesorter.pager.js"></script>
 <script type="text/javascript">
-	function updateuserform(){
-		var userid = $("#userid").val();
-		var url = "/qsolcowork/User/Updateform?userid="+userid;
+function updatemanagerform(){
+		var managerid = $("#managerid").val();
+		var url = "/qsolcowork/User/Updateform?managerid="+managerid;
 		alert(url);
 		location.href = url;
 	}
 
-	function deleteuserdata(){
+	function deletemanagerdata(){
 	    var temp_obj = {};
 	    var answer = confirm("삭제하시겠습니까??")
 	    if (answer) {
-		    temp_obj["userid"] = $("#userid").val();
+		    temp_obj["managerid"] = $("#managerid").val();
 			alert(JSON.stringify(temp_obj));
 			//alert(senddelvar);
 			$.ajax({
@@ -54,11 +54,7 @@
 		
 	}
 	function cancel(){
-		location.href = "/qsolcowork/User/List";
-	}
-	
-	function googleLogin() {
-		location.href = "/qsolcowork/User/googleCallback";
+		location.href = "/qsolcowork/Manager/List";
 	}
 	
 	$(function() {
@@ -265,8 +261,8 @@ body {
     <!-- 상세 뷰 페이지  -->
     <div class="viewListTop">
     	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 30px; font-weight: bold;">담당자 상세 조회</span>
-    	<button type="button" class="btn btn-danger pull-right" onclick="deleteuserdata()" style="margin-right: 10px; margin-top: 8px;">담당자 삭제</button>
-    	<button type="button" class="btn btn-primary pull-right" onclick="updateuserform()" style="margin-right: 10px; margin-top: 8px;">담당자 수정</button>
+    	<button type="button" class="btn btn-danger pull-right" onclick="deletemanagerdata()" style="margin-right: 10px; margin-top: 8px;">담당자 삭제</button>
+    	<button type="button" class="btn btn-primary pull-right" onclick="updatemanagerform()" style="margin-right: 10px; margin-top: 8px;">담당자 수정</button>
     	<%-- <a href="${google_url}">
     		<button id="btnJoinGoogle" class="btn btn-primary btn-round" style="width: 100%">
         		<i class="fa fa-google" aria-hidden="true"></i>Google Login
@@ -283,84 +279,26 @@ body {
 						<th style="width: 10%; text-align: center;">이름</th>
 						<th style="width: 15%; text-align: center;">연락처</th>
 						<th style="width: 15%; text-align: center;">이메일</th>
-						<th style="width: 15%; text-align: center;">부서</th>
+						<th style="width: 15%; text-align: center;">분류</th>
 						<th style="width: 15%; text-align: center;">직급</th>
 						<th style="width: 15%; text-align: center;">소속</th>
 					</tr>
 				</thead>
 				<tbody align="center">
 						<tr>
-							<td>${userVO.userid}</td>
-							<td>${userVO.username}<input type="hidden" id="userid" value="${userVO.userid}"/></td>
-							<td><a href='tel:${userVO.usermobile}'>${userVO.usermobile}</a></td>
-							<td><a href='mailto:${userVO.useremail}'>${userVO.useremail}</a></td>
-							<td>${userVO.deptname}</td>
-							<td>${userVO.positionname}</td>
-							<td>${userVO.companyname}</td>
+							<td>${managerVO.managerid}</td>
+							<td>${managerVO.managername}<input type="hidden" id="managerid" value="${managerVO.managerid}"/></td>
+							<td><a href='tel:${managerVO.managermobile}'>${managerVO.managermobile}</a></td>
+							<td><a href='mailto:${managerVO.manageremail}'>${managerVO.manageremail}</a></td>
+							<td>${managerVO.managerdeptname}</td>
+							<td>${managerVO.positionname}</td>
+							<td>${managerVO.companyname}</td>
 						</tr>
 				</tbody>
 			</table>
 		</div>
 	</div>
-	<div class="viewList">
-	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 23px; font-weight: bold;">작성 업무 목록</span>
-		<div class="table-responsive">
-			<table class="table table-striped tableWrite">
-				<thead align="center">
-					<tr>
-						<th style="width: 10%; text-align: center;" class="filter-select filter-exact" data-placeholder="카테고리">카테고리</th>
-						<th style="width: 20%; text-align: center;">고객사명</th>
-						<th style="width: 30%; text-align: center;">제목</th>
-						<th style="width: 10%; text-align: center;">등록자</th>
-						<th style="width: 15%; text-align: center;">업무코드</th>
-						<th style="width: 15%; text-align: center;">작성일</th>
-					</tr>
-				</thead>
-				<tfoot>
-					<tr>
-						<th colspan="6" class="ts-pagerWrite">
-							<div class="form-inline" align="center">
-								<div class="btn-group btn-group-sm mx-1" role="group">
-									<button type="button" class="btn btn-primary first"
-										title="first">⇤</button>
-									<button type="button" class="btn btn-primary prev"
-										title="previous">←</button>
-								</div>
-								<span class="pagedisplay"></span>
-								<div class="btn-group btn-group-sm mx-1" role="group">
-									<button type="button" class="btn btn-primary next"
-										title="next">→</button>
-									<button type="button" class="btn btn-primary last"
-										title="last">⇥</button>
-								</div>
-								<!-- <select class="form-control-sm custom-select btn btn-primary px-1 pagesize" 
-									title="Select page size" style="width: 50px; height: 37px;">
-									<option selected="selected" value="5">5</option>
-									<option value="10">10</option>
-									<option value="15">15</option>
-								</select> -->
-								<select class="form-control-sm btn btn-primary custom-select pagenum"
-									title="Select page number" style="width: 50px; height: 37px;">
-								</select>
-							</div>
-						</th>
-					</tr>
-				</tfoot>
-				<tbody align="center">
-					<c:forEach items="${coworkVO}" var="coworkVO" varStatus="rowCount">
-					<tr>
-						<td>${coworkVO.coworksubject}</td>
-						<td style="font-weight: bold;"><a href='${pageContext.request.contextPath}/Company/View?companycode=${coworkVO.companycode}'>${coworkVO.companyname}</a></td>
-						<td style="font-weight: bold;"><a href='${pageContext.request.contextPath}/Cowork/View?coworkcode=${coworkVO.coworkcode}'>${coworkVO.coworktitle}</a></td>
-						<td><a href='${pageContext.request.contextPath}/User/View?userid=${coworkVO.userid}'>${coworkVO.username}</a></td>
-						<td>${coworkVO.coworkcode}</td>
-						<td><fmt:formatDate value="${coworkVO.coworkdate}" pattern="yyyy/MM/dd"/></td>
-					</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-		</div>
-	</div>
+	
 	<div class="viewList">
 	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 23px; font-weight: bold;">담당 업무 목록</span>
 		<div class="table-responsive">

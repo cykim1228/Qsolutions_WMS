@@ -43,6 +43,7 @@
 	       		username like CONCAT('%',#{searchData},'%')
 	       	</if>
 			AND u.IsUse = 0
+			AND NOT c.companyname = '(주) 퀀텀솔루션즈'
 		</trim>
 		ORDER BY
 			usercompanycode desc
@@ -53,15 +54,16 @@
     	select
     		count(*)
     	from
-    		user
+    		user u left join company c ON u.usercompanycode = c.companycode
     	<trim prefix="WHERE" prefixOverrides="AND |OR ">
 	       	<if test="searchType=='userid'">
-	       		userid like CONCAT('%',#{searchData},'%')
+	       		u.userid like CONCAT('%',#{searchData},'%')
 	       	</if>
 	       	<if test="searchType=='username'">
-	       		username like CONCAT('%',#{searchData},'%')
+	       		u.username like CONCAT('%',#{searchData},'%')
 	       	</if>
-			AND IsUse = 0
+			AND u.IsUse = 0
+			AND NOT c.companyname = '(주) 퀀텀솔루션즈'
 		</trim>
     </select>
     
@@ -139,5 +141,105 @@
 		WHERE
 			ucc.userid = #{userid};
    	</select>
+   	
+   	<select id="UserIdSelect" resultType="String" parameterType="String">
+		select max(userid) from user
+		<where>
+			userid like CONCAT('%',#{nowdate},'%') 
+		</where>
+	</select>
+   	
+   	
+   	<!-- 특정담당자 검색 -->
+    <select id="ManagerCheckID" resultType="ManagerVO" parameterType="String">
+    	select 
+    		managerid, managername
+    	from 
+    		manager
+    	<where>
+    		managerid = #{managerid}
+    	</where>    
+    </select>
+    <select id="ManagerViewSelect" resultType="ManagerVO" parameterType="String">
+    	select
+    		managerid, managername, managermobile, manageremail, managercompanycode, managerdeptname, m.managerpositioncode,p.positionname,c.companyname
+    	from 
+    		manager m left join positions p ON m.managerpositioncode = p.positioncode 
+            left join company c ON m.managercompanycode = c.companycode
+    	<where>
+    		managerid = #{managerid}
+    	</where>    
+    </select>
+ 	<!-- 전체 담당자 검색 -->
+    <select id="SelectManagerList" resultType="ManagerVO" parameterType="PagingVO">
+    	select
+    		managerid, managername, managermobile,manageremail,managercompanycode,managerdeptname,m.managerpositioncode,p.positionname,c.companyname
+    	from 
+    		manager m left join positions p ON m.managerpositioncode = p.positioncode 
+            left join company c ON m.managercompanycode = c.companycode
+    	<trim prefix="WHERE" prefixOverrides="AND |OR ">
+	       	<if test="searchType=='managerid'">
+	       		managerid like CONCAT('%',#{searchData},'%')
+	       	</if>
+	       	<if test="searchType=='managername'">
+	       		managername like CONCAT('%',#{searchData},'%')
+	       	</if>
+			AND m.IsUse = 0
+		</trim>
+		ORDER BY
+			managercompanycode desc
+		Limit #{start},#{last}
+    </select>
+    
+    <select id="SelectManagerCount" resultType="Integer" parameterType="PagingVO">
+    	select
+    		count(*)
+    	from
+    		manager
+    	<trim prefix="WHERE" prefixOverrides="AND |OR ">
+	       	<if test="searchType=='managerid'">
+	       		managerid like CONCAT('%',#{searchData},'%')
+	       	</if>
+	       	<if test="searchType=='username'">
+	       		managername like CONCAT('%',#{searchData},'%')
+	       	</if>
+			AND IsUse = 0
+		</trim>
+    </select>
+    
+   	<insert id="InsertManager" parameterType="ManagerDTO">
+   		insert into manager
+   			(managerid,managername,managercompanycode,managerdeptname,managerpositioncode,managermobile,manageremail)
+   		value
+   			(#{managerid},#{managername},#{managercompanycode},#{managerdeptname},#{managerpositioncode},#{managermobile},#{manageremail})
+   	</insert>
+   	
+   	<update id="UpdateManager" parameterType="ManagerDTO">
+   		update 
+			manager
+		set
+			managername = #{managername}, managermobile = #{managermobile}, manageremail = #{manageremail},
+			managercompanycode = #{managercompanycode}, managerdeptname = #{managerdeptname}, managerpositioncode = #{managerpositioncode}
+		where
+			managerid = #{managerid}
+   	</update>
+   	<update id="DeleteManager" parameterType="ManagerDTO">
+   		update 
+			manager
+		set
+			IsUse = 1
+		where
+			managerid = #{managerid}
+   	</update>
+    
+    <select id="SelectManager" resultType="ManagerVO">
+		select 
+			managerid, managername, managermobile, manageremail, managerdeptname, p.positionname, managercompanycode, c.companyname
+		from 
+			manager m left join positions p ON m.managerpositioncode = p.positioncode 
+            left join company c ON m.managercompanycode = c.companycode
+		where
+			m.IsUse != 1
+	</select>
     
 </mapper>
