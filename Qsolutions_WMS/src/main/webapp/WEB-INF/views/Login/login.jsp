@@ -13,26 +13,30 @@
 
 </head>
 <body class="text-center">
-	<form class="form-signin" name="SendLogin" action="${pageContext.request.contextPath}/Login" method="POST">
+	<form class="form-signin" name="SendLogin" action="${pageContext.request.contextPath}/Login" method="POST"> 
 		<!-- 로그인 폼  -->
-		<img class="mb-4" src="${pageContext.request.contextPath}/resources/img/logo.png" alt="">      
+		<div style="text-align: center;">
+		<img class="mb-4" src="${pageContext.request.contextPath}/resources/img/logo.png" alt="" >      
+		</div>
 		<h1 class="h3 mb-3 font-weight-normal">사내 업무 시스템</h1>
-		
+	<div>
 		<label for="inputEmail" class="sr-only">UserID</label>
-		<input type="text" id="userid" name="userid"  class="form-control" placeholder="아이디" value="${cookie.rememberID.value}"  required autofocus>
+		<input type="text" id="userid" name="userid"  class="form-control" placeholder="아이디" value="${cookie.rememberID.value}" style="width:330px; margin: 0 auto;"  required autofocus>
 		<label for="inputPassword" class="sr-only">Password</label>
-		<input type="password" id="userpasswd" name="userpasswd" class="form-control" placeholder="패스워드" required>
+		<input type="password" id="userpasswd" name="userpasswd" class="form-control" placeholder="패스워드" style="width:330px; margin: 0 auto;" required>
 		<input type="hidden" name="Client" value="N"/>
-	
+	</div>
 	<div class="checkbox mb-3">
         <label>
           <input type="checkbox" name="useCookie"> 로그인유지
         </label>
       </div>
-		<button type="button" onclick="check()" id="loginBtn" class="btn btn-default btn-lg" style=" margin-bottom: 20px">LOGIN</button>
-		<button type="button" onclick="googleLogin()" id="loginBtn" class="btn btn-default btn-lg" style=" margin-bottom: 20px">GoogleLogin</button>
+		<button type="button" onclick="check()" id="loginBtn" class="btn btn-default btn-lg" style="width:330px; margin-bottom: 20px">LOGIN</button>
+		<!-- <button type="button" onclick="googleLogin()" id="loginBtn" class="btn btn-default btn-lg" style="width:330px; margin-bottom: 20px">GoogleLogin</button> -->
 		
-		<p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+		<p class="mt-5 mb-3 text-muted">&copy; 2019 Copyright: 
+		<a href="http://www.qsolutions.co.kr/" style="color: #0431B4;"> Quantum Solutions</a>
+	  <p style="font-size: 3px;">The Dominant in Wireless Lifecycle</p></p>
 	</form>
 	<script>
 		var LoginForm = document.SendLogin;

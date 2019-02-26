@@ -265,8 +265,20 @@ body {
     <!-- 상세 뷰 페이지  -->
     <div class="viewListTop">
     	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 30px; font-weight: bold;">담당자 상세 조회</span>
-    	<button type="button" class="btn btn-danger pull-right" onclick="deleteuserdata()" style="margin-right: 10px; margin-top: 8px;">담당자 삭제</button>
-    	<button type="button" class="btn btn-primary pull-right" onclick="updateuserform()" style="margin-right: 10px; margin-top: 8px;">담당자 수정</button>
+    	<c:choose>
+			<c:when test="${userVO.companyname eq '(주) 퀀텀솔루션즈'}">
+				<c:if test="${loginVO.userid eq 'admin'}">
+				<button type="button" class="btn btn-danger pull-right" onclick="deleteuserdata()" style="margin-right: 10px; margin-top: 8px;">담당자 삭제</button>
+    			<button type="button" class="btn btn-primary pull-right" onclick="updateuserform()" style="margin-right: 10px; margin-top: 8px;">담당자 수정</button>
+				</c:if>
+			</c:when>
+			<c:otherwise>
+				<button type="button" class="btn btn-danger pull-right" onclick="deleteuserdata()" style="margin-right: 10px; margin-top: 8px;">담당자 삭제</button>
+    			<button type="button" class="btn btn-primary pull-right" onclick="updateuserform()" style="margin-right: 10px; margin-top: 8px;">담당자 수정</button>
+			</c:otherwise>
+		</c:choose>
+    	
+    	
     	<%-- <a href="${google_url}">
     		<button id="btnJoinGoogle" class="btn btn-primary btn-round" style="width: 100%">
         		<i class="fa fa-google" aria-hidden="true"></i>Google Login

@@ -43,7 +43,6 @@
 	       		username like CONCAT('%',#{searchData},'%')
 	       	</if>
 			AND u.IsUse = 0
-			AND NOT c.companyname = '(주) 퀀텀솔루션즈'
 		</trim>
 		ORDER BY
 			usercompanycode desc
@@ -54,16 +53,15 @@
     	select
     		count(*)
     	from
-    		user u left join company c ON u.usercompanycode = c.companycode
+    		user
     	<trim prefix="WHERE" prefixOverrides="AND |OR ">
 	       	<if test="searchType=='userid'">
-	       		u.userid like CONCAT('%',#{searchData},'%')
+	       		userid like CONCAT('%',#{searchData},'%')
 	       	</if>
 	       	<if test="searchType=='username'">
-	       		u.username like CONCAT('%',#{searchData},'%')
+	       		username like CONCAT('%',#{searchData},'%')
 	       	</if>
-			AND u.IsUse = 0
-			AND NOT c.companyname = '(주) 퀀텀솔루션즈'
+			AND IsUse = 0
 		</trim>
     </select>
     

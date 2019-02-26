@@ -230,7 +230,7 @@ body {
 				<thead align="center">
 					<tr>
 						<th style="width: 34%; text-align: center;">회사 검색 결과</th>
-						<th style="width: 34%; text-align: center;">사용자 검색 결과</th>
+						<th style="width: 34%; text-align: center;">담당자 검색 결과</th>
 						<th style="width: 33%; text-align: center;">업무 검색 결과</th>
 					</tr>
 				</thead>

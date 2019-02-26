@@ -116,6 +116,7 @@ public class UserController {
 
 		UserVO userVO = userservice.UserViewSelect(viewuserid);
 		
+		model.addAttribute("loginVO", loginVO);
 		model.addAttribute("userVO", userVO);
 		model.addAttribute("coworkVO", coworkVO);
 		model.addAttribute("managerCoworkVO", managerCoworkVO);
