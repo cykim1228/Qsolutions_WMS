@@ -193,7 +193,7 @@
         contentType:"application/json;charset=UTF-8",
         success:function(data){
         	viewManager();
-            alert("등록되었습니다.");
+            // alert("등록되었습니다.");
         },
         error:function(jqXHR, textStatus, errorThrown){
             alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);

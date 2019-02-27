@@ -26,24 +26,30 @@
 	}
 
 	function deleteform(){
-		var companycode = $("#companycode").val();
-
-		$.ajax({
-        url:"Delete",
-        type:"get",
-        data:{"companycode":companycode},
-        datatype:"html",
-        contentType:"application/html;charset=UTF-8",
-        success:function(response){
-            alert("삭제되었습니다.");
-    		location.href = "/qsolcowork/Company/List";
-        },
-        error:function(jqXHR, textStatus, errorThrown){
-            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
-        }
-		});
 		
+		var answer = confirm("삭제하시겠습니까??")
+		if (answer) {
+			var companycode = $("#companycode").val();
+			$.ajax({
+	        url:"Delete",
+	        type:"get",
+	        data:{"companycode":companycode},
+	        datatype:"html",
+	        contentType:"application/html;charset=UTF-8",
+	        success:function(response){
+	            alert("삭제되었습니다.");
+	    		location.href = "/qsolcowork/Company/List";
+	        },
+	        error:function(jqXHR, textStatus, errorThrown){
+	            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
+	        }
+			});
+		}
+	    else {
+	        return;
+	    }
 	}
+	
 	function cancel(){
 		location.href = "/qsolcowork/Company/List";
 	}

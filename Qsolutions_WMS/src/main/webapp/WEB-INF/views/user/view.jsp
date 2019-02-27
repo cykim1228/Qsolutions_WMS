@@ -21,7 +21,7 @@
 	function updateuserform(){
 		var userid = $("#userid").val();
 		var url = "/qsolcowork/User/Updateform?userid="+userid;
-		alert(url);
+		// alert(url);
 		location.href = url;
 	}
 

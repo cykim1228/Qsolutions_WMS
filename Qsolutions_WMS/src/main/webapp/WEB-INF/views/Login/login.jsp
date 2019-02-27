@@ -34,9 +34,9 @@
 		<button type="button" onclick="check()" id="loginBtn" class="btn btn-default btn-lg" style="width:330px; margin-bottom: 20px">LOGIN</button>
 		<!-- <button type="button" onclick="googleLogin()" id="loginBtn" class="btn btn-default btn-lg" style="width:330px; margin-bottom: 20px">GoogleLogin</button> -->
 		
-		<p class="mt-5 mb-3 text-muted">&copy; 2019 Copyright: 
+		<p class="mt-5 mb-3 text-muted">&copy; 2019 Copyright:
 		<a href="http://www.qsolutions.co.kr/" style="color: #0431B4;"> Quantum Solutions</a>
-	  <p style="font-size: 3px;">The Dominant in Wireless Lifecycle</p></p>
+	  <p style="font-size: 80%;">The Dominant in Wireless Lifecycle</p></p>
 	</form>
 	<script>
 		var LoginForm = document.SendLogin;

@@ -17,7 +17,7 @@
 function updateuserform(){
 		var userid = $("#userid").val();
 		var url = "/qsolcowork/User/Updateforms?userid="+userid;
-		alert(url);
+		// alert(url);
 		location.href = url;
 	}
 </script>
@@ -200,24 +200,16 @@ h2 {
 					<td><a href='${pageContext.request.contextPath}/Company/View?companycode=${coworkMyListVO.companycode}'>${coworkMyListVO.companyname}</a></td>
 					<td>
 						<c:if test="${coworkMyListVO.coworkstep == '견적'}">
-							<div class="progress" style="margin-bottom: 0px;">
-								<div class="progress-bar progress-bar-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">20%</div>
-							</div>
+							<p>견적</p>
 						</c:if>
 						<c:if test="${coworkMyListVO.coworkstep == '입찰'}">
-							<div class="progress" style="margin-bottom: 0px;">
-								<div class="progress-bar progress-bar-info" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">40%</div>
-							</div>
+							<p>입찰</p>
 						</c:if>
 						<c:if test="${coworkMyListVO.coworkstep == '수주'}">
-							<div class="progress" style="margin-bottom: 0px;">
-								<div class="progress-bar progress-bar-success" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div>
-							</div>
+							<p>수주</p>
 						</c:if>
 						<c:if test="${coworkMyListVO.coworkstep == '계약'}">
-							<div class="progress" style="margin-bottom: 0px;">
-								<div class="progress-bar progress-bar-success" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">80%</div>
-							</div>
+							<p>계약</p>
 						</c:if>
 						<c:if test="${coworkMyListVO.coworkstep == '이슈발생'}">
 							<div class="progress" style="margin-bottom: 0px;">
@@ -236,7 +228,7 @@ h2 {
 						</c:if>
 						<c:if test="${coworkMyListVO.coworkstep == '진행중'}">
 							<div class="progress" style="margin-bottom: 0px;">
-								<div class="progress-bar progress-bar-success" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
+								${subcoworkListVO.coworkstep}
 							</div>
 						</c:if>
 						<%-- <c:if test="${coworkMyListVO.coworkstep == '유지보수전'}">
