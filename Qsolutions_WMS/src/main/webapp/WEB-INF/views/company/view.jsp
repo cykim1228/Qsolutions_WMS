@@ -21,7 +21,7 @@
 	function updateform(){
 		//var coworkcode = document.getElementById("coworkcode").value
 		var companycode = $("#companycode").val();
-		var url = "/qsolcowork/Company/Updateform?companycode="+companycode;
+		var url = "/Company/Updateform?companycode="+companycode;
 		location.href = url;
 	}
 
@@ -38,7 +38,7 @@
 	        contentType:"application/html;charset=UTF-8",
 	        success:function(response){
 	            alert("삭제되었습니다.");
-	    		location.href = "/qsolcowork/Company/List";
+	    		location.href = "/Company/List";
 	        },
 	        error:function(jqXHR, textStatus, errorThrown){
 	            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
@@ -52,6 +52,33 @@
 	
 	function cancel(){
 		location.href = "/qsolcowork/Company/List";
+	}
+	
+	function uploadfile(){
+ 		
+ 		var temp_obj = {};
+ 		
+		temp_obj["companycode"] = $("#companycode").val();
+		temp_obj["filename"] = $("#filename").val();
+		temp_obj["filepathname"] = $("#filepathname").val();
+	    
+		alert("test--"+JSON.stringify(temp_obj));
+
+		$.ajax({
+	        url:"Upload",
+	        type:"post",
+	        data:JSON.stringify(temp_obj),
+	        datatype:"json",
+			cache : false,
+	        contentType:"application/json; charset=UTF-8",
+	        success:function(resqonse){
+	            alert("파일이 업로드되었습니다.");
+	    		location.href = "/Company/List";
+	        },
+	        error:function(jqXHR, textStatus, errorThrown){
+	            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
+	        }
+	    });
 	}
 	
 	$(function() {
@@ -416,7 +443,23 @@ body {
 			</div>
 	</div>
 	
+	<%-- <div class="viewList">
+	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 23px; font-weight: bold;">파일 업로드</span>
+	<form method="post" action="upload" enctype="multipart/form-data">
+		<input type="hidden" id="companycode" name="companycode" value="${companyVO.companycode}"/>
+		<label>파일 명:</label>
+		<input type="text" id="filename" name="filename">
+		<input type="file" id="file" name="file">
+		<br><br>
+		<button type="button" class="btn btn-primary pull-right" onclick="uploadfile()" style="margin-right: 10px; margin-top: 8px;">파일 업로드</button>
+	</form>
 	
+	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 23px; font-weight: bold;">파일 목록</span>
+	<div class="result-images">
+		<img src="${pageContext.request.contextPath }${url }" style="width:150px">
+	</div>
+
+	</div> --%>
     
 	<%-- <!-- 상세 뷰 페이지  -->
 	<div class="container-fluid">

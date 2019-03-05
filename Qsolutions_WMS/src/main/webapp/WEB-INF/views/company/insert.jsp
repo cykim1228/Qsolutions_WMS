@@ -68,7 +68,7 @@
 	        contentType:"application/json; charset=UTF-8",
 	        success:function(resqonse){
 	            alert("사이트가 입력 처리되었습니다.");
-	    		location.href = "/qsolcowork/Company/List";
+	    		location.href = "/Company/List";
 	        },
 	        error:function(jqXHR, textStatus, errorThrown){
 	            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
@@ -96,7 +96,7 @@
 	        contentType:"application/json; charset=UTF-8",
 	        success:function(resqonse){
 	            alert("업데이트 처리되었습니다.");
-	    		location.href = "/qsolcowork/Company/List";
+	    		location.href = "/Company/List";
 	        },
 	        error:function(jqXHR, textStatus, errorThrown){
 	            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);

@@ -40,6 +40,13 @@ public class EmailController {
             return "cowork/mailform";
         }
         */
+    
+    @RequestMapping(value="/Cowork/send",method=RequestMethod.POST)
+    public String submit(EmailForm form) throws Exception{
+        emailSender.sendEmail(form);
+        
+        return "redirect:/Cowork/List";
+    }
         
     @RequestMapping(value="/toMail/Send",method=RequestMethod.POST)
     public String CoworkView(HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
@@ -74,7 +81,8 @@ public class EmailController {
     	coworkDTO.setCoworkcode(tmpcode);
     	CoworkVO coworkVO = coworkservice.CoworkViewSelect(coworkDTO);
     	
-    	System.out.println(coworkVO);
+    	System.out.println("tmpcode : " + tmpcode);
+    	System.out.println("coworkVO : " + coworkVO);
     	
     	List<SubCoworkVO>subcoworkVO = coworkservice.SubCoworkListSelect(tmpcode);
     	
@@ -82,7 +90,7 @@ public class EmailController {
     	
     	System.out.println("userList : " + userList);
     	
-    	System.out.println(subcoworkVO);
+    	System.out.println("subcoworkVO : " + subcoworkVO);
     	
     	model.addAttribute("userList", userList);
     	model.addAttribute("CoworkVO", coworkVO);

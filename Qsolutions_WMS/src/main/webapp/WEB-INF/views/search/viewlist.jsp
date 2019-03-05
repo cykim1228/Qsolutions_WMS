@@ -32,7 +32,7 @@
 	}
 
 	function insertView() {
-		location.href = "/qsolcowork/Company/Insertform";
+		location.href = "/Company/Insertform";
 	}
 
 	$(function() {

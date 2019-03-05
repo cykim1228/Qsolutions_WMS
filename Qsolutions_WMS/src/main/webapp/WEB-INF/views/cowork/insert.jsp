@@ -115,7 +115,7 @@
 			contentType : "application/json;charset=UTF-8",
 			success : function(resqonse) {
 				alert("저장되었습니다.");
-				location.href = "/qsolcowork/Cowork/List";
+				location.href = "/Cowork/List";
 			},
 			error : function(jqXHR, textStatus, errorThrown) {
 				alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
@@ -124,7 +124,7 @@
 	}
 
 	function cancel() {
-		location.href = "/qsolcowork/Cowork/List";
+		location.href = "/Cowork/List";
 	}
 	
 	$(document).ready(function() {

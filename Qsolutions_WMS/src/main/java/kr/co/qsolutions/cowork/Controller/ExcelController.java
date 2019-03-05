@@ -32,6 +32,7 @@ import kr.co.qsolutions.cowork.DTO.CoworkDTO;
 import kr.co.qsolutions.cowork.DTO.SubCoworkDTO;
 import kr.co.qsolutions.cowork.Service.CompanyService;
 import kr.co.qsolutions.cowork.Service.CoworkService;
+import kr.co.qsolutions.cowork.Service.UserService;
 import kr.co.qsolutions.cowork.VO.CompanyVO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
 import kr.co.qsolutions.cowork.VO.PagingVO;
@@ -52,6 +53,9 @@ public class ExcelController {
 	private CompanyService companyservice;
 	
 	@Inject
+	private UserService userservice;
+	
+	@Inject
 	private CoworkService coworkservice;
 	
 	String returnUrl;
@@ -63,8 +67,10 @@ public class ExcelController {
 
 		UserVO loginVO = (UserVO)session.getAttribute("login");
 		
-		List<CompanyVO> companylist = companyservice.SelectCompanyList(pagingVO);
+		List<CompanyVO> companylist = companyservice.SelectCompanyListToExcel(pagingVO);
 		pagingVO.setTotal(companyservice.SelectCompanyCount(pagingVO));
+		
+		List<UserVO> userVO = userservice.SelectUserList(pagingVO);
 		
 //		pagingVO.setTotal(coworkservice.CoworkViewListCount(pagingVO));
 //		List<CoworkVO> listvo = coworkservice.CoworkViewListSelect(pagingVO);
@@ -72,6 +78,7 @@ public class ExcelController {
 		model.addAttribute("companylistvo",companylist);
 		model.addAttribute("pagingVO", pagingVO);
 		model.addAttribute("userid", loginVO.getUserid());
+		model.addAttribute("userVO", userVO);
 		
 		return "toExcel/companyListToExcel";
 	}

@@ -25,12 +25,12 @@ public class EmailSender {
     @Autowired
     private JavaMailSender mailSender;
     
-    /*
     public void sendEmail(EmailForm emailForm) throws Exception{
         //皋老 惯价 扁瓷 力傍
         MimeMessage msg = mailSender.createMimeMessage();
         msg.setSubject(emailForm.getSubject(), "utf-8"); //皋老 力格
         msg.setText(emailForm.getContent(), "utf-8", "html");
+        msg.setFrom(new InternetAddress("chanyoung.kim@qsolutions.co.kr","QSolutions"));
         
 		msg.setRecipient(RecipientType.TO, new InternetAddress(emailForm.getReceiver()));
 		
@@ -40,7 +40,6 @@ public class EmailSender {
 			ex.printStackTrace();
 		}
     }
-    */
     
     public void sendMail(String userId, String filePath, HttpSession session) throws IOException {
 

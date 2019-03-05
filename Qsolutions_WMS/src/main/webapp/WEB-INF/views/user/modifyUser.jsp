@@ -77,7 +77,7 @@
   		        contentType:"application/json; charset=UTF-8",
   		        success:function(resqonse){
   		            alert("업데이트 처리되었습니다.");
-  		            location.href="/qsolcowork/User/List";
+  		            location.href="/User/List";
   		        },
   		        error:function(jqXHR, textStatus, errorThrown){
   		            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
@@ -86,7 +86,7 @@
   			
   		}
   		function cancel(){
-  			location.href = "/qsolcowork/User/List";
+  			location.href = "/User/List";
   		}
   </script>
 

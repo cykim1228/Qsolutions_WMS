@@ -97,7 +97,7 @@
   		}
   		
   		function cancel(){
-  			location.href = "/qsolcowork/User/List";
+  			location.href = "/User/List";
   		}
   		
   </script>

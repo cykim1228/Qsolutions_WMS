@@ -56,7 +56,7 @@
 		    temp_obj["usermobile"] = $("#usermobile").val();
 		    temp_obj["useremail"] = $("#useremail").val();
 
-  			alert(JSON.stringify(temp_obj));
+  			// alert(JSON.stringify(temp_obj));
 
   			$.ajax({
   		        url:"Update",
@@ -67,7 +67,7 @@
   		        contentType:"application/json; charset=UTF-8",
   		        success:function(resqonse){
   		            alert("업데이트 처리되었습니다.");
-  		            location.href="/qsolcowork/User/List";
+  		            location.href="/User/List";
   		        },
   		        error:function(jqXHR, textStatus, errorThrown){
   		            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
@@ -76,7 +76,7 @@
   			
   		}
   		function cancel(){
-  			location.href = "/qsolcowork/User/List";
+  			location.href = "/User/List";
   		}
   </script>
 

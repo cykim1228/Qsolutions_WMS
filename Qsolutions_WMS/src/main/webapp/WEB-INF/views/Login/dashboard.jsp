@@ -16,7 +16,7 @@
 <script type="text/javascript">
 function updateuserform(){
 		var userid = $("#userid").val();
-		var url = "/qsolcowork/User/Updateforms?userid="+userid;
+		var url = "/User/Updateforms?userid="+userid;
 		// alert(url);
 		location.href = url;
 	}
@@ -144,12 +144,12 @@ h2 {
 		<img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="" style="width: 80%; margin-top: 10px">
 		<br>
 		<img src="${pageContext.request.contextPath}/resources/img/user.png" alt="" style="width: 40%; margin-left: 10%; margin-top: 8%;" class="pull-left">
-		<p style="padding-left:60%; margin-top:12%; text-align:left; font-weight: bold; font-size: 150%">
+		<p style="padding-left:55%; margin-top:12%; text-align:left; font-weight: bold; font-size: 150%">
 		${userVO.username}
 		<input type="hidden" id="userid" value="${userVO.userid}"/>
 		</p>
-		<p style="padding-left:60%; margin-top:10%; text-align:left; font-weight: bold; font-size: 120%; color: gray;">${userVO.positionname}</p>
-		<p style="padding-left:60%; margin-top:10%; text-align:left; font-weight: bold; font-size: 120%; color: gray;">${userVO.deptname}</p>
+		<p style="padding-left:55%; margin-top:10%; text-align:left; font-weight: bold; font-size: 120%; color: gray;">${userVO.positionname}</p>
+		<p style="padding-left:55%; margin-top:10%; text-align:left; font-weight: bold; font-size: 100%; color: gray;">${userVO.deptname}</p>
 		<br>
 		<button type="button" id="save" class="btn btn-info" onclick="" style="margin-top: 5%; width: 80%; height: 10%">오늘의 일정</button>
 		<button type="button" id="save" class="btn btn-info" onclick="updateuserform()" style="margin-top: 2%; width: 80%; height: 10%">내정보 수정</button>
@@ -186,7 +186,7 @@ h2 {
 					<th style="width: 15%; text-align: center;">카테고리</th>
 					<th style="width: 35%; text-align: center;">업무명</th>
 					<th style="width: 30%; text-align: center;">고객사명</th>
-					<th style="width: 20%; text-align: center;">진행률</th>
+					<th style="width: 20%; text-align: center;">진행단계</th>
 				</tr>
 			</thead>
 			<tbody align="center">
@@ -200,16 +200,16 @@ h2 {
 					<td><a href='${pageContext.request.contextPath}/Company/View?companycode=${coworkMyListVO.companycode}'>${coworkMyListVO.companyname}</a></td>
 					<td>
 						<c:if test="${coworkMyListVO.coworkstep == '견적'}">
-							<p>견적</p>
+							<p style="margin-bottom: 0px;">견적</p>
 						</c:if>
 						<c:if test="${coworkMyListVO.coworkstep == '입찰'}">
-							<p>입찰</p>
+							<p style="margin-bottom: 0px;">입찰</p>
 						</c:if>
 						<c:if test="${coworkMyListVO.coworkstep == '수주'}">
-							<p>수주</p>
+							<p style="margin-bottom: 0px;">수주</p>
 						</c:if>
 						<c:if test="${coworkMyListVO.coworkstep == '계약'}">
-							<p>계약</p>
+							<p style="margin-bottom: 0px;">계약</p>
 						</c:if>
 						<c:if test="${coworkMyListVO.coworkstep == '이슈발생'}">
 							<div class="progress" style="margin-bottom: 0px;">
@@ -228,7 +228,7 @@ h2 {
 						</c:if>
 						<c:if test="${coworkMyListVO.coworkstep == '진행중'}">
 							<div class="progress" style="margin-bottom: 0px;">
-								${subcoworkListVO.coworkstep}
+								<div class="progress-bar progress-bar-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
 							</div>
 						</c:if>
 						<%-- <c:if test="${coworkMyListVO.coworkstep == '유지보수전'}">

@@ -15,6 +15,7 @@ import kr.co.qsolutions.cowork.DAO.CompanyDao;
 import kr.co.qsolutions.cowork.DAO.CoworkDao;
 import kr.co.qsolutions.cowork.DTO.CompanyDTO;
 import kr.co.qsolutions.cowork.DTO.CoworkDTO;
+import kr.co.qsolutions.cowork.DTO.FileDTO;
 import kr.co.qsolutions.cowork.VO.CompanyVO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
 import kr.co.qsolutions.cowork.DAO.UserDao;
@@ -119,6 +120,18 @@ public class CompanyServiceImpl implements CompanyService {
 		// TODO Auto-generated method stub
 		System.out.println("CoworkServiceImpl");
     	return dao.DeleteCompanyCowork(companyDTO);
+	}
+
+	@Override
+	public List<CompanyVO> SelectCompanyListToExcel(PagingVO pagingVO) throws Exception {
+	// TODO Auto-generated method stub
+       return dao.SelectCompanyListToExcel(pagingVO);
+	}
+
+	@Override
+	public int InsertFileUpload(FileDTO fileDTO) throws Exception {
+		// TODO Auto-generated method stub
+    	return dao.InsertFileUpload(fileDTO);
 	}
 
 	

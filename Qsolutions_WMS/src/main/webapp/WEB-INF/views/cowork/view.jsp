@@ -2,11 +2,74 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ page import="javax.servlet.http.HttpSession" %>
+<%@ page import="java.io.*" %>
+<%@ page import="javax.mail.internet.InternetAddress" %>
+<%@ page import="javax.mail.internet.MimeMessage" %>
+<%@ page import="org.springframework.beans.factory.annotation.Autowired" %>
+<%@ page import="org.springframework.stereotype.Component" %>
+<%@ page import="org.springframework.mail.MailException" %>
+<%@ page import="org.springframework.mail.javamail.JavaMailSender" %>
+<%@ page import="org.springframework.mail.javamail.MimeMessageHelper" %>
 
 <!DOCTYPE html>
 <html>
 <head>
 <title>[QSOLUTIONS]업무관리 시스템</title>
+
+<%!
+
+@Autowired
+private JavaMailSender mailSender;
+
+public void sendMail(String userId, String filePath, HttpSession session) throws IOException {
+
+	MimeMessage message = mailSender.createMimeMessage();
+
+    String file = session.getServletContext().getRealPath("WEB-INF/views") + filePath;
+    InputStream is = new FileInputStream(file);
+    String htmlContent = "";
+    
+    //스트링 버퍼를 이용하여 inputStream을 스트링으로 변환하고 utf-8로 변환하는 방법
+    String UTF8 = "utf8";
+    StringBuffer buffer = new StringBuffer();
+    int BUFFER_SIZE = 8192;
+    BufferedReader br = new BufferedReader(new InputStreamReader(is, UTF8), BUFFER_SIZE);
+    String str;
+    
+    while ((str = br.readLine()) != null) {
+       htmlContent += str;
+    }
+
+    try {
+
+       MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+
+       messageHelper.setSubject("[업무관리시스템] 메일서비스");
+       messageHelper.setText(htmlContent, true);
+       messageHelper.setFrom("zzanzzanyoung@gmail.com", "QSolutions");
+       messageHelper.setTo(new InternetAddress(userId, "utf-8"));
+       
+/*         // 파일 첨부
+       messageHelper.addAttachment(MimeUtility.encodeText("사용자관리.xlsx", "UTF-8", "B"), new FileDataSource("C:/OpenProject/사용자관리.xlsx"));
+       
+       // 파일 첨부2 - 이미지파일만 가능, 본문에 미리보기 기능 추가
+       messageHelper.addInline("qwer", new FileDataSource("C:/OpenProject/qwer.jpg"));*/
+       
+       //메일 보내기
+       mailSender.send(message);
+       
+    } catch (MailException e) {
+    	e.printStackTrace();
+    	return;
+    } catch (Throwable e) {
+    	e.printStackTrace();
+    	return;
+    }
+    
+}
+
+%>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
@@ -18,7 +81,7 @@
 	function updateform(){
 		//var coworkcode = document.getElementById("coworkcode").value
 		var coworkcode = $("#coworkcode").val();
-		var url = "/qsolcowork/Cowork/Updateform?coworkcode="+coworkcode;
+		var url = "/Cowork/Updateform?coworkcode="+coworkcode;
 		location.href = url;
 	}
 	
@@ -34,7 +97,7 @@
 	        contentType:"application/html;charset=UTF-8",
 	        success:function(response){
 	            alert("삭제되었습니다.");
-	    		location.href = "/qsolcowork/Cowork/List";
+	    		location.href = "/Cowork/List";
 	        },
 	        error:function(jqXHR, textStatus, errorThrown){
 	            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
@@ -107,18 +170,20 @@
 	
 	
 	function cancel(){
-		location.href = "/qsolcowork/Cowork/List";
+		location.href = "/Cowork/List";
 	}
 	
-	function mailSend(){
+	/* function mailSend(){
 		
 		var receiver = $("#receiver").val(); // 받는사람
+		var coworkcode = $("#coworkcode").val();
 		
 		$.ajax({
-	        url:"/qsolcowork/toMail/coworkViewToMail",
+	        url:"/toMail/coworkViewToMail",
 	        type:"post",
 	        data:{
-	        	receiver:receiver
+	        	receiver:receiver, 
+	        	coworkcode:coworkcode
 	        },
 	        success:function(data){
 	            alert("메일이 전송되었습니다.");
@@ -131,9 +196,9 @@
 	        }
 		});
 		
-	}
+	} */
 	
-	/* function mailSend(){
+	function mailSend(){
 		
 		var receiver = $("#receiver").val(); // 받는사람
 		var subject = $("#subject").val(); // 제목
@@ -156,9 +221,9 @@
 	        error:function(jqXHR, textStatus, errorThrown){
 	            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
 	        }
-			});
+		});
 		
-	} */
+	}
 	
 	
   </script>
@@ -259,7 +324,9 @@ body {
 			<option value="" selected disabled hidden>== 받는사람 ==</option>
 			<option value="we@qsolutions.co.kr">전체</option>
 			<c:forEach items="${userList}" var="userList" varStatus="rowCount">
-				<option id="useremail" value="${userList.useremail}">${userList.username}</option>
+				<c:if test="${userList.usercompanycode eq 'C0000001'}">
+					<option id="useremail" value="${userList.useremail}">${userList.username}</option>
+				</c:if>
 			</c:forEach>
 		</select>
     </div>
@@ -370,37 +437,87 @@ body {
 	
 	<!-- 메일 전송 부분 -->        	
 	
-	<%-- <form action="send" method="post">
+	<form action="send" method="post">
 		<input type="hidden" id="subject" type="text" name="subject" value="${CoworkVO.companyname} - ${CoworkVO.coworktitle}"><br>
 		<input type="hidden" id="content" name="content" value='<div style="width: 80%; height: 80%; margin: 0 auto; margin-top: 15px;">
-			<table border="1">
+			<table border="1" cellpadding="10px">
 				<thead align="center">
 					<tr>
-						<th style="width: 10%; text-align: center;">카테고리</th>
-						<th style="width: 35%; text-align: center;">제목</th>
-						<th style="width: 10%; text-align: center;">업무코드</th>
-						<th style="width: 25%; text-align: center;">고객사명</th>
-						<th style="width: 10%; text-align: center;">등록자</th>
-						<th style="width: 10%; text-align: center;">작성일</th>
+						<th style="width: 150px; text-align: center;">카테고리</th>
+						<th style="width: 300px; text-align: center;">업무명</th>
+						<th style="width: 200px; text-align: center;">고객사명</th>
+						<th style="width: 200px; text-align: center;">업무코드</th>
+						<th style="width: 150px; text-align: center;">등록자</th>
+						<th style="width: 150px; text-align: center;">작성일</th>
 					</tr>
 				</thead>
 				<tbody align="center">
+					<tr>
+						<td>${CoworkVO.coworksubject}</td>
+						<td>${CoworkVO.coworktitle}</td>
+						<td>${CoworkVO.companyname}</td>
+						<td>${CoworkVO.coworkcode}</td>
+						<td>${CoworkVO.username}</td>
+						<td><fmt:formatDate value="${CoworkVO.coworkdate}" pattern="yyyy/MM/dd"/></td>
+					</tr>
+					<tr style="height: 10px;"></tr>
+					<tr>
+						<th colspan="1" style="text-align: center;">진행단계</th>
+						<th colspan="2" style="text-align: center;">시작시간</th>
+						<th colspan="3" style="text-align: center;">종료시간</th>
+					</tr>
+					<tr>
+						<td colspan="1">${CoworkVO.coworkstep}</td>
+						<td colspan="2">${CoworkVO.startdate}</td>
+						<td colspan="3">${CoworkVO.enddate}</td>
+					</tr>
+					<tr style="height: 10px;"></tr>
+					<tr>
+						<th style="text-align: center;">직급</th>
+						<th style="text-align: center;">담당자</th>
+						<th style="text-align: center;">소속</th>
+						<th style="text-align: center;">담당자연락처</th>
+						<th colspan="2" style="text-align: center;">담당자이메일</th>
+					</tr>
+					<c:forEach items="${userList}" var="userList" varStatus="rowCount">
 						<tr>
-							<td>${CoworkVO.coworksubject}</td>
-							<td>${CoworkVO.coworktitle}</td>
-							<td>${CoworkVO.coworkcode}</td>
-							<td>${CoworkVO.companyname}</td>
-							<td>${CoworkVO.username}</td>
-							<td><fmt:formatDate value="${CoworkVO.coworkdate}" pattern="yyyy/MM/dd"/></td>
+							<td>${userList.positionname}</td>
+							<td>${userList.username}</td>
+							<td>${userList.companyname}</td>
+							<td>${userList.usermobile}</td>
+							<td colspan="2">${userList.useremail}</td>
 						</tr>
+					</c:forEach>
+					<tr style="height: 10px;"></tr>
+						<tr>
+							<th colspan="6" style="text-align: center;">업무내용</th>
+						</tr>
+						<tr>
+							<td colspan="6">${CoworkVO.coworktext}</td>
+						</tr>
+					<tr style="height: 10px;"></tr>
+					<tr>
+						<th style="text-align: center;">번호</th>
+						<th colspan="2" style="text-align: center;">추가업무명</th>
+						<th style="text-align: center;">등록자</th>
+						<th colspan="2" style="text-align: center;">등록시간</th>
+					</tr>
+					<c:forEach var="SubCoworkVO" items="${SubCoworkVO}" varStatus="linenum">
+						<tr>
+							<td>${SubCoworkVO.subcoworkcode}</td>
+							<td>${SubCoworkVO.subcoworktext}</td>
+							<td>${SubCoworkVO.username}</td>
+							<td><fmt:formatDate value="${SubCoworkVO.subcoworkdate}" pattern="yyyy/MM/dd a h:mm"/></td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
-			<table border="1">
+			<%-- <table border="1">
 				<thead align="center">
 					<tr>
-						<th style="width: 25%; text-align: center;">진행단계</th>
-						<th style="width: 50%; text-align: center;">시작시간</th>
-						<th style="width: 100%; text-align: center;">종료시간</th>
+						<th style="width: 200px; text-align: center;">진행단계</th>
+						<th style="width: 400px; text-align: center;">시작시간</th>
+						<th style="width: 400px; text-align: center;">종료시간</th>
 					</tr>
 				</thead>
 				<tbody align="center">
@@ -411,33 +528,31 @@ body {
 					</tr>
 				</tbody>
 			</table>
-		</div>
-		<div class="table-responsive">
-			<table class="table table-striped">
+			<table border="1">
 				<thead align="center">
 					<tr>
-						<th style="width: 20%; text-align: center;">소속</th>
-						<th style="width: 15%; text-align: center;">직급</th>
-						<th style="width: 15%; text-align: center;">담당자</th>
-						<th style="width: 20%; text-align: center;">담당자연락처</th>
-						<th style="width: 30%; text-align: center;">담당자이메일</th>
+						<th style="width: 200px; text-align: center;">소속</th>
+						<th style="width: 100px; text-align: center;">직급</th>
+						<th style="width: 100px; text-align: center;">담당자</th>
+						<th style="width: 200px; text-align: center;">담당자연락처</th>
+						<th style="width: 400px; text-align: center;">담당자이메일</th>
 					</tr>
 				</thead>
 				<tbody align="center">
 					<c:forEach items="${userList}" var="userList" varStatus="rowCount">
 						<tr>
-							<td><a href='${pageContext.request.contextPath}/Company/View?companycode=${userList.usercompanycode}'>${userList.companyname}</a></td>
+							<td>${userList.companyname}</td>
 							<td>${userList.positionname}</td>
-							<td><a href="${pageContext.request.contextPath}/User/View?userid=${userList.userid}">${userList.username}</a></td>
-							<td><a href='tel:${userList.usermobile}'>${userList.usermobile}</a></td>
-							<td><a href='mailto:${userList.useremail}'>${userList.useremail}</a></td>
+							<td>${userList.username}</td>
+							<td>${userList.usermobile}</td>
+							<td>${userList.useremail}</td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
-		</div>
-		<div style="width: 80%; height: 80%; background-color: #E6E6E6; border:2px solid #ddd; padding:0.5em; line-height: 1em; border-radius:0.5em; -moz-border-radius: 0.5em; -webkit-border-radius: 0.5em;">
-			${CoworkVO.coworktext}
+			<div style="width: 80%; height: 80%; background-color: #E6E6E6; border:2px solid #ddd; padding:0.5em; line-height: 1em; border-radius:0.5em; -moz-border-radius: 0.5em; -webkit-border-radius: 0.5em;">
+				${CoworkVO.coworktext}
+			</div> --%>
 		</div>
 		<c:forEach var="SubCoworkVO" items="${SubCoworkVO}" varStatus="linenum">
 	        	<div class="viewList">
@@ -460,7 +575,7 @@ body {
 	        </div>
 	    </c:forEach>
 		'>
-	</form> --%>
+	</form>
 	        	
 	        	
 	<%-- <div class="container-fluid">

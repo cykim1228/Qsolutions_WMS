@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import kr.co.qsolutions.cowork.DTO.CompanyDTO;
 import kr.co.qsolutions.cowork.DTO.CoworkDTO;
+import kr.co.qsolutions.cowork.DTO.FileDTO;
 import kr.co.qsolutions.cowork.VO.CompanyVO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
 import kr.co.qsolutions.cowork.DTO.UserDTO;
@@ -46,5 +47,9 @@ public interface CompanyDao {
 	public List<UserVO> SelectUserCompany(CompanyDTO companyDTO) throws Exception;
 
 	public int DeleteCompanyCowork(CompanyDTO companyDTO) throws Exception;
+
+	public List<CompanyVO> SelectCompanyListToExcel(PagingVO pagingVO) throws Exception;
+
+	public int InsertFileUpload(FileDTO fileDTO) throws Exception;
 
 }

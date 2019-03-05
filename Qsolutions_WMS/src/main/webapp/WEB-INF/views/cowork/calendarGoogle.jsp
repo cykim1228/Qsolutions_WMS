@@ -51,7 +51,7 @@
 				
 				$.ajax({
 					type : 'post',
-					url : '/qsolcowork/Cowork/Calendar',
+					url : '/Cowork/Calendar',
 					data : {
 						coworktitle : coworktitle
 					},

@@ -20,7 +20,7 @@
 <script type="text/javascript">
 	function updateuserform(){
 		var userid = $("#userid").val();
-		var url = "/qsolcowork/User/Updateform?userid="+userid;
+		var url = "/User/Updateform?userid="+userid;
 		// alert(url);
 		location.href = url;
 	}
@@ -40,7 +40,7 @@
 	        contentType:"application/json;charset=UTF-8",
 	        success:function(data){
 	            alert("삭제되었습니다.");
-	            location.href="/qsolcowork/User/List"
+	            location.href="/User/List"
 	            
 	        },
 	        error:function(jqXHR, textStatus, errorThrown){
@@ -54,11 +54,11 @@
 		
 	}
 	function cancel(){
-		location.href = "/qsolcowork/User/List";
+		location.href = "/User/List";
 	}
 	
 	function googleLogin() {
-		location.href = "/qsolcowork/User/googleCallback";
+		location.href = "/User/googleCallback";
 	}
 	
 	$(function() {
@@ -266,7 +266,7 @@ body {
     <div class="viewListTop">
     	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 30px; font-weight: bold;">담당자 상세 조회</span>
     	<c:choose>
-			<c:when test="${userVO.companyname eq '(주) 퀀텀솔루션즈'}">
+			<c:when test="${userVO.usercompanycode eq 'C0000001'}">
 				<c:if test="${loginVO.userid eq 'admin'}">
 				<button type="button" class="btn btn-danger pull-right" onclick="deleteuserdata()" style="margin-right: 10px; margin-top: 8px;">담당자 삭제</button>
     			<button type="button" class="btn btn-primary pull-right" onclick="updateuserform()" style="margin-right: 10px; margin-top: 8px;">담당자 수정</button>

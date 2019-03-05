@@ -48,10 +48,10 @@
 
 	<!-- Email 관련 -->
 	<beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<beans:property name="host" value="smtp.gmail.com" /> <!-- smtp 서버명 -->
-		<beans:property name="port" value="587" /> <!-- 포트 번호 -->
-		<beans:property name="username" value="zzanzzanyoung@gmail.com" /> <!-- id(일반적인 id가 아니니 확인 필요) -->
-		<beans:property name="password" value="alstnqkqh" /> <!-- 비밀번호 -->
+		<beans:property name="host" value="mail.qsolutions.co.kr" /> <!-- smtp 서버명 -->
+		<beans:property name="port" value="25" /> <!-- 포트 번호 -->
+		<beans:property name="username" value="chanyoung.kim@qsolutions.co.kr" /> <!-- id(일반적인 id가 아니니 확인 필요) -->
+		<beans:property name="password" value="1q2w3e4r5t!" /> <!-- 비밀번호 -->
 		<beans:property name="javaMailProperties">
 			<beans:props>
 				<beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
@@ -76,5 +76,9 @@
 		<beans:property name="scope" value="https://www.googleapis.com/auth/plus.login" />
 		<beans:property name="redirectUri" value="http://localhost:8080/qsolcowork/oauth2callback" />
 	</beans:bean>
+	
+	<!-- 엑셀 변환 위한 빈즈설정 -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+	
 	
 </beans:beans>

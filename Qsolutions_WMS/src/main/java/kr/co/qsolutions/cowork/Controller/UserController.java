@@ -121,6 +121,7 @@ public class UserController {
 		model.addAttribute("coworkVO", coworkVO);
 		model.addAttribute("managerCoworkVO", managerCoworkVO);
 		
+		System.out.println("userVO : " + userVO);
 		System.out.println("coworkVO : " + coworkVO);
 		System.out.println("managerCoworkVO : " + managerCoworkVO);
 		
@@ -138,11 +139,12 @@ public class UserController {
     	String nowdate = dt.format(date.getTime());
 		// userid 생성 및 기본 입력 데이터 호출
 		String newuserid = userservice.UserIdSelect(nowdate);
+		
 		if(newuserid == null || newuserid == "") {
 			tmpcodeStr = "U" + nowdate + "00001";
 		} else {
 			tmpstr = newuserid.substring(9,14);
-			int tmpcode = Integer.parseInt(tmpstr,9);
+			int tmpcode = Integer.parseInt(tmpstr,10);
 			tmpcodeStr = newuserid.substring(0, 9);
 			tmpcode = tmpcode + 1;
 			newuserid = tmpcodeStr + tmpcode;

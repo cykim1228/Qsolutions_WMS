@@ -1,5 +1,6 @@
 package kr.co.qsolutions.cowork.Controller;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,15 +25,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.co.qsolutions.cowork.DTO.CompanyDTO;
 import kr.co.qsolutions.cowork.DTO.CoworkDTO;
+import kr.co.qsolutions.cowork.DTO.FileDTO;
 import kr.co.qsolutions.cowork.DTO.SubCoworkDTO;
 import kr.co.qsolutions.cowork.Service.CompanyService;
 import kr.co.qsolutions.cowork.Service.CoworkService;
+import kr.co.qsolutions.cowork.Util.FileUploadService;
 import kr.co.qsolutions.cowork.VO.CompanyVO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
 import kr.co.qsolutions.cowork.VO.PagingVO;
@@ -52,6 +57,9 @@ public class CompanyController {
 	
 	@Inject
 	private CoworkService coworkservice;
+	
+	@Autowired
+	FileUploadService fileUploadService;
 	
 	String returnUrl;
 	/**
@@ -74,6 +82,39 @@ public class CompanyController {
 		
 		return "company/viewlist";
 	}
+	
+	@RequestMapping(value = "/Company/Upload")
+	public String upload(HttpServletResponse response, HttpServletRequest request, HttpSession session, Model model, @RequestParam("file") MultipartFile file) throws Exception {
+
+		String companycode = (String)request.getParameter("companycode");
+		
+		
+		String path = "C://upload//" + companycode;
+		
+		System.out.println("companycode : " + companycode);
+		
+		File files = new File(path);
+		
+		if(!files.exists()){
+			//디렉토리 생성 메서드
+			files.mkdirs();
+			System.out.println("created directory successfully!");
+		}
+		
+		String url = fileUploadService.restore(companycode, file);
+		
+		FileDTO fileDTO = new FileDTO();
+		fileDTO.setCompanycode(companycode);
+        
+        System.out.println("fileDTO : " + fileDTO);
+        
+        companyservice.InsertFileUpload(fileDTO);
+		
+		model.addAttribute("url", url);
+		
+	    return "company/viewlist";
+	}
+	
 	@RequestMapping(value = "/Company/View")
 	public String CoworkView(HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
 		

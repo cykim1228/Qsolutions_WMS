@@ -51,6 +51,24 @@
 			companyname asc
 	</select>
 	
+	<select id="SelectCompanyListToExcel" parameterType="PagingVO" resultType="CompanyVO">
+		select 
+			companycode, companyname, companyhomepg, companyaddress, IsUse, companyclass, companyaddress2, companyzipcode
+		from
+			company
+		WHERE
+			IsUse != 1
+		order by
+			companycode desc
+	</select>
+	
+	<insert id="InsertFileUpload" parameterType="CompanyDTO">
+		insert into fileupload
+			(companycode, filename, filepathname)
+		value
+			(#{companycode},#{filename},#{filepathname})
+	</insert>
+	
 	<select id="CoworkViewSelectCompany" resultType="CoworkVO" parameterType="CoworkDTO">
 		select 
 			cw.userid, u.username, c.companycode, cw.coworkcode, cw.coworktext, cw.coworktitle, cw.coworkdate, cw.coworksubject, cw.startdate, cw.enddate

@@ -34,23 +34,45 @@
 
 	<table border="1">
 		<thead align="center">
-			<tr>
-				<th style="width: 10%; text-align: center;">회사 분류</th>
-				<th style="width: 20%; text-align: center;">회사 코드</th>
-				<th style="width: 40%; text-align: center;">회사 명</th>
-				<th style="width: 30%; text-align: center;">회사 홈페이지</th>
-				<th style="width: 80%; text-align: center;">회사 주소</th>
-			</tr>
+			
 		</thead>
 		<tbody align="center">
-			<c:forEach items="${companylistvo}" var="companylistvo"
-				varStatus="rowCount">
+			<c:forEach items="${companylistvo}" var="companylistvo" varStatus="rowCount">
+			<br style='mso-data-placement:same-cell;'>
 				<tr>
-					<td>${companylistvo.companyclass}</td>
-					<td>${companylistvo.companycode}</td>
-					<td style="font-weight: bold;">${companylistvo.companyname}</a></td>
-					<td><a href='${companylistvo.companyhomepg}'>${companylistvo.companyhomepg}</a></td>
-					<td>[${companylistvo.companyzipcode}] ${companylistvo.companyaddress} ${companylistvo.companyaddress2}</td>
+					<th style="width: 10%; text-align: center;">회사 분류</th>
+					<th style="width: 20%; text-align: center;">회사 코드</th>
+					<th style="width: 40%; text-align: center;">회사 명</th>
+					<th style="width: 30%; text-align: center;">회사 홈페이지</th>
+					<th style="width: 80%; text-align: center;">회사 주소</th>
+				</tr>
+				<tr>
+					<td style="text-align: center;">${companylistvo.companyclass}</td>
+					<td style="text-align: center;">${companylistvo.companycode}</td>
+					<td style="text-align: center;">${companylistvo.companyname}</a></td>
+					<td style="text-align: center;"><a href='${companylistvo.companyhomepg}'>${companylistvo.companyhomepg}</a></td>
+					<td style="text-align: center;">[${companylistvo.companyzipcode}] ${companylistvo.companyaddress} ${companylistvo.companyaddress2}</td>
+				</tr>
+				<tr>
+					<th style="width: 80%; text-align: center;">담당자 직급</th>
+					<th style="width: 10%; text-align: center;">담당자 이름</th>
+					<th style="width: 30%; text-align: center;">담당자 소속</th>
+					<th style="width: 20%; text-align: center;">담당자 번호</th>
+					<th style="width: 40%; text-align: center;">담당자 메일</th>
+				</tr>
+				<c:forEach items="${userVO}" var="userVO" varStatus="rowCount">
+					<c:if test="${userVO.usercompanycode eq companylistvo.companycode}">
+					<tr>
+						<td style="text-align: center;">${userVO.positionname}</td>
+						<td style="text-align: center;">${userVO.username}</td>
+						<td style="text-align: center;">${userVO.deptname}</td>
+						<td style="text-align: center; mso-number-format:\@">${userVO.usermobile}</td>
+						<td style="text-align: center;">${userVO.useremail}</td>
+					</tr>
+					</c:if>
+				</c:forEach>
+				<tr style="background-color: black;">
+				
 				</tr>
 			</c:forEach>
 		</tbody>

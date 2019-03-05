@@ -26,7 +26,7 @@
 			searchUser.submit();
 		}
 		function insertView(){
-			location.href = "/qsolcowork/Cowork/Insertform";
+			location.href = "/Cowork/Insertform";
 		}
 		
 		$(function() {

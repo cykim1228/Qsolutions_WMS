@@ -73,7 +73,7 @@
 		}
 		
 		function googleLogin() {
-			location.href = "/qsolcowork/Login/googleLogin";
+			location.href = "/Login/googleLogin";
 		}
 		
 		function setCookie(cookieName, value, exdays){

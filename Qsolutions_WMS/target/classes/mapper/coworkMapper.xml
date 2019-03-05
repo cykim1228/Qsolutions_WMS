@@ -222,12 +222,11 @@
 		select distinct
 			cw.userid, u.username ,c.companycode, c.companyname,cw.coworkcode, cw.coworktitle, date_format(cw.coworkdate, '%Y-%m-%d') AS coworkdate, cw.coworksubject, cw.startdate, cw.enddate, cw.coworkstep, ucc.userid
 		from
-			user u inner join cowork cw ON u.userid = cw.userid
+			cowork cw inner join user u ON cw.userid = u.userid
 			inner join company c ON cw.coworkcompany = c.companycode
-			inner join usercoworkcompany ucc ON ucc.userid = u.userid
+			inner join usercoworkcompany ucc ON ucc.coworkcode = cw.coworkcode
 		where
-			ucc.userid = u.userid
-		    and ucc.coworkcode = cw.coworkcode
+			ucc.userid = #{userid}
 			and cw.IsUse = 0
 		order by coworkcode desc
 		limit 5;

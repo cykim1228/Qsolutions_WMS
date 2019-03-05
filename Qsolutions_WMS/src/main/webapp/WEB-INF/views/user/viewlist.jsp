@@ -36,7 +36,7 @@
 			});	
 		}
 		function insertView(){
-			location.href = "/qsolcowork/User/Insertform";
+			location.href = "/User/Insertform";
 		}
 		
 		$(function() {

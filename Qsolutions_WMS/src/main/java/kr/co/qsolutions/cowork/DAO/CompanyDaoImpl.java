@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.co.qsolutions.cowork.DTO.CompanyDTO;
 import kr.co.qsolutions.cowork.DTO.CoworkDTO;
+import kr.co.qsolutions.cowork.DTO.FileDTO;
 import kr.co.qsolutions.cowork.VO.CompanyVO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
 import kr.co.qsolutions.cowork.VO.PagingVO;
@@ -114,6 +115,18 @@ public class CompanyDaoImpl implements CompanyDao  {
 	public int DeleteCompanyCowork(CompanyDTO companyDTO) throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.update(Namespace+".DeleteCompanyCowork", companyDTO);
+	}
+
+	@Override
+	public List<CompanyVO> SelectCompanyListToExcel(PagingVO pagingVO) throws Exception {
+		// TODO Auto-generated method stub
+        return sqlSession.selectList(Namespace+".SelectCompanyListToExcel",pagingVO);
+	}
+
+	@Override
+	public int InsertFileUpload(FileDTO fileDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.insert(Namespace+".InsertFileUpload", fileDTO);
 	}
 
 	
