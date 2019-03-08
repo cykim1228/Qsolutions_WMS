@@ -234,7 +234,7 @@
 	
 	<select id="SubCoworkDashboardList" resultType="SubCoworkVO" parameterType="CoworkDTO">
 		select
-			sc.subcoworkcode, date_format(sc.subcoworkdate, '%Y-%m-%d'), sc.subcoworktext, sc.coworkcode,u.userid,u.username, c.companyname, co.coworktitle, sc.IsUse 
+			sc.subcoworkcode, date_format(sc.subcoworkdate, '%Y-%m-%d'), sc.subcoworktext, sc.coworkcode,u.userid,u.username, c.companyname, co.coworktitle, sc.IsUse, c.companycode
 		from 
 			subcowork sc left join user u ON sc.userid = u.userid
 		    inner join cowork co ON sc.coworkcode = co.coworkcode
@@ -245,5 +245,29 @@
 		order by subcoworkcode desc
 		limit 5;
 	</select>
+	
+	<select id="CoworkDashboardList" resultType="CoworkVO" parameterType="CoworkDTO">
+		select distinct
+			cw.userid, u.username ,c.companycode, c.companyname,cw.coworkcode, cw.coworktitle, date_format(cw.coworkdate, '%Y-%m-%d') AS coworkdate, cw.coworksubject, cw.startdate, cw.enddate, cw.coworkstep
+		from
+			cowork cw inner join user u ON cw.userid = u.userid
+			inner join company c ON cw.coworkcompany = c.companycode
+		where
+			date_format(cw.coworkdate, '%Y-%m-%d') >= date_add(NOW(), INTERVAL -5 DAY)
+			and cw.IsUse = 0
+		order by coworkcode desc
+		limit 5;
+	</select>
+	
+	<select id="CountTodayCowork" resultType="Integer" parameterType="CoworkDTO">
+ 		SELECT 
+			count(*)
+		FROM
+			cowork co inner join usercoworkcompany ucc ON co.coworkcode = ucc.coworkcode
+		WHERE
+			ucc.userid = #{userid} and
+			now() between co.startdate and co.enddate
+			AND IsUse != 1
+ 	</select>
 	
 </mapper>

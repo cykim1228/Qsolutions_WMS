@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page import="javax.servlet.http.HttpSession" %>
 <%@ page import="java.io.*" %>
 <%@ page import="javax.mail.internet.InternetAddress" %>
@@ -277,7 +278,8 @@ body {
 	border-radius:0.5em;
 	-moz-border-radius: 0.5em;
 	-webkit-border-radius: 0.5em;
-	text-align: center;
+	vertical-align: middle;
+    text-align: center;
 }
 
 .roundedSubName {
@@ -291,7 +293,8 @@ body {
 	border-radius:0.5em;
 	-moz-border-radius: 0.5em;
 	-webkit-border-radius: 0.5em;
-	text-align: center;
+	vertical-align: middle;
+    text-align: center;
 }
 
 .roundedSubText {
@@ -305,6 +308,7 @@ body {
 	border-radius:0.5em;
 	-moz-border-radius: 0.5em;
 	-webkit-border-radius: 0.5em;
+	vertical-align: middle;
 }
 
 </style>
@@ -403,8 +407,9 @@ body {
 				</tbody>
 			</table>
 		</div>
-		<div class="rounded">
-		${CoworkVO.coworktext}
+		<% pageContext.setAttribute("newLineChar", "\n"); %>
+		<div class="rounded" style="line-height: 1.5em; font-size: 16px; overflow: scroll; overflow-x : hidden; word-break:break-all; word-wrap:break-word;">
+		${fn:replace(CoworkVO.coworktext, newLineChar, "<br>")}
 		</div>
 		
 	</div>
@@ -416,12 +421,11 @@ body {
 	        	<c:forEach var="SubCoworkVO" items="${SubCoworkVO}" varStatus="linenum">
 	        	<div class="viewList">
 					<div class="roundedSubNo">
-					
 						No. ${SubCoworkVO.subcoworkcode}
 						<input type="hidden" id="subcoworkcode" name="subcoworkcode" value="${SubCoworkVO.subcoworkcode}">
 					</div>
-		            <div class="roundedSubText">
-		            	${SubCoworkVO.subcoworktext}
+		            <div class="roundedSubText" style="overflow: scroll; overflow-x : hidden; word-break:break-all; word-wrap:break-word;">
+		            	${fn:replace(SubCoworkVO.subcoworktext, newLineChar, "<br>")}
 		            </div>
 		            <div class="roundedSubName">
 		            	${SubCoworkVO.username}
@@ -435,10 +439,10 @@ body {
 	        	</div>
 	        	</c:forEach>
 	
-	<!-- 메일 전송 부분 -->        	
+	<!-- 메일 전송 부분 -->
 	
 	<form action="send" method="post">
-		<input type="hidden" id="subject" type="text" name="subject" value="${CoworkVO.companyname} - ${CoworkVO.coworktitle}"><br>
+		<input type="hidden" id="subject" type="text" name="subject" value="[업무관리시스템] ${CoworkVO.companyname} - ${CoworkVO.coworktitle}"><br>
 		<input type="hidden" id="content" name="content" value='<div style="width: 80%; height: 80%; margin: 0 auto; margin-top: 15px;">
 			<table border="1" cellpadding="10px">
 				<thead align="center">
@@ -498,16 +502,16 @@ body {
 					<tr style="height: 10px;"></tr>
 					<tr>
 						<th style="text-align: center;">번호</th>
-						<th colspan="2" style="text-align: center;">추가업무명</th>
+						<th colspan="2" style="text-align: center;">추가업무</th>
 						<th style="text-align: center;">등록자</th>
 						<th colspan="2" style="text-align: center;">등록시간</th>
 					</tr>
 					<c:forEach var="SubCoworkVO" items="${SubCoworkVO}" varStatus="linenum">
 						<tr>
 							<td>${SubCoworkVO.subcoworkcode}</td>
-							<td>${SubCoworkVO.subcoworktext}</td>
+							<td colspan="2" style="text-align: center;">>${SubCoworkVO.subcoworktext}</td>
 							<td>${SubCoworkVO.username}</td>
-							<td><fmt:formatDate value="${SubCoworkVO.subcoworkdate}" pattern="yyyy/MM/dd a h:mm"/></td>
+							<td colspan="2" style="text-align: center;">><fmt:formatDate value="${SubCoworkVO.subcoworkdate}" pattern="yyyy/MM/dd a h:mm"/></td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -554,7 +558,7 @@ body {
 				${CoworkVO.coworktext}
 			</div> --%>
 		</div>
-		<c:forEach var="SubCoworkVO" items="${SubCoworkVO}" varStatus="linenum">
+		<%-- <c:forEach var="SubCoworkVO" items="${SubCoworkVO}" varStatus="linenum">
 	        	<div class="viewList">
 					<div class="roundedSubNo">
 						No. ${SubCoworkVO.subcoworkcode}
@@ -573,7 +577,7 @@ body {
 					</div>
 		    	<button type="button" class="btn btn-danger pull-right" onclick="deletesubcowork()" style="width: 9%; height: 74px; display: inline-block;">삭제</button>
 	        </div>
-	    </c:forEach>
+	    </c:forEach> --%>
 		'>
 	</form>
 	        	

@@ -39,6 +39,8 @@ public class DashboardController {
 	
 	String returnUrl;
 	
+	int todaycowork = 0;
+	
 	@RequestMapping(value = "/Dashboard")
 	public String CoworkList(PagingVO pagingVO, HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
 
@@ -60,8 +62,17 @@ public class DashboardController {
 
 		List<SubCoworkVO> subcoworkListVO = coworkservice.SubCoworkDashboardList();
 		
+		List<CoworkVO> coworkListVO = coworkservice.CoworkDashboardList();
+		
+		todaycowork = coworkservice.CountTodayCowork(coworkDTO);
 		
 		System.out.println("subcoworkListVO : " + subcoworkListVO);
+		
+		System.out.println("coworkMyListVO : " + coworkMyListVO);
+		
+		System.out.println("coworkListVO : " + coworkListVO);
+		
+		System.out.println("todaycowork : " + todaycowork);
 		
 		model.addAttribute("coworkMyListVO",coworkMyListVO);
 		model.addAttribute("coworklistvo",listvo);
@@ -69,6 +80,8 @@ public class DashboardController {
 		model.addAttribute("userVO", userVO);
 		model.addAttribute("userid", loginVO.getUserid());
 		model.addAttribute("subcoworkListVO",subcoworkListVO);
+		model.addAttribute("coworkListVO",coworkListVO);
+		model.addAttribute("todaycowork",todaycowork);
 		
 		return "Login/dashboard";
 	}

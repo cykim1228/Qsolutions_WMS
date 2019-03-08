@@ -10,7 +10,7 @@
 </head>
 <body>
 <h1>하이</h1>
-	<input type="hidden" id="subject" type="text" name="subject" value="${CoworkVO.companyname} - ${CoworkVO.coworktitle}">
+	<input type="hidden" id="subject" type="text" name="subject" value="[업무관리시스템] ${CoworkVO.companyname} - ${CoworkVO.coworktitle}">
 		<br>
 			<table border="1">
 				<thead align="center">

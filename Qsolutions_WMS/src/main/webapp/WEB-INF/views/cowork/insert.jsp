@@ -496,6 +496,7 @@ h2 {
 			<select class="form-control coworkstep4" id="coworkstep4" name="coworkstep4" style="display: none;">
 				<option value="" selected disabled hidden>== 진행단계를 선택해주세요 ==</option>
 				<option value="견적">견적</option>
+				<option value="발주">발주</option>
 				<option value="입찰">입찰</option>
 				<option value="수주">수주</option>
 				<option value="계약">계약</option>

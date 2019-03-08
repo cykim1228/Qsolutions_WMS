@@ -59,4 +59,8 @@ public interface CoworkDao {
 
 	public List<ManagerVO> SelectCoworkManager() throws Exception;
 
+	public List<CoworkVO> CoworkDashboardList() throws Exception;
+
+	public int CountTodayCowork(CoworkDTO coworkDTO) throws Exception;
+
 }

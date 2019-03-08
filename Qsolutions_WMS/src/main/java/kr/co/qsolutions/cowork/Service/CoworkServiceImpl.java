@@ -158,6 +158,18 @@ public class CoworkServiceImpl implements CoworkService {
 		// TODO Auto-generated method stub
 		return dao.SelectCoworkManager();
 	}
+
+	@Override
+	public List<CoworkVO> CoworkDashboardList() throws Exception {
+		// TODO Auto-generated method stub
+		return dao.CoworkDashboardList();
+	}
+
+	@Override
+	public int CountTodayCowork(CoworkDTO coworkDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.CountTodayCowork(coworkDTO);
+	}
 	
 	
 }

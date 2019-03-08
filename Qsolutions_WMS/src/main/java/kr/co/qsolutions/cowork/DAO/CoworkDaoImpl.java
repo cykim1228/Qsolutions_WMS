@@ -157,5 +157,17 @@ public class CoworkDaoImpl implements CoworkDao  {
 		return sqlSession.selectList(Namespace+".SelectCoworkManager");
 	}
 
+	@Override
+	public List<CoworkVO> CoworkDashboardList() throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(Namespace+".CoworkDashboardList");
+	}
+
+	@Override
+	public int CountTodayCowork(CoworkDTO coworkDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(Namespace+".CountTodayCowork", coworkDTO);
+	}
+
 	
 }

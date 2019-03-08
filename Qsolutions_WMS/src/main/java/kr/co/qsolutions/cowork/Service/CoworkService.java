@@ -56,5 +56,9 @@ public interface CoworkService {
 	public List<SubCoworkVO> SubCoworkDashboardList() throws Exception;
 
 	public List<ManagerVO> SelectCoworkManager(CoworkDTO coworkDTO) throws Exception;
+
+	public List<CoworkVO> CoworkDashboardList() throws Exception;
+	
+	public int CountTodayCowork(CoworkDTO coworkDTO) throws Exception;
 	
 }
