@@ -15,6 +15,7 @@ import kr.co.qsolutions.cowork.DTO.CoworkDTO;
 import kr.co.qsolutions.cowork.DTO.FileDTO;
 import kr.co.qsolutions.cowork.VO.CompanyVO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
+import kr.co.qsolutions.cowork.VO.FileVO;
 import kr.co.qsolutions.cowork.VO.PagingVO;
 import kr.co.qsolutions.cowork.VO.SubCoworkVO;
 import kr.co.qsolutions.cowork.VO.UserVO;
@@ -127,6 +128,18 @@ public class CompanyDaoImpl implements CompanyDao  {
 	public int InsertFileUpload(FileDTO fileDTO) throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.insert(Namespace+".InsertFileUpload", fileDTO);
+	}
+
+	@Override
+	public List<FileVO> SelectFileUpload(CompanyDTO companyDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(Namespace+".SelectFileUpload", companyDTO);
+	}
+
+	@Override
+	public int DeleteFile(FileDTO fileDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.delete(Namespace+".DeleteFile", fileDTO);
 	}
 
 	

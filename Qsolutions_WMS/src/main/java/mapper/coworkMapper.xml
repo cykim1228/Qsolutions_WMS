@@ -260,14 +260,14 @@
 	</select>
 	
 	<select id="CountTodayCowork" resultType="Integer" parameterType="CoworkDTO">
- 		SELECT 
+		SELECT 
 			count(*)
 		FROM
 			cowork co inner join usercoworkcompany ucc ON co.coworkcode = ucc.coworkcode
 		WHERE
 			ucc.userid = #{userid} and
-			now() between co.startdate and co.enddate
-			AND IsUse != 1
+			date_format(now(), '%Y-%m-%d') between date_format(co.startdate, '%Y-%m-%d') and date_format(co.enddate, '%Y-%m-%d')
+			AND IsUse != 1;
  	</select>
 	
 </mapper>

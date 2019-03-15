@@ -12,6 +12,7 @@ import kr.co.qsolutions.cowork.DTO.CoworkDTO;
 import kr.co.qsolutions.cowork.DTO.FileDTO;
 import kr.co.qsolutions.cowork.VO.CompanyVO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
+import kr.co.qsolutions.cowork.VO.FileVO;
 import kr.co.qsolutions.cowork.DTO.UserDTO;
 import kr.co.qsolutions.cowork.VO.PagingVO;
 import kr.co.qsolutions.cowork.VO.SubCoworkVO;
@@ -51,5 +52,9 @@ public interface CompanyDao {
 	public List<CompanyVO> SelectCompanyListToExcel(PagingVO pagingVO) throws Exception;
 
 	public int InsertFileUpload(FileDTO fileDTO) throws Exception;
+
+	public List<FileVO> SelectFileUpload(CompanyDTO companyDTO) throws Exception;
+
+	public int DeleteFile(FileDTO fileDTO) throws Exception;
 
 }

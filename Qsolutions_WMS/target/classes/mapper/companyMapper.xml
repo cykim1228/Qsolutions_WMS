@@ -69,6 +69,25 @@
 			(#{companycode},#{filename},#{filepathname})
 	</insert>
 	
+	<select id="SelectFileUpload" resultType="FileVO" parameterType="CompanyDTO">
+		select
+			*
+		from
+			fileupload
+		where
+			companycode = #{companycode}
+			AND
+			IsUse != 1
+	</select>
+	
+	<select id="DeleteFile" parameterType="CompanyDTO">
+		UPDATE fileupload
+ 			SET IsUse = 1
+		WHERE companycode = #{companycode}
+			AND
+			filepathname = #{filepathname}
+	</select>
+	
 	<select id="CoworkViewSelectCompany" resultType="CoworkVO" parameterType="CoworkDTO">
 		select 
 			cw.userid, u.username, c.companycode, cw.coworkcode, cw.coworktext, cw.coworktitle, cw.coworkdate, cw.coworksubject, cw.startdate, cw.enddate
@@ -181,4 +200,5 @@
 		where
 			IsUse != 1
 	</select>
+	
 </mapper>

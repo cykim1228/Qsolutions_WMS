@@ -1,6 +1,7 @@
 package kr.co.qsolutions.cowork.Controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
@@ -85,14 +86,12 @@ public class LoginController {
 		
 		uservo = (UserVO)userservice.UserCheckID(userid);
 		
-		String tmpPassWD = ac.EncryptPW(uservo.getUserpasswd());
-
-		
 		if ( session.getAttribute("login") != null ){
 			session.removeAttribute("login"); // 기존값을 제거해 준다.
         }
 		
-		if(uservo!=null) {
+		if(uservo != null) { 
+			String tmpPassWD = ac.EncryptPW(uservo.getUserpasswd());			
         	session.setAttribute("login", uservo); 
     		if(tmpPassWD.equals(userpw)) {
     			//Input passwd equals DB Passwd
@@ -119,14 +118,33 @@ public class LoginController {
 				
     			returnUrl = "redirect:/Dashboard/";
     			
-    		}else {
-    			errorcode = "ERR000002";
-    			returnUrl = "redirect:/error/";
+    		} else {
+    			errorcode = "ERR00002";
+
+    			response.setContentType("text/html; charset=UTF-8");
+    			 
+    			PrintWriter out = response.getWriter();
+    			 
+    			out.println("<script>alert('비밀번호가 틀렸습니다.'); location.href='/';</script>");
+    			 
+    			out.flush();
+    			
+    			// returnUrl = "redirect:/";
     		}
-		}else {
-			// not found UserID?
+    		
+		} else {
 			errorcode = "ERR00001"; //ERR00001 = 로그인계정이 존재하지 않습니다.
-			returnUrl = "redirect:/error/";
+
+			// not found UserID?
+			response.setContentType("text/html; charset=UTF-8");
+			 
+			PrintWriter out = response.getWriter();
+			 
+			out.println("<script>alert('로그인 계정이 존재하지 않습니다.'); location.href='/';</script>");
+			 
+			out.flush();
+			
+			// returnUrl = "redirect:/";
 		}
 		
 		return returnUrl;

@@ -34,6 +34,7 @@
             <typeAlias type="kr.co.qsolutions.cowork.VO.CompanyVO" alias="CompanyVO"/>
             <typeAlias type="kr.co.qsolutions.cowork.VO.SearchVO" alias="SearchVO"/>
             <typeAlias type="kr.co.qsolutions.cowork.VO.ManagerVO" alias="ManagerVO"/>
+            <typeAlias type="kr.co.qsolutions.cowork.VO.FileVO" alias="FileVO"/>
         </typeAliases>
         <mappers>
 	        <package name="kr.co.qsolutions.mapper"/>

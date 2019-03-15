@@ -68,6 +68,7 @@
 	        url:"Upload",
 	        type:"post",
 	        data:JSON.stringify(temp_obj),
+	        enctype: "multipart/form-data",
 	        datatype:"json",
 			cache : false,
 	        contentType:"application/json; charset=UTF-8",
@@ -80,6 +81,79 @@
 	        }
 	    });
 	}
+	
+	function deletefile(val){
+ 		
+		// var str = "";
+		// var tdArr = new Array();
+		// var checkBtn = $(this);
+		
+		// var tr = checkBtn.parent().parent();
+		// var td = tr.children();
+		
+		// console.log("클릭한 Row의 모든 데이터 : "+tr.text());
+        
+        // var filepathname = td.eq(0).value();
+		
+ 		var temp_obj = {};
+ 		
+		temp_obj["companycode"] = $("#companycode").val();
+		temp_obj["filepathname"] = val;
+		// temp_obj["filename"] = $("#filename").val();
+		// temp_obj["filepathname"] = $("#filepathname").val();
+	    
+		// alert("test--"+JSON.stringify(temp_obj));
+
+		$.ajax({
+	        url:"fileDelete",
+	        type:"post",
+	        data:JSON.stringify(temp_obj),
+	        enctype: "multipart/form-data",
+	        datatype:"json",
+			cache : false,
+	        contentType:"application/json; charset=UTF-8",
+	        success:function(resqonse){
+	            alert("파일을 삭제하였습니다.");
+	            location.reload();
+	        },
+	        error:function(jqXHR, textStatus, errorThrown){
+	            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
+	        }
+	    });
+	}
+	
+	function fileSubmit() {
+		
+		var forms = document.fileForm;
+		
+		if(forms.fileUp.value == "") {
+			alert("파일을 선택해주세요.")
+			return forms.fileUp.focus();
+		}
+		
+		if(forms.filename.value == "") {
+			alert("파일 업로드 이름을 작성해주세요.")
+			return forms.filename.focus();
+		}
+		
+        var formData = new FormData($("#fileForm")[0]);
+        $.ajax({
+            type : 'post',
+            url : 'fileUpload',
+            data : formData,
+            processData : false,
+            contentType : false,
+            success : function(html) {
+                alert("파일 업로드하였습니다.");
+                location.reload();
+            },
+            error : function(error) {
+                alert("파일 업로드에 실패하였습니다.");
+                console.log(error);
+                console.log(error.status);
+            }
+        });
+    }
 	
 	$(function() {
 
@@ -121,6 +195,10 @@
 
 			// target the pager markup - see the HTML block below
 			container : $(".ts-pagerUser"),
+			
+			size : 5,
+			
+			cssPageSize: '.pagesize', // page size selector - select dropdown that sets the "size" option
 
 			// target the pager page select dropdown - choose a page
 			cssGoto : ".pagenum",
@@ -174,6 +252,10 @@
 				// target the pager markup - see the HTML block below
 				container : $(".ts-pagerCowork"),
 
+				size : 5,
+				
+				cssPageSize: '.pagesize', // page size selector - select dropdown that sets the "size" option
+
 				// target the pager page select dropdown - choose a page
 				cssGoto : ".pagenum",
 
@@ -187,6 +269,62 @@
 
 			});
 		
+		$(".tableFile").tablesorter(
+			{
+				theme : "bootstrap",
+				
+				widthFixed : true,
+
+				// widget code contained in the jquery.tablesorter.widgets.js file
+				// use the zebra stripe widget if you plan on hiding any rows (filter widget)
+				// the uitheme widget is NOT REQUIRED!
+				widgets : [ "filter", "columns", "zebra" ],
+
+				widgetOptions : {
+					// using the default zebra striping class name, so it actually isn't included in the theme variable above
+					// this is ONLY needed for bootstrap theming if you are using the filter widget, because rows are hidden
+					zebra : [ "even", "odd" ],
+
+					// class names added to columns when sorted
+					columns : [ "primary", "secondary", "tertiary" ],
+
+					// reset filters button
+					filter_reset : ".reset",
+
+					// extra css class name (string or array) added to the filter element (input or select)
+					filter_cssFilter : [ 
+						'form-control', 
+						'form-control',
+						'form-control custom-select', // select needs custom class names :(
+						'form-control', 
+						'form-control', 
+						'form-control',
+						'form-control' 
+						]
+
+					}
+				}).tablesorterPager({
+
+			// target the pager markup - see the HTML block below
+			container : $(".ts-pagerFile"),
+
+			size : 5,
+			
+			cssPageSize: '.pagesize', // page size selector - select dropdown that sets the "size" option
+
+			// target the pager page select dropdown - choose a page
+			cssGoto : ".pagenum",
+
+			// remove rows from the table to speed up the sort of large tables.
+			// setting this to false, only hides the non-visible rows; needed if you plan to add/remove rows with the pager enabled.
+			removeRows : false,
+
+			// output string - default is '{page}/{totalPages}';
+			// possible variables: {page}, {totalPages}, {filteredPages}, {startRow}, {endRow}, {filteredRows} and {totalRows}
+			output : '{startRow} - {endRow} / {filteredRows} ({totalRows})'
+
+		});
+	
 	});
 	
 	$(document).ready(function() {
@@ -278,6 +416,38 @@ body {
 
 .tablesorter-pager .btn-group-sm .btn {
 	font-size: 1.2em; /* make pager arrows more visible */
+}
+
+.file_input_textbox {
+	float:left
+}
+
+.file_input_div {
+	position:relative;
+	width:100px;
+	height:23px;
+	overflow:hidden;
+}
+
+.file_input_button {
+	width:100px;
+	position:absolute; 
+	top:0px; 
+	background-color:#aaa; 
+	color:#fff; 
+	border-style:solid;
+}
+
+.file_input_hidden {
+	font-size:45px; 
+	position:absolute; 
+	right:0px; 
+	top:0px; 
+	opacity:0; 
+	filter:alpha(opacity=0); 
+	-ms-filter:"alpha(opacity=0)"; 
+	-khtml-opacity:0; 
+	-moz-opacity:0;
 }
 
 </style>
@@ -443,24 +613,93 @@ body {
 			</div>
 	</div>
 	
-	<%-- <div class="viewList">
-	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 23px; font-weight: bold;">파일 업로드</span>
-	<form method="post" action="upload" enctype="multipart/form-data">
+	<div class="viewList">
+	<form id="fileForm" name="fileForm" action="fileUpload" method="post" enctype="multipart/form-data" style="height: 40px;">
+	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 23px; font-weight: bold;">파일 목록</span>
+        <input class="btn btn-primary pull-right" type="button" value="파일업로드" onClick="fileSubmit();">
+       	<input type="text" class="form-control pull-right" placeholder="업로드 이름.." id="filename" name="filename" style="width: 20%; margin-right: 10px;">
+        <input class="btn btn-primary pull-right" type="file" id="fileUp" name="fileUp" style="width: 20%; margin-right: 10px;"><br>
+        <input type="hidden" id="companycode" name="companycode" value="${companyVO.companycode}">
+    </form>
+    <br>
+		<div>
+				<div class="table-responsive">
+					<table class="table table-striped tableFile">
+						<thead align="center">
+							<tr>
+								<th style="width: 40%; text-align: center;">업로드 이름</th>
+								<th style="width: 40%; text-align: center;">업로드 날짜</th>
+								<th style="width: 20%; text-align: center;">파일 삭제</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th colspan="3" class="ts-pagerFile">
+									<div class="form-inline" align="center">
+										<div class="btn-group btn-group-sm mx-1" role="group">
+											<button type="button" class="btn btn-primary first"
+												title="first">⇤</button>
+											<button type="button" class="btn btn-primary prev"
+												title="previous">←</button>
+										</div>
+										<span class="pagedisplay"></span>
+										<div class="btn-group btn-group-sm mx-1" role="group">
+											<button type="button" class="btn btn-primary next"
+												title="next">→</button>
+											<button type="button" class="btn btn-primary last"
+												title="last">⇥</button>
+										</div>
+										<!-- <select class="form-control-sm custom-select btn btn-primary px-1 pagesize" 
+											title="Select page size" style="width: 50px; height: 37px;">
+											<option selected="selected" value="5">5</option>
+											<option value="10">10</option>
+											<option value="15">15</option>
+										</select> -->
+										<select class="form-control-sm btn btn-primary custom-select pagenum"
+											title="Select page number" style="width: 50px; height: 37px;">
+										</select>
+									</div>
+								</th>
+							</tr>
+						</tfoot>
+						<tbody align="center">
+							<c:forEach items="${fileList}" var="fileList" varStatus="rowCount">
+								<tr>
+									<td><input type="hidden" id="filepathname" name="filepathname" value="${fileList.filepathname}">
+									<a href="http://localhost:8080/${fileList.filepathname}">${fileList.filename}</a></td>
+									<td><fmt:formatDate value="${fileList.uploaddate}" pattern="yyyy/MM/dd"/></td>
+									<td><button id="checkBtn" type="button" class="btn btn-danger" value="${fileList.filepathname}" onclick="deletefile(this.value)" style="display: inline-block;">삭제</button>
+									</td>
+								</tr>
+							</c:forEach>
+							<!-- <a href="http://localhost:8080/upload/C0000003/1552287574583.png">asd</a> -->
+						</tbody>
+					</table>
+				</div>
+			</div>
+	</div>
+	
+	<%-- <form method="post" action="upload" enctype="multipart/form-data">
 		<input type="hidden" id="companycode" name="companycode" value="${companyVO.companycode}"/>
 		<label>파일 명:</label>
 		<input type="text" id="filename" name="filename">
 		<input type="file" id="file" name="file">
 		<br><br>
 		<button type="button" class="btn btn-primary pull-right" onclick="uploadfile()" style="margin-right: 10px; margin-top: 8px;">파일 업로드</button>
-	</form>
+	</form> --%>
 	
-	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 23px; font-weight: bold;">파일 목록</span>
+	<%-- <form id="fileForm" action="fileUpload" method="post" enctype="multipart/form-data">
+        <input class="btn btn-primary pull-right" type="button" value="파일업로드" onClick="fileSubmit();">
+        <input class="btn btn-primary" type="file" id="fileUp" name="fileUp"/><br>
+        <input type="hidden" id="companycode" name="companycode" value="${companyVO.companycode}"/>
+       	파일명 : <input type="text" id="filename" name="filename">
+    </form> --%>
+	
+	<%-- <span class="sub-header" style="margin-left: 10px; position: relative; font-size: 23px; font-weight: bold;">파일 목록</span>
 	<div class="result-images">
 		<img src="${pageContext.request.contextPath }${url }" style="width:150px">
-	</div>
-
 	</div> --%>
-    
+
 	<%-- <!-- 상세 뷰 페이지  -->
 	<div class="container-fluid">
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

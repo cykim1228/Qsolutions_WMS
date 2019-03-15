@@ -138,12 +138,13 @@ public void sendMail(String userId, String filePath, HttpSession session) throws
 		
 	}
 	
-	function deletesubcowork(){
+	function deletesubcowork(val){
+		
 	    var temp_obj = {};
 	    var answer = confirm("삭제하시겠습니까??")
 	    if (answer) {
 		    temp_obj["coworkcode"] = $("#coworkcode").val();
-		    temp_obj["subcoworkcode"] = $("#subcoworkcode").val();
+		    temp_obj["subcoworkcode"] = val;
 
 		    $.ajax({
 	        url:"SubCoworkDelete",
@@ -167,8 +168,6 @@ public void sendMail(String userId, String filePath, HttpSession session) throws
 	    }
 		
 	}
-	
-	
 	
 	function cancel(){
 		location.href = "/Cowork/List";
@@ -422,7 +421,7 @@ body {
 	        	<div class="viewList">
 					<div class="roundedSubNo">
 						No. ${SubCoworkVO.subcoworkcode}
-						<input type="hidden" id="subcoworkcode" name="subcoworkcode" value="${SubCoworkVO.subcoworkcode}">
+						<input type="hidden" id="subcoworkcode_${SubCoworkVO.subcoworkcode}" value="${SubCoworkVO.subcoworkcode}">
 					</div>
 		            <div class="roundedSubText" style="overflow: scroll; overflow-x : hidden; word-break:break-all; word-wrap:break-word;">
 		            	${fn:replace(SubCoworkVO.subcoworktext, newLineChar, "<br>")}
@@ -435,7 +434,7 @@ body {
 		            	<fmt:formatDate value="${SubCoworkVO.subcoworkdate}" pattern="yyyy/MM/dd a h:mm"/>
 		            	</fmt:timeZone>
 		            </div>
-		            <button type="button" class="btn btn-danger pull-right" onclick="deletesubcowork()" style="width: 9%; height: 74px; display: inline-block;">삭제</button>
+		            <button type="button" id="${linenum.count}" name="deletesubcowork"  class="btn btn-danger pull-right" value="${SubCoworkVO.subcoworkcode}" onclick="deletesubcowork(this.value)" style="width: 9%; height: 74px; display: inline-block;">삭제</button>
 	        	</div>
 	        	</c:forEach>
 	

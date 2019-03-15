@@ -39,6 +39,7 @@ import kr.co.qsolutions.cowork.Service.CoworkService;
 import kr.co.qsolutions.cowork.Util.FileUploadService;
 import kr.co.qsolutions.cowork.VO.CompanyVO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
+import kr.co.qsolutions.cowork.VO.FileVO;
 import kr.co.qsolutions.cowork.VO.PagingVO;
 import kr.co.qsolutions.cowork.VO.UserVO;
 
@@ -96,7 +97,7 @@ public class CompanyController {
 		File files = new File(path);
 		
 		if(!files.exists()){
-			//µğ·ºÅä¸® »ı¼º ¸Ş¼­µå
+			//ë””ë ‰í† ë¦¬ ìƒì„± ë©”ì„œë“œ
 			files.mkdirs();
 			System.out.println("created directory successfully!");
 		}
@@ -114,6 +115,72 @@ public class CompanyController {
 		
 	    return "company/viewlist";
 	}
+	
+	/*
+	@RequestMapping(value = "/fileUpload") // method = RequestMethod.GET 
+	public Map fileUpload(HttpServletRequest req, HttpServletResponse rep) { 
+		//íŒŒì¼ì´ ì €ì¥ë  path ì„¤ì • 
+		String path = "c://aaa"; 
+		Map returnObject = new HashMap(); 
+		try { 
+			// MultipartHttpServletRequest ìƒì„± 
+			MultipartHttpServletRequest mhsr = (MultipartHttpServletRequest) req; 
+			Iterator iter = mhsr.getFileNames(); 
+			
+			MultipartFile mfile = null; 
+			String fieldName = ""; 
+			List resultList = new ArrayList(); 
+			
+			// ë””ë ˆí† ë¦¬ê°€ ì—†ë‹¤ë©´ ìƒì„± 
+			File dir = new File(path); 
+			if (!dir.isDirectory()) { 
+				dir.mkdirs(); 
+			} 
+			
+			// ê°’ì´ ë‚˜ì˜¬ë•Œê¹Œì§€ 
+			while (iter.hasNext()) { 
+				fieldName = iter.next(); // ë‚´ìš©ì„ ê°€ì ¸ì™€ì„œ 
+				mfile = mhsr.getFile(fieldName); 
+				String origName; 
+				
+				origName = new String(mfile.getOriginalFilename().getBytes("8859_1"), "UTF-8"); //í•œê¸€êº ì§ ë°©ì§€ 
+				
+				// íŒŒì¼ëª…ì´ ì—†ë‹¤ë©´ 
+				if ("".equals(origName)) { 
+					continue; 
+				} 
+				
+				// íŒŒì¼ ëª… ë³€ê²½(uuidë¡œ ì•”í˜¸í™”) 
+				String ext = origName.substring(origName.lastIndexOf('.')); // í™•ì¥ì 
+				String saveFileName = getUuid() + ext; 
+				
+				// ì„¤ì •í•œ pathì— íŒŒì¼ì €ì¥ 
+				File serverFile = new File(path + File.separator + saveFileName); 
+				mfile.transferTo(serverFile); 
+				
+				Map file = new HashMap(); 
+				file.put("origName", origName); 
+				file.put("sfile", serverFile); 
+				resultList.add(file); 
+		} 
+			
+		returnObject.put("files", resultList); 
+		returnObject.put("params", mhsr.getParameterMap()); 
+		
+		} catch (UnsupportedEncodingException e) { 
+			// TODO Auto-generated catch block e.printStackTrace(); 
+		}catch (IllegalStateException e) { 
+			// TODO Auto-generated catch block e.printStackTrace(); 
+		} catch (IOException e) { 
+			// TODO Auto-generated catch block e.printStackTrace(); 
+		} return null; 
+	} 
+	
+	//uuidìƒì„± 
+	public static String getUuid() { 
+		return UUID.randomUUID().toString().replaceAll("-", ""); 
+	}
+	*/
 	
 	@RequestMapping(value = "/Company/View")
 	public String CoworkView(HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
@@ -135,7 +202,9 @@ public class CompanyController {
 		
 		List<CoworkVO> coworkList = companyservice.CoworkViewSelectCompany(tmpcode);
 		
-		System.out.println("¾÷¹« List ÄÁÆ®·Ñ·¯ : " + tmpcode);
+		List<FileVO> fileList = companyservice.SelectFileUpload(companyDTO);
+		
+		System.out.println("ì—…ë¬´ List ì»¨íŠ¸ë¡¤ëŸ¬ : " + tmpcode);
 		
 		System.out.println("coworkList : " + coworkList);
 		
@@ -145,12 +214,19 @@ public class CompanyController {
 		
 		System.out.println("userList : " + userList);
 		
+		System.out.println("loginVO : " + loginVO);
+		
+		System.out.println("fileList : " + fileList);
+		
 		CompanyVO companyVO = companyservice.SelectCompanyView(companyDTO);
-		//´ã´çÀÚ Ãß°¡
+		//ë‹´ë‹¹ì ì¶”ê°€
+		
+		model.addAttribute("loginVO", loginVO);
 		model.addAttribute("userList", userList);
 		model.addAttribute("coworkList", coworkList);
 		model.addAttribute("companyVO", companyVO);
 		model.addAttribute("companyuserList", companyuserList);
+		model.addAttribute("fileList", fileList);
 		
 		returnUrl = "company/view";
 		return returnUrl;
@@ -162,7 +238,7 @@ public class CompanyController {
 	 * @ResponseBody public List<CoworkVO>
 	 * coworkList(@RequestParam("companycode")String companycode) throws Exception {
 	 * 
-	 * System.out.println("¾÷¹« List ÄÁÆ®·Ñ·¯" + companycode);
+	 * System.out.println("ì—…ë¬´ List ì»¨íŠ¸ë¡¤ëŸ¬" + companycode);
 	 * 
 	 * List<CoworkVO> coworkVO =
 	 * companyservice.CoworkViewSelectCompany(companycode);
@@ -175,12 +251,12 @@ public class CompanyController {
 	@RequestMapping(value = "/Company/Insertform")
 	public String CoworkInsertform(HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
 		UserVO loginVO = (UserVO)session.getAttribute("login");
-//		//coworkcode»ı¼º ¹× ±âº» ÀÔ·Â µ¥ÀÌÅÍ È£Ãâ
+//		//coworkcodeìƒì„± ë° ê¸°ë³¸ ì…ë ¥ ë°ì´í„° í˜¸ì¶œ
 		String companycode = companyservice.SelectCompanyCode();
 //		String newcoworkcode = coworkservice.SelectCompanyCode(nowdate.substring(1,8));
 //		
-//		//Èì ¾î¶»°Ô Ã³¸®ÇÏ³Ä? ÀÌ¸»ÀÌ¾ß
-//		// ³¯Â¥ + Ä«¿îÆ®?/ 
+//		//í  ì–´ë–»ê²Œ ì²˜ë¦¬í•˜ëƒ? ì´ë§ì´ì•¼
+//		// ë‚ ì§œ + ì¹´ìš´íŠ¸?/ 
 		
 		System.out.println("companycode : " + companycode);
 		
@@ -275,7 +351,7 @@ public class CompanyController {
 		 * managerList.put("userid", userid);
 		 */
 		
-		System.out.println("´ã´çÀÚ List ÄÁÆ®·Ñ·¯" + companycode);
+		System.out.println("ë‹´ë‹¹ì List ì»¨íŠ¸ë¡¤ëŸ¬" + companycode);
 		
 		CompanyDTO companyDTO = new CompanyDTO();
 		companyDTO.setCompanycode(companycode);
@@ -415,7 +491,7 @@ public class CompanyController {
 		 * managerList.put("userid", userid);
 		 */
 		
-		System.out.println("´ã´çÀÚ List ÄÁÆ®·Ñ·¯" + companycode);
+		System.out.println("ë‹´ë‹¹ì List ì»¨íŠ¸ë¡¤ëŸ¬" + companycode);
 		
 		CompanyDTO companyDTO = new CompanyDTO();
 		companyDTO.setCompanycode(companycode);

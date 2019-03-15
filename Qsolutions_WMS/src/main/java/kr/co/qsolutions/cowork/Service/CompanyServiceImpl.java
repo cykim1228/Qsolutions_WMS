@@ -18,6 +18,7 @@ import kr.co.qsolutions.cowork.DTO.CoworkDTO;
 import kr.co.qsolutions.cowork.DTO.FileDTO;
 import kr.co.qsolutions.cowork.VO.CompanyVO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
+import kr.co.qsolutions.cowork.VO.FileVO;
 import kr.co.qsolutions.cowork.DAO.UserDao;
 import kr.co.qsolutions.cowork.VO.PagingVO;
 import kr.co.qsolutions.cowork.VO.SubCoworkVO;
@@ -132,6 +133,18 @@ public class CompanyServiceImpl implements CompanyService {
 	public int InsertFileUpload(FileDTO fileDTO) throws Exception {
 		// TODO Auto-generated method stub
     	return dao.InsertFileUpload(fileDTO);
+	}
+
+	@Override
+	public List<FileVO> SelectFileUpload(CompanyDTO companyDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.SelectFileUpload(companyDTO);
+	}
+
+	@Override
+	public int DeleteFile(FileDTO fileDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.DeleteFile(fileDTO);
 	}
 
 	
