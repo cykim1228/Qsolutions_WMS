@@ -104,22 +104,26 @@
 	    
 		// alert("test--"+JSON.stringify(temp_obj));
 
-		$.ajax({
-	        url:"fileDelete",
-	        type:"post",
-	        data:JSON.stringify(temp_obj),
-	        enctype: "multipart/form-data",
-	        datatype:"json",
-			cache : false,
-	        contentType:"application/json; charset=UTF-8",
-	        success:function(resqonse){
-	            alert("파일을 삭제하였습니다.");
-	            location.reload();
-	        },
-	        error:function(jqXHR, textStatus, errorThrown){
-	            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
-	        }
-	    });
+		var answer = confirm("삭제하시겠습니까??")
+		
+		if(answer) {
+			$.ajax({
+		        url:"fileDelete",
+		        type:"post",
+		        data:JSON.stringify(temp_obj),
+		        enctype: "multipart/form-data",
+		        datatype:"json",
+				cache : false,
+		        contentType:"application/json; charset=UTF-8",
+		        success:function(resqonse){
+		            alert("파일을 삭제하였습니다.");
+		            location.reload();
+		        },
+		        error:function(jqXHR, textStatus, errorThrown){
+		            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
+		        }
+		    });
+		}
 	}
 	
 	function fileSubmit() {

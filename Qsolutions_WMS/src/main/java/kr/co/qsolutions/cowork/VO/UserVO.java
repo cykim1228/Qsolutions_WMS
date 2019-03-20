@@ -1,5 +1,7 @@
 package kr.co.qsolutions.cowork.VO;
 
+import java.util.List;
+
 public class UserVO {
 
 	private String userid;
@@ -18,6 +20,8 @@ public class UserVO {
 	private String oauthcode;
 	private String usercompanycode;
 	private String companyname;
+	
+	private List<UserVO> managerList;
 
 	public String getUserid() {
 		return userid;
@@ -116,6 +120,12 @@ public class UserVO {
 	public void setCompanyname(String companyname) {
 		this.companyname = companyname;
 	}
+	public List<UserVO> getManagerList() {
+		return managerList;
+	}
+	public void setManagerList(List<UserVO> managerList) {
+		this.managerList = managerList;
+	}
 	
 	@Override
 	public String toString() {
@@ -124,7 +134,7 @@ public class UserVO {
 				+ ", positioncode=" + positioncode + ", positionname=" + positionname + ", usercompanyname="
 				+ usercompanyname + ", useCookie=" + useCookie + ", gmail=" + gmail + ", gname=" + gname
 				+ ", oauthcode=" + oauthcode + ", usercompanycode=" + usercompanycode + ", companyname=" + companyname
-				+ "]";
+				+ ", managerList=" + managerList + "]";
 	}
 	
 }

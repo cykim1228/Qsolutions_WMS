@@ -60,5 +60,7 @@ public interface CoworkService {
 	public List<CoworkVO> CoworkDashboardList() throws Exception;
 	
 	public int CountTodayCowork(CoworkDTO coworkDTO) throws Exception;
+
+	public CoworkVO InsertCoworkLast() throws Exception;
 	
 }

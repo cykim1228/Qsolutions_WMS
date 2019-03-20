@@ -251,6 +251,33 @@ public class CompanyController {
 	@RequestMapping(value = "/Company/Insertform")
 	public String CoworkInsertform(HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
 		UserVO loginVO = (UserVO)session.getAttribute("login");
+
+		CompanyDTO companyDTO = new CompanyDTO();
+		List<UserVO> managerList = companyservice.SelectCompanyUser(companyDTO);
+        
+		List<UserVO> usersVO = (List<UserVO>)companyservice.SelectUser();
+        
+		// model.addAttribute("userVO", userVO);
+			
+		System.out.println("usersVO : " + usersVO);
+		
+		System.out.println("managerList : " + managerList);
+		
+		model.addAttribute("usersVO", usersVO);
+		model.addAttribute("managerList", managerList);
+		
+		returnUrl = "company/insert";
+		return returnUrl;
+	}
+	
+	@RequestMapping(value = "/Company/Insert")
+	public String CompanyInsert(@RequestBody String body,HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
+	
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+        CompanyDTO companyDTO = mapper.readValue(body, CompanyDTO.class);
+        String jsonStr = mapper.writeValueAsString(companyDTO);
+        
 //		//coworkcode생성 및 기본 입력 데이터 호출
 		String companycode = companyservice.SelectCompanyCode();
 //		String newcoworkcode = coworkservice.SelectCompanyCode(nowdate.substring(1,8));
@@ -282,34 +309,7 @@ public class CompanyController {
 		CompanyVO companyVO = new CompanyVO();
 		companyVO.setCompanycode(companycode);
 		
-		CompanyDTO companyDTO = new CompanyDTO();
 		companyDTO.setCompanycode(companycode);
-		
-		List<UserVO> managerList = companyservice.SelectCompanyUser(companyDTO);
-        
-		List<UserVO> usersVO = (List<UserVO>)companyservice.SelectUser();
-        
-		// model.addAttribute("userVO", userVO);
-			
-		System.out.println("usersVO : " + usersVO);
-		
-		System.out.println("managerList : " + managerList);
-		
-		model.addAttribute("usersVO", usersVO);
-		model.addAttribute("companyVO", companyVO);
-		model.addAttribute("managerList", managerList);
-		
-		returnUrl = "company/insert";
-		return returnUrl;
-	}
-	
-	@RequestMapping(value = "/Company/Insert")
-	public String CompanyInsert(@RequestBody String body,HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
-	
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
-        CompanyDTO companyDTO = mapper.readValue(body, CompanyDTO.class);
-        String jsonStr = mapper.writeValueAsString(companyDTO);
         
         companyservice.InsertCompany(companyDTO);
         

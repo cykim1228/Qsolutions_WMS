@@ -66,7 +66,7 @@
 		    temp_obj["usermobile"] = $("#usermobile").val();
 		    temp_obj["useremail"] = $("#useremail").val();
 
-  			alert(JSON.stringify(temp_obj));
+  			// alert(JSON.stringify(temp_obj));
 
   			$.ajax({
   		        url:"Update",

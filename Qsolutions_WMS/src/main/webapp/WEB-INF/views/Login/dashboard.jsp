@@ -186,7 +186,7 @@ h2 {
 	<div class="roundedEvent center-block" style="line-height: 1.3em; overflow: scroll; overflow-x : hidden; word-break:break-all; word-wrap:break-word; -ms-overflow-style: none; padding: 20px;">
 		<h3 style="text-align: center; font-weight: bold;">이벤트</h3>
 		<c:if test="${coworkListVO.isEmpty()}">
-			<p style="color: #d9534f;">이벤트가 없습니다.</p>
+			<p style="color: #d9534f; margin-top: 110px;">이벤트가 없습니다.</p>
 		</c:if>
 		
 		<c:forEach items="${coworkListVO}" var="coworkListVO" varStatus="rowCount">
@@ -205,7 +205,7 @@ h2 {
 		<h3 style="text-align: center; font-weight: bold;">최신 메시지</h3>
 		
 		<c:if test="${subcoworkListVO.isEmpty()}">
-			<p style="color: #d9534f;">메시지가 없습니다.</p>
+			<p style="color: #d9534f; margin-top: 110px;">메시지가 없습니다.</p>
 		</c:if>
 		
 		<c:forEach items="${subcoworkListVO}" var="subcoworkListVO" varStatus="rowCount">

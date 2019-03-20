@@ -30,7 +30,7 @@
     <!-- cowork테이블 통합 검색 -->
     <select id="SearchCoworkAll" parameterType="PagingVO" resultType="CoworkVO">
  		SELECT 
-			*
+			co.userid, u.username ,c.companycode, c.companyname,co.coworkcode, co.coworktitle, date_format(co.coworkdate, '%Y-%m-%d') AS coworkdate, co.coworksubject, co.startdate, co.enddate, co.coworkstep
 		FROM
 			cowork co
 		inner join company c ON co.coworkcompany = c.companycode

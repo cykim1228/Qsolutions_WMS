@@ -169,5 +169,11 @@ public class CoworkDaoImpl implements CoworkDao  {
 		return sqlSession.selectOne(Namespace+".CountTodayCowork", coworkDTO);
 	}
 
+	@Override
+	public CoworkVO InsertCoworkLast() throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(Namespace+".InsertCoworkLast");
+	}
+
 	
 }

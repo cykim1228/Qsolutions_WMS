@@ -132,7 +132,33 @@ public class UserController {
 	public String UserInsertform(HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
 		UserVO loginVO = (UserVO)session.getAttribute("login");
 		
-		String tmpcodeStr = "";
+		UserVO userVO = new UserVO();
+		
+		List<CompanyVO> companyVO = (List<CompanyVO>) coworkservice.CompanyAllSelect();
+		
+		List<UserVO> deptVO = (List<UserVO>)userservice.SelectDeptList();
+		List<UserVO> positionVO = (List<UserVO>)userservice.SelectPositionList();
+		
+		model.addAttribute("deptVO", deptVO);
+		model.addAttribute("positionVO", positionVO);
+		model.addAttribute("companyVO", companyVO);
+		model.addAttribute("userVO", userVO);
+		
+		System.out.println("deptVO : " + deptVO);
+		
+		returnUrl = "user/insert";
+		return returnUrl;
+	}
+	
+	@RequestMapping(value = "/User/Insert")
+	public String UserInsert(@RequestBody String body,HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
+
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+        UserDTO userDTO = mapper.readValue(body, UserDTO.class);
+        String jsonStr = mapper.writeValueAsString(userDTO);
+
+        String tmpcodeStr = "";
 		String tmpstr = "";
 		Date date = new Date();
         SimpleDateFormat dt = new SimpleDateFormat("yyyyMMdd");
@@ -159,30 +185,7 @@ public class UserController {
 		UserVO userVO = new UserVO();
 		userVO.setUserid(tmpcodeStr);
 		
-		List<CompanyVO> companyVO = (List<CompanyVO>) coworkservice.CompanyAllSelect();
-		
-		List<UserVO> deptVO = (List<UserVO>)userservice.SelectDeptList();
-		List<UserVO> positionVO = (List<UserVO>)userservice.SelectPositionList();
-		
-		model.addAttribute("deptVO", deptVO);
-		model.addAttribute("positionVO", positionVO);
-		model.addAttribute("companyVO", companyVO);
-		model.addAttribute("userVO", userVO);
-		
-		System.out.println("deptVO : " + deptVO);
-		
-		returnUrl = "user/insert";
-		return returnUrl;
-	}
-	
-	@RequestMapping(value = "/User/Insert")
-	public String UserInsert(@RequestBody String body,HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
-
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
-        UserDTO userDTO = mapper.readValue(body, UserDTO.class);
-        String jsonStr = mapper.writeValueAsString(userDTO);
-
+		userDTO.setUserid(tmpcodeStr);
         
 //        if(userDTO.getCompanyusercode()==0) {
 //        	userDTO.setDeptcode(deptcode);("");

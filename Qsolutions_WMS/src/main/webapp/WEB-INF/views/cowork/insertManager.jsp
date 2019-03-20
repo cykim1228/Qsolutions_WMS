@@ -62,11 +62,7 @@
 	// 		});
 	// 	}
 	
-	var selectedManager = new Array();
-	
-	var i = 0;
-	
-	function insertdata() {
+	/* function insertdata() {
 
 		var formData = document.insertData;
 			
@@ -88,7 +84,7 @@
 		var temp_obj = {};
 		temp_obj["coworksubject"] = $("#coworksubject").val();
 		temp_obj["coworktitle"] = $("#coworktitle").val();
-		// temp_obj["coworkcode"] = $("#coworkcode").val();
+		temp_obj["coworkcode"] = $("#coworkcode").val();
 		temp_obj["userid"] = $("#userid").val();
 		temp_obj["companycode"] = $("#companycode").val();
 		temp_obj["coworktext"] = $("#coworktext").val();
@@ -110,60 +106,6 @@
 			temp_obj["coworkstep"] = $("#coworkstep5").val();
 		}
 		
-		var comcode = $("#companycode").val();
-		
-		var selectsManager = [$("#manager").val().toString()];
-		
-		var dataList = {'selectsManager' : selectsManager, 'comcode' : comcode};
-		
-		// alert("selectsManager : " + selectsManager);
-		
-		/* 
-		var selectManager = $("#manager").val().toString();
-		alert("manager : " + selectManager);
-		var filedata = {"selectManager" : selectManager};
-		
-		var totData = new Object();
-		var Data = new Object();
-		var dataList = new Array();
-		
-		var obj = document.getElementById("manager"); 
-	    for (var i=0,cnt=obj.options.length;i<cnt;i++) { 
-			if (obj.options[i].selected == true) alert('체크'); 
-			
-			data["manager"] = $("#manager" + i).val().toString();
-			dataList.push(data);
-	    }
-		
-		for (var i = 0; i < $('#manager option').size(); i++) {
-			
-			dataList[i] = $("#manager" + i + " option:selected").val();
-			dataList.push(selectManager);
-			
-			if( $("#manager option:eq("+i+")").attr("selected") ) //선택된 값찾기
-			alert($("#manager option:eq("+i+")").val()); //선택된 값 출력
-			
-			// data["manager"] = $("#manager").val().toString();
-			// dataList.push(data);
-		}
-		
-		alert("dataList : " + dataList);
-		
-		totData["managerList"] = dataList;
-		alert("totData : " + totData); */
-		
-		$.ajax({
-            url : "InsertSelectManager",     // 요기에 ajax!
-            type : 'POST', 
-            data : dataList,
-            success : function(data) {
-               // alert("완료!");
-            }, // success : function (xml)
-            error : function(xhr, status) {
-                alert("에러발생!" + xhr + " : " + status);
-            }
-        });
-		
 		$.ajax({
 			url : "Insert",
 			type : "post",
@@ -179,68 +121,10 @@
 				alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
 			}
 		});
-		
-	}
+	} */
 
-	function cancel() {
-		location.href = "/Cowork/List";
-	}
-	
-	$(document).ready(function() {
-
-		$('#enddate').bootstrapMaterialDatePicker ({
-			weekStart: 0, 
-			format: 'YYYY-MM-DD HH:mm',
-			cancelText: 'Cancel',
-			okText: 'OK',
-			/* nowButton : true, */
-			switchOnClick : true,
-			lang: 'ko'
-		});
-		
-		$('#startdate').bootstrapMaterialDatePicker ({
-			weekStart: 0, 
-			format: 'YYYY-MM-DD HH:mm',
-			cancelText: 'Cancel',
-			okText: 'OK',
-			/* nowButton : true, */
-			switchOnClick : true,
-			lang: 'ko'
-		}).on('change', function(e, date) {
-			$('#enddate').bootstrapMaterialDatePicker('setMinDate', date);
-		});
-
-		$('#min-date').bootstrapMaterialDatePicker({ 
-			format : 'YYYY/MM/DD HH:mm', 
-			minDate : new Date() 
-		});
-		
-		$.material.init()
-		
-	});
-	
 	function changeSelect(){
-		
-		/* selectedManager[i] = $("#manager option:selected").val();
-		
-		i = i + 1;
-		
-		alert("i : " + selectManager);
-		
-		alert("selectedManager : " + selectedManager);
-		
-		var selectManager = $("#manager").val().toString();
-		alert("manager : " + selectManager);
-		var filedata = {"selectManager" : selectManager};
-	    
-		alert(filedata); */
-		
-		/* var obj = document.getElementById("manager"); 
-			for (var i=0,cnt=obj.options.length;i<cnt;i++) { 
-				if (obj.options[i].selected == true) alert('selectManager : ' + selectManager[i]); 
-		} */
-		
-		/* var userid = $("#manager").val();
+		var userid = $("#manager").val();
 		var companycode = $("#companycode").val();
 		var coworkcode = $("#coworkcode").val();
 		var managerName = $("#manager option:checked").text();
@@ -262,9 +146,9 @@
 	    temp_html = temp_html + '</div>';
 	    
 	    $("#choicess").append(temp_html);
-	    $('#choicess').html(); */
+	    $('#choicess').html();
 
-	    /* $.ajax({
+	    $.ajax({
         url:"InsertManager",
         type:"post",
         data:JSON.stringify(temp_obj),
@@ -277,11 +161,11 @@
         error:function(jqXHR, textStatus, errorThrown){
             alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
         }
-		}); */
+		});
 		
 	}
 	
-	/* $(document).ready(function() {
+	$(document).ready(function() {
 		
 		viewManager();
 		
@@ -294,10 +178,15 @@
 		var coworkcode = $("#coworkcode").val();
 		var companycode = $("#companycode").val();
 		
+		console.log("coworkcode : " + coworkcode);
+		console.log("companycode : " + companycode);
+		
 		$.ajax({
 		    url:"SelectManager",
 		    type:"post",
-		    data:{"coworkcode" : coworkcode},
+		    data:{"coworkcode" : coworkcode,
+		    	  "companycode" : companycode
+		   		},
 	        datatype:"json",
 	        contentType:"application/json;charset=UTF-8",
 		    success:function(data){
@@ -331,9 +220,9 @@
 				alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
 		    }
 		});
-	} */
+	}
 	
-	/* function deleteManager(e){
+	function deleteManager(e){
 	    var temp_obj = {};
 	    var answer = confirm("삭제하시겠습니까??")
 	    
@@ -346,12 +235,6 @@
 		    
 		    console.log(temp_obj);
 		    
-		    console.log("managerid : " + managerid);
-        	console.log("." + managerid);
-        	$("div").remove("." + managerid);
-        	viewManager();
-            alert("삭제되었습니다.");
-            
 		    $.ajax({
 	        url:"DeleteManager",
 	        type:"delete",
@@ -373,48 +256,6 @@
 	    else {
 	        return;
 	    }
-		
-	} */
-	
-	function showSelect() {
-		
-		// var selectData = document.forms.insertData;
-		
-		var selectdata = $('#coworksubject option:selected').val();
-		
-		console.log("selectdata : " + selectdata);
-		
-		if (selectdata == "이슈") {
-			$('.coworkstep1').css("display","");
-			$('.coworkstep2').css("display","none");
-			$('.coworkstep3').css("display","none");
-			$('.coworkstep4').css("display","none");
-			$('.coworkstep5').css("display","none");
-		} else if (selectdata == "유지보수") {
-			$('.coworkstep1').css("display","none");
-			$('.coworkstep2').css("display","");
-			$('.coworkstep3').css("display","none");
-			$('.coworkstep4').css("display","none");
-			$('.coworkstep5').css("display","none");
-		} else if (selectdata == "정기점검") {
-			$('.coworkstep1').css("display","none");
-			$('.coworkstep2').css("display","none");
-			$('.coworkstep3').css("display","");
-			$('.coworkstep4').css("display","none");
-			$('.coworkstep5').css("display","none");
-		} else if (selectdata == "상담") {
-			$('.coworkstep1').css("display","none");
-			$('.coworkstep2').css("display","none");
-			$('.coworkstep3').css("display","none");
-			$('.coworkstep4').css("display","");
-			$('.coworkstep5').css("display","none");
-		} else {
-			$('.coworkstep1').css("display","none");
-			$('.coworkstep2').css("display","none");
-			$('.coworkstep3').css("display","none");
-			$('.coworkstep4').css("display","none");
-			$('.coworkstep5').css("display","");
-		}
 		
 	}
 	
@@ -540,101 +381,40 @@ h2 {
 	<!-- 상세 뷰 페이지  -->
 	<form action="${pageContext.request.contextPath}/Cowork/Insert" method="post" id="insertData" name="insertData">
 	    <div class="viewListTop">
-	    	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 30px; font-weight: bold;">업무 등록</span>
+	    	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 30px; font-weight: bold;">담당자 등록</span>
 	    	<!-- <input type="submit" id="save" class="btn btn-primary pull-right" onclick="insertdata()" style="margin-right: 10px; margin-top: 8px;" value="업무 등록"> -->
-	    	<button type="button" id="save" class="btn btn-primary pull-right" onclick="insertdata()" style="margin-right: 10px; margin-top: 8px;">업무 등록</button>
+	    	<button type="button" id="save" class="btn btn-primary pull-right" onclick="insertdata()" style="margin-right: 10px; margin-top: 8px;">담당자 등록</button>
 	    </div>
 	
 		<div class="viewListCenter" id="insertform">
-			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">업무 제목</p>
-			<input id="coworktitle" name="coworktitle" type="text" class="form-control" placeholder="업무명 입력..." value="${CoworkVO.coworktitle}" size="50" style="width: 100%; display: inline-block;" required>
-			<%-- <p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">업무 코드</p>
-			<input id="coworkcode" name="coworkcode" type="text" class="form-control" placeholder="${CoworkVO.coworkcode}" value="${CoworkVO.coworkcode}" size="50" style="width: 100%; display: inline-block;" readonly="readonly">
-			<input type="hidden" id="coworkcode" value="${CoworkVO.coworkcode}"  name="coworkcode" /> --%>
-			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">카테고리</p>
-			<select class="form-control" id="coworksubject" name="coworksubject" onChange="showSelect()">
-				<option value="" selected disabled hidden>== 카테고리를 선택해주세요 ==</option>
-				<option value="이슈">이슈</option>
-				<option value="유지보수">유지보수</option>
-				<!-- <option value="정기점검">정기점검</option> -->
-				<option value="상담">상담</option>
-				<option value="프로젝트">프로젝트</option>
-			</select>
-			<select class="form-control coworkstep1" id="coworkstep1" name="coworkstep1" style="display: none;">
-				<option value="" selected disabled hidden>== 진행단계를 선택해주세요 ==</option>
-				<option value="이슈발생">이슈발생</option>
-				<option value="원인파악">원인파악</option>
-				<option value="작업진행">작업진행</option>
-				<option value="완료">완료</option>
-			</select>
-			<select class="form-control coworkstep2" id="coworkstep2" name="coworkstep2" style="display: none;">
-				<option value="" selected disabled hidden>== 진행단계를 선택해주세요 ==</option>
-				<option value="진행중">진행중</option>
-				<option value="완료">완료</option>
-			</select>
-			<!-- <select class="form-control coworkstep3" id="coworkstep3" name="coworkstep3" style="display: none;">
-				<option value="" selected disabled hidden>== 진행단계를 선택해주세요 ==</option>
-				<option value="점검전">점검전</option>
-				<option value="점검중">점검중</option>
-				<option value="완료">완료</option>
-			</select> -->
-			<select class="form-control coworkstep4" id="coworkstep4" name="coworkstep4" style="display: none;">
-				<option value="" selected disabled hidden>== 진행단계를 선택해주세요 ==</option>
-				<option value="견적">견적</option>
-				<option value="발주">발주</option>
-				<option value="입찰">입찰</option>
-				<option value="수주">수주</option>
-				<option value="계약">계약</option>
-				<option value="계약">완료</option>
-			</select>
-			<select class="form-control coworkstep5" id="coworkstep5" name="coworkstep5" style="display: none;">
-				<option value="" selected disabled hidden>== 진행단계를 선택해주세요 ==</option>
-				<option value="0">0%</option>
-				<option value="20">20%</option>
-				<option value="40">40%</option>
-				<option value="60">60%</option>
-				<option value="80">80%</option>
-				<option value="100">완료</option>
-			</select>
-			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">작성자</p>
-			<input type="text" class="form-control" id="#" value="${CoworkVO.username}" name="writer" size="50" style="width: 100%; display: inline-block;" readonly="readonly">
-			<input type="hidden" id="userid" value="${CoworkVO.userid}" name="userid" />
-			<input type="hidden" id="username" value="${CoworkVO.username}" name="username" />
-			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">고객사 명</p>
-			<select class="selectpicker show-tick" data-style="btn-primary" name="companycode" id="companycode" data-live-search="true" data-width="100%" data-size="10" title="== 고객사를 선택해주세요 ==" style="display: inline-block;">
-				<c:forEach var="companyList" items="${companyList}" varStatus="list">
-					<option id="companycode" value="${companyList.companycode}">${companyList.companyname}</option>
-				</c:forEach>
-			</select>
-			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">업무 내용</p>
-			<textarea id="coworktext" name="coworktext" class="form-control" rows="3" placeholder="업무 내용을 입력해주세요.." style="width: 100%; display: inline-block;" required></textarea>
-			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">업무 날짜</p>
-			<input id="startdate" name="startdate" type="text" class="form-control" placeholder="시작 시간.." value="" size="50" style="width: 49%; display: inline-block;">
-			<input id="enddate" name="enddate" type="text" class="form-control pull-right" placeholder="종료 시간.." value="" size="50" style="width: 49%; display: inline-block;">
+			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">업무 코드</p>
+			<input id="coworkcode" name="coworkcode" type="text" class="form-control" placeholder="${codeVO.coworkcode}" value="${codeVO.coworkcode}" size="50" style="width: 100%; display: inline-block;" readonly="readonly">
+			<input type="hidden" id="coworkcode" value="${codeVO.coworkcode}"  name="coworkcode" />
+			<input type="hidden" id="companycode" value="${codeVO.companycode}"  name="companycode" />
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">담당자</p>
-			<select class="selectpicker show-tick" multiple data-selected-text-format="count > 10" data-style="btn-primary" name="manager" id="manager" data-live-search="true" title="== 담당자를 선택해주세요 ==" data-width="100%" data-size="10" onchange="changeSelect()" style="display: inline-block;">
+			<select class="selectpicker show-tick" data-style="btn-primary" name="manager" id="manager" data-live-search="true" title="== 담당자를 선택해주세요 ==" data-width="100%" data-size="10" onchange="changeSelect()" style="display: inline-block;">
 				
-				<c:forEach var="companyList" items="${companyList}" varStatus="status">
+				<c:forEach var="companyList" items="${companyList}" varStatus="list">
 					<optgroup label="${companyList.companyname}">
-						<c:forEach var="usersVO" items="${usersVO}" varStatus="status">
+						<c:forEach var="usersVO" items="${usersVO}" varStatus="list">
 							<c:if test="${companyList.companyname == usersVO.companyname}">
-								<option id="manager${status.count}" value="${usersVO.userid}" data-subtext="${usersVO.positionname}"><p id="managerName" value="${usersVO.username}">${usersVO.username}</p></option>
+								<option id="manager" value="${usersVO.userid}"><p id="managerName" value="${usersVO.username}">[${usersVO.positionname}] ${usersVO.username}</p></option>
 							</c:if>
 						</c:forEach>
 					</optgroup>
 				</c:forEach>
 				
 				<optgroup label="미분류">
-					<c:forEach var="managerVO" items="${managerVO}" varStatus="status">
+					<c:forEach var="managerVO" items="${managerVO}" varStatus="list">
 						<c:if test="${managerVO.companyname eq null}">
-							<option id="manager${status.count}" value="${managerVO.managerid}"><p id="managerName" value="${managerVO.managername}">[${managerVO.positionname}] ${managerVO.managername}</p></option>
+							<option id="manager" value="${managerVO.managerid}"><p id="managerName" value="${managerVO.managername}">[${managerVO.positionname}] ${managerVO.managername}</p></option>
 						</c:if>
 					</c:forEach>
 				</optgroup>
 			</select>
-			<%-- <div class="choices" data-type="select-multiple" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" dir="ltr">
+			<div class="choices" data-type="select-multiple" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" dir="ltr">
 			<div id="choicess" class="choices__inner">
-				<c:forEach var="managerList" items="${managerList}" varStatus="list">
+				<%-- <c:forEach var="managerList" items="${managerList}" varStatus="list">
 					<div class="choices__list choices__list--multiple ${managerList.userid}">
 						<div class="choices__item choices__item--selectable" data-item="" data-id="12" data-value="${managerList.username}" data-deletable="" aria-selected="true">
 						${managerList.username}
@@ -643,9 +423,9 @@ h2 {
 						</button>
 						</div>
 					</div>
-				</c:forEach>
+				</c:forEach> --%>
 			</div>
-			</div> --%>
+		</div>
 		</div>
 	</form>
 	

@@ -31,11 +31,6 @@
   			
   			var formData = document.insertData;
   			
-  			if(formData.userid.value == "") {
-  				alert("아이디를 입력해주세요.")
-  				return formData.userid.focus();
-  			}
-  			
   			if(formData.username.value == "") {
   				alert("이름을 입력해주세요.")
   				return formData.username.focus();
@@ -68,7 +63,6 @@
   			
 			var temp_obj = {};
 			
-		    temp_obj["userid"] = $("#userid").val();
 		    temp_obj["username"] = $("#username").val();
 		    temp_obj["userpasswd"] = $("#userpasswd").val();
 		    temp_obj["usercompanycode"] = $("#usercompanycode").val();
@@ -77,7 +71,7 @@
 		    temp_obj["usermobile"] = $("#usermobile").val();
 		    temp_obj["useremail"] = $("#useremail").val();
 
-  			alert(JSON.stringify(temp_obj));
+  			// alert(JSON.stringify(temp_obj));
 
   			$.ajax({
   		        url:"Insert",
@@ -205,8 +199,8 @@ body {
 	    </div>
 	
 		<div class="viewListCenter" id="insertform">
-			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">사용자 ID</p>
-			<input id="userid" name="userid" type="text" class="form-control" placeholder="${userVO.userid}" value="${userVO.userid}" size="50" style="width: 100%; display: inline-block;" readonly="readonly">
+			<%-- <p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">사용자 ID</p>
+			<input id="userid" name="userid" type="text" class="form-control" placeholder="${userVO.userid}" value="${userVO.userid}" size="50" style="width: 100%; display: inline-block;" readonly="readonly"> --%>
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">사용자 이름</p>
 			<input id="username" name="username" type="text" class="form-control" placeholder="이름 입력.." size="50" style="width: 100%; display: inline-block;">
 			<!-- <p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">비밀번호</p> -->

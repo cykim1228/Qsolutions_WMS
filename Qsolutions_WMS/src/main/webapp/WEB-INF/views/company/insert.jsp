@@ -49,7 +49,7 @@
 		}
  		
  		var temp_obj = {};
-		temp_obj["companycode"] = $("#companycode").val();
+		// temp_obj["companycode"] = $("#companycode").val();
 		temp_obj["companyname"] = $("#companyname").val();
 		temp_obj["companyzipcode"] = $("#store_zip").val();
 	    temp_obj["companyaddress"] = $("#companyaddress").val();
@@ -57,7 +57,7 @@
 	    temp_obj["companyhomepg"] = $("#companyhomepg").val();
 	    temp_obj["companyclass"] = $("#companyclass").val();
 	    
-		alert("test--"+JSON.stringify(temp_obj));
+		// alert("test--"+JSON.stringify(temp_obj));
 
 		$.ajax({
 	        url:"Insert",
@@ -77,7 +77,7 @@
 	}
  	function updatedata(){
  		var temp_obj = {};
-		temp_obj["companycode"] = $("#companycode").val();
+		// temp_obj["companycode"] = $("#companycode").val();
 		temp_obj["companyname"] = $("#companyname").val();
 		temp_obj["companyzipcode"] = $("#store_zip").val();
 	    temp_obj["companyaddress"] = $("#companyaddress").val();
@@ -85,7 +85,7 @@
 	    temp_obj["companyhomepg"] = $("#companyhomepg").val();
 	    temp_obj["companyclass"] = $("#companyclass").val();
 
-		alert("test--"+JSON.stringify(temp_obj));
+		// alert("test--"+JSON.stringify(temp_obj));
 
 		$.ajax({
 	        url:"Update",
@@ -373,9 +373,9 @@ body {
 	<div class="viewListCenter">
 		<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">회사 명</p>
 		<input id="companyname" name="companyname" type="text" class="form-control" placeholder="회사명 입력..." value="${companyVO.companyname}" size="50" style="width: 100%; display: inline-block;">
-		<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">회사 코드</p>
+		<%-- <p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">회사 코드</p>
 		<input id="#" name="companycode" type="text" class="form-control" placeholder="${companyVO.companycode}" value="${companyVO.companycode}" size="50" style="width: 100%; display: inline-block;" readonly="readonly">
-		<input type="hidden" id="companycode" value="${companyVO.companycode}"  name="companycode" />
+		<input type="hidden" id="companycode" value="${companyVO.companycode}"  name="companycode" /> --%>
 		<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">분류</p>
 			<select class="form-control" id="companyclass" name="companyclass">
 				<option value="" selected disabled hidden>== 회사 분류를 선택해주세요 ==</option>

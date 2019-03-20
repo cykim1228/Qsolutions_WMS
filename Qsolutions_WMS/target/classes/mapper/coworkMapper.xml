@@ -241,7 +241,7 @@
 		    inner join company c ON co.coworkcompany = c.companycode
 		where
 			date_format(sc.subcoworkdate, '%Y-%m-%d') >= date_add(NOW(), INTERVAL -5 DAY)
-			and sc.IsUse = 0
+			and co.IsUse = 0
 		order by subcoworkcode desc
 		limit 5;
 	</select>
@@ -269,5 +269,22 @@
 			date_format(now(), '%Y-%m-%d') between date_format(co.startdate, '%Y-%m-%d') and date_format(co.enddate, '%Y-%m-%d')
 			AND IsUse != 1;
  	</select>
+ 	
+ 	<select id="InsertCoworkLast" resultType="CoworkVO">
+ 		SELECT
+			coworkcode, coworkcompany AS companycode
+		FROM
+			cowork
+		ORDER BY
+			coworkcode DESC
+		LIMIT
+			1;
+ 	</select>
+ 	
+ 	<insert id ="insertKeyWordCnt" parameterType="java.util.HashMap">
+	<foreach item="item" collection="list">
+	  INSERT INTO SERVER_CUN_SUM (t_seq, k_seq, s_total_count, s_unique_count)
+	  VALUES (${item.t_seq}, #{item.k_seq}, #{item.s_total_count}, #{item.s_unique_count})</foreach>
+	</insert>
 	
 </mapper>

@@ -63,4 +63,6 @@ public interface CoworkDao {
 
 	public int CountTodayCowork(CoworkDTO coworkDTO) throws Exception;
 
+	public CoworkVO InsertCoworkLast() throws Exception;
+
 }

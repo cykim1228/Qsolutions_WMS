@@ -170,6 +170,12 @@ public class CoworkServiceImpl implements CoworkService {
 		// TODO Auto-generated method stub
 		return dao.CountTodayCowork(coworkDTO);
 	}
+
+	@Override
+	public CoworkVO InsertCoworkLast() throws Exception {
+		// TODO Auto-generated method stub
+		return dao.InsertCoworkLast();
+	}
 	
 	
 }
