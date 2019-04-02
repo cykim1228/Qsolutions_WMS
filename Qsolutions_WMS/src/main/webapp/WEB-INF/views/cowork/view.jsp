@@ -204,6 +204,12 @@ public void sendMail(String userId, String filePath, HttpSession session) throws
 		var subject = $("#subject").val(); // 제목
 		var content = $("#content").val(); // 내용
 		
+		if(receiver == "" || receiver == null){
+			alert("받는사람을 선택해주시기 바랍니다.");
+			
+			return;
+		}
+		
 		$.ajax({
 	        url:"send",
 	        type:"post",
@@ -224,6 +230,44 @@ public void sendMail(String userId, String filePath, HttpSession session) throws
 		});
 		
 	}
+	
+	$('document').ready(function() {
+		'[]'
+		$.ajax({
+			type : 'post',
+			url : '/Cowork/Calendar',
+			data : {
+				coworktitle : coworktitle
+			},
+			success : function(data) {
+				
+				console.log(data);
+				console.log(data.coworktitle);
+				
+				var str = '';
+				str += '<tr>';
+				str += '<td>' + data.coworksubject + '</td>';
+				str += '<td><a href="${pageContext.request.contextPath}/Cowork/View?coworkcode=' + data.coworkcode + '">' + data.coworktitle + '</a></td>';
+				str += '<td>' + data.coworkcode + '</td>';
+				str += '</tr>';
+
+				$('#cowork_text').html(str);
+				
+				var strs = '';
+				strs += '<tr>';
+				strs += '<td><a href="${pageContext.request.contextPath}/Company/View?companycode=' + data.companycode + '">' + data.companyname + '</a></td>';
+				strs += '<td><a href="${pageContext.request.contextPath}/User/View?userid=' + data.userid + '">' + data.username + '</a></td>';
+				strs += '<td>' + data.startdate + '</td>';
+				strs += '<td>' + data.enddate + '</td>';
+				strs += '</tr>';
+				
+				$('#cowork_texts').html(strs);
+				
+				$("#layerpop").modal(); 
+			}
+		});
+		
+	})
 	
 	
   </script>
@@ -310,6 +354,61 @@ body {
 	vertical-align: middle;
 }
 
+@media all and (max-width: 768px) {
+	.receiver {
+		width: 100%;
+		height: 34px;
+		display: inline-block; 
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+	.writesubcoworkbtn {
+		width: 29%; height: 74px;
+	}
+	.writesubcowork {
+		width: 70%; display: inline-block;
+	}
+	.deletesubcoworkbtn {
+		width: 29%; height: 74px;
+	}
+}
+@media all and (min-width: 768px) and (max-width: 1024px) {
+	.receiver {
+		width: 150px;
+		height: 34px;
+		display: inline-block; 
+		margin-right: 10px; 
+		margin-top: 8px;
+	}
+	.writesubcoworkbtn {
+		width: 9%; height: 74px;
+	}
+	.writesubcowork {
+		width: 90%; display: inline-block;
+	}
+	.deletesubcoworkbtn {
+		width: 9%; height: 74px;
+	}
+}
+@media all and (min-width: 1025px) {
+    .receiver {
+		width: 150px;
+		height: 34px;
+		display: inline-block; 
+		margin-right: 10px; 
+		margin-top: 8px;
+	}
+	.writesubcoworkbtn {
+		width: 9%; height: 74px;
+	}
+	.writesubcowork {
+		width: 90%; display: inline-block;
+	}
+	.deletesubcoworkbtn {
+		width: 9%; height: 74px;
+	}
+}
+
 </style>
 
 </head>
@@ -318,12 +417,13 @@ body {
 <%@ include file="/WEB-INF/views/header/footer.jsp"%>
 
 	<!-- 상세 뷰 페이지  -->
-    <div class="viewListTop">
+    <div class="viewListTop hidden-xs">
     	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 30px; font-weight: bold;">${CoworkVO.coworktitle}</span>
-    	<button type="button" class="btn btn-danger pull-right" onclick="deleteform()" style="margin-right: 10px; margin-top: 8px;">업무 삭제</button>
-    	<button type="button" class="btn btn-primary pull-right" onclick="updateform()" style="margin-right: 10px; margin-top: 8px;">업무 수정</button>
-    	<button type="button" class="btn btn-info pull-right" onclick="mailSend()" style="margin-right: 10px; margin-top: 8px;">메일 전송</button>
-		<select class="form-control pull-right" id="receiver" name="receiver" style="width: 150px; height: 34px; display: inline-block; margin-right: 10px; margin-top: 8px;">
+    	<br class="visible-xs">
+    	<button type="button" class="btn btn-danger pull-right" onclick="deleteform()" style="margin-right: 10px; margin-top: 8px; margin-bottom: 10px;">업무 삭제</button>
+    	<button type="button" class="btn btn-primary pull-right" onclick="updateform()" style="margin-right: 10px; margin-top: 8px; margin-bottom: 10px;">업무 수정</button>
+    	<button type="button" class="btn btn-info pull-right" onclick="mailSend()" style="margin-right: 10px; margin-top: 8px; margin-bottom: 10px;">메일 전송</button>
+		<select class="form-control pull-right receiver" id="receiver" name="receiver">
 			<option value="" selected disabled hidden>== 받는사람 ==</option>
 			<option value="we@qsolutions.co.kr">전체</option>
 			<c:forEach items="${userList}" var="userList" varStatus="rowCount">
@@ -332,9 +432,60 @@ body {
 				</c:if>
 			</c:forEach>
 		</select>
+		<br class="visible-xs">
     </div>
 <!--  -->
-	<div class="viewList">
+	<div class="viewList visible-xs">
+		<table class="table table-striped">
+			<span class="sub-header" style="margin-left: 10px; margin-bottom: 10px; position: relative; font-size: 30px; font-weight: bold;">${CoworkVO.coworktitle}</span>
+			<tr>
+				<td style="font-weight:bold; width: 30%;">카테고리</td>
+				<td>${CoworkVO.coworksubject}</td>
+			</tr>
+			<tr>
+				<td style="font-weight:bold; width: 30%;">고객사명</td>
+				<td><a href='${pageContext.request.contextPath}/Company/View?companycode=${CoworkVO.companycode}'>${CoworkVO.companyname}</a></td>
+			</tr>
+			<tr>
+				<td style="font-weight:bold; width: 30%;">등록일</td>
+				<td><fmt:formatDate value="${CoworkVO.coworkdate}" pattern="yyyy/MM/dd"/></td>
+			</tr>
+			<tr>
+				<td style="font-weight:bold; width: 30%;">진행단계</td>
+				<td>${CoworkVO.coworkstep}</td>
+			</tr>
+			<tr>
+				<td style="font-weight:bold; width: 30%;">시작시간</td>
+				<td>${CoworkVO.startdate}</td>
+			</tr>
+			<tr>
+				<td style="font-weight:bold; width: 30%;">종료시간</td>
+				<td>${CoworkVO.enddate}</td>
+			</tr>
+			<c:forEach items="${userList}" var="userList" varStatus="rowCount">
+				<tr>
+					<td style="font-weight:bold; width: 30%;">담당자</td>
+					<td><a href="${pageContext.request.contextPath}/User/View?userid=${userList.userid}">${userList.username}</a></td>
+				</tr>
+			</c:forEach>
+			<tr>
+				<td colspan="2">${fn:replace(CoworkVO.coworktext, newLineChar, "<br>")}</td>
+			</tr>
+		</table>
+		<select class="form-control pull-left receiver" id="receiver" name="receiver" style="width: 60%;">
+			<option value="" selected disabled hidden>== 받는사람 ==</option>
+			<option value="we@qsolutions.co.kr">전체</option>
+			<c:forEach items="${userList}" var="userList" varStatus="rowCount">
+				<c:if test="${userList.usercompanycode eq 'C0000001'}">
+					<option id="useremail" value="${userList.useremail}">${userList.username}</option>
+				</c:if>
+			</c:forEach>
+		</select>
+    	<button type="button" class="btn btn-info pull-right" onclick="mailSend()" style="width:38%; margin-top: 10px; margin-bottom: 10px;">메일 전송</button>
+		<button type="button" class="btn btn-danger pull-right" onclick="deleteform()" style="width:49%; margin-top: 8px; margin-bottom: 20px;">업무 삭제</button>
+    	<button type="button" class="btn btn-primary pull-left" onclick="updateform()" style="width:49%; margin-top: 8px; margin-bottom: 20px;">업무 수정</button>
+	</div>
+	<div class="viewList hidden-xs">
 		<div class="table-responsive">
 			<table class="table table-striped">
 				<thead align="center">
@@ -362,7 +513,7 @@ body {
 	</div>
 	</div>
 	
-	<div class="viewList">
+	<div class="viewList hidden-xs">
 		<div class="table-responsive">
 			<table class="table table-striped">
 				<thead align="center">
@@ -414,12 +565,13 @@ body {
 	</div>
 	
 	<div class="viewList">
-		<textarea id="subcoworktext" name="subcoworktext" class="form-control" rows="3" placeholder="추가 업무 내용을 입력해주세요." style="width: 90%; display: inline-block;"></textarea>
-		<button type="button" class="btn btn-primary pull-right" onclick="insertsubcowork()" style="width: 9%; height: 74px;">작성</button>
+		<textarea id="subcoworktext" name="subcoworktext" class="form-control writesubcowork" rows="3" placeholder="추가 업무 내용을 입력해주세요."></textarea>
+		<button type="button" class="btn btn-primary pull-right writesubcoworkbtn" onclick="insertsubcowork()">작성</button>
 	</div>
+	<div style="margin-bottom: 100px;">
 	        	<c:forEach var="SubCoworkVO" items="${SubCoworkVO}" varStatus="linenum">
 	        	<div class="viewList">
-					<div class="roundedSubNo">
+					<div class="roundedSubNo hidden-xs">
 						No. ${SubCoworkVO.subcoworkcode}
 						<input type="hidden" id="subcoworkcode_${SubCoworkVO.subcoworkcode}" value="${SubCoworkVO.subcoworkcode}">
 					</div>
@@ -429,15 +581,15 @@ body {
 		            <div class="roundedSubName">
 		            	${SubCoworkVO.username}
 		            </div>
-		            <div class="roundedSubName">
+		            <div class="roundedSubName hidden-xs">
 		            	<fmt:timeZone value="GMT">
 		            	<fmt:formatDate value="${SubCoworkVO.subcoworkdate}" pattern="yyyy/MM/dd a h:mm"/>
 		            	</fmt:timeZone>
 		            </div>
-		            <button type="button" id="${linenum.count}" name="deletesubcowork"  class="btn btn-danger pull-right" value="${SubCoworkVO.subcoworkcode}" onclick="deletesubcowork(this.value)" style="width: 9%; height: 74px; display: inline-block;">삭제</button>
+		            <button type="button" id="${linenum.count}" name="deletesubcowork"  class="btn btn-danger pull-right deletesubcoworkbtn" value="${SubCoworkVO.subcoworkcode}" onclick="deletesubcowork(this.value)">삭제</button>
 	        	</div>
 	        	</c:forEach>
-	
+	</div>
 	<!-- 메일 전송 부분 -->
 	
 	<form action="send" method="post">
@@ -669,5 +821,57 @@ body {
         	</c:forEach>
         </div>
 	</div> --%>
+	
+		<!-- 모달 창 -->
+
+<!-- <div class="modal fade" id="layerpop" >
+	<div class="modal-dialog">
+		<div class="modal-content">
+			header
+			<div class="modal-header">
+				header title
+				<h4 class="modal-title">업무 상세보기</h4>
+				닫기(x) 버튼
+				<button type="button" class="close" data-dismiss="modal">×</button>
+			</div>
+			
+			body
+			<div id="coworkViewText" class="modal-body">
+			<table class="table table-striped">
+				<thead align="center">
+					<tr>
+						<th style="width: 30%; text-align: center;">카테고리</th>
+						<th style="width: 35%; text-align: center;">제목</th>
+						<th style="width: 35%; text-align: center;">업무코드</th>
+					</tr>
+				</thead>
+				<tbody align="center" id="cowork_text">
+					
+				</tbody>
+			</table>
+			<table class="table table-striped">
+				<thead align="center">
+					<tr>
+						<th style="width: 25%; text-align: center;">고객사명</th>
+						<th style="width: 25%; text-align: center;">등록자</th>
+						<th style="width: 25%; text-align: center;">시작시간</th>
+						<th style="width: 25%; text-align: center;">종료시간</th>
+					</tr>
+				</thead>
+				<tbody align="center" id="cowork_texts">
+					
+				</tbody>
+			</table>
+			</div>
+			
+			Footer
+			<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+			</div>
+		</div>
+	</div>
+</div> -->
+	
+	
 </body>
 </html>

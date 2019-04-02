@@ -69,6 +69,7 @@ body {
 	width: 80%;
 	height: 80%;
 	margin: 0 auto; 
+	margin-bottom: 80px;
 }
 
 </style>
@@ -83,8 +84,8 @@ body {
 	<!-- 상세 뷰 페이지 -->
 	<div class="viewListTop">
 		<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 30px; font-weight: bold;">담당자 리스트</span>
-	    <button type="button" class="btn btn-primary pull-right" onclick="insertView()" style="margin-left:10px; margin-right: 10px; margin-top: 8px;">담당자 등록</button>
-	    <form class="navbar-form navbar-right" style="border-right-width: 2px; border-right-style: solid; border-right-color: gray; margin-right: 5px;">
+	    <button type="button" class="btn btn-primary pull-right" onclick="insertView()" style="margin-left:10px; margin-right: 10px; margin-top: 8px; margin-bottom: 10px;">담당자 등록</button>
+	    <form class="navbar-form navbar-right hidden-xs" style="border-right-width: 2px; border-right-style: solid; border-right-color: gray; margin-right: 5px;">
 			<select class="btn btn-primary" name="SearchType">
 	            <option value="username"<c:if test="${pagingVO.searchType == 'username'}">seleted</c:if> >담당자명</option>
 	            <option value="userid" <c:if test="${pagingVO.searchType == 'userid'}">seleted</c:if> >담당자ID</option>
@@ -98,25 +99,25 @@ body {
 		<table id="myTable" class="table table-striped tablesorter" >
 			<thead align="center">
 				<tr>
-					<th style="width: 15%; text-align: center;">담당자ID</th>
-					<th style="width: 10%; text-align: center;">담당자명</th>
-					<th style="width: 15%; text-align: center;">H.P</th>
-					<th style="width: 20%; text-align: center;">EMail</th>
-					<th style="width: 10%; text-align: center;">부서</th>
-					<th style="width: 10%; text-align: center;">직급</th>
 					<th style="width: 20%; text-align: center;">소속</th>
+					<th class="hidden-xs" style="width: 15%; text-align: center;">담당자ID</th>
+					<th style="width: 10%; text-align: center;">담당자명</th>
+					<th class="hidden-xs" style="width: 15%; text-align: center;">H.P</th>
+					<th class="hidden-xs" style="width: 20%; text-align: center;">EMail</th>
+					<th class="hidden-xs" style="width: 10%; text-align: center;">부서</th>
+					<th class="hidden-xs" style="width: 10%; text-align: center;">직급</th>
 				</tr>	
 			</thead>
 			<tbody align="center">
 				<c:forEach items="${userVO}" var="userVO" varStatus="rowCount">
 					<tr>
-						<td>${userVO.userid}</td>
+						<td style="font-weight: bold;"><a href='${pageContext.request.contextPath}/Company/View?companycode=${userVO.usercompanycode}'>${userVO.companyname}</a></td>
+						<td class="hidden-xs">${userVO.userid}</td>
 						<td style="font-weight: bold;"><a href="${pageContext.request.contextPath}/User/View?userid=${userVO.userid}">${userVO.username}</a></td>
-						<td><a href='tel:${userVO.usermobile}'>${userVO.usermobile}</a></td>
-						<td><a href='mailto:${userVO.useremail}'>${userVO.useremail}</a></td>
-						<td>${userVO.deptname}</td>
-						<td>${userVO.positionname}</td>
-						<td>${userVO.companyname}</td>
+						<td class="hidden-xs"><a href='tel:${userVO.usermobile}'>${userVO.usermobile}</a></td>
+						<td class="hidden-xs"><a href='mailto:${userVO.useremail}'>${userVO.useremail}</a></td>
+						<td class="hidden-xs">${userVO.deptname}</td>
+						<td class="hidden-xs">${userVO.positionname}</td>
 					</tr>
 				</c:forEach>
 			</tbody>

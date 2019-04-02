@@ -395,7 +395,7 @@ body {
 		</div>
 	</div>
 
-	<div class="viewList">
+	<div class="viewList" style="margin-bottom: 100px;">
 		<div class="table-responsive">
 			<table class="table table-striped tableCowork">
 				<thead align="center">

@@ -41,7 +41,7 @@ public class DashboardController {
 	
 	int todaycowork = 0;
 	
-	@RequestMapping(value = "/Dashboard")
+	@RequestMapping(value = "/")
 	public String CoworkList(PagingVO pagingVO, HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
 
 		UserVO loginVO = (UserVO)session.getAttribute("login");

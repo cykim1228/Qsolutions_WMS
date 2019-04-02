@@ -61,8 +61,8 @@ public class LoginController {
 	
 	
 	//----Main Controller
-	@RequestMapping(value = "/")
-	public String home(Locale locale, Model model) {
+	@RequestMapping(value = "/Check")
+	public String Check(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
 		Date date = new Date();
@@ -116,7 +116,7 @@ public class LoginController {
 		            userservice.keepLogin(userDTO.getUserid(), session.getId(), sessionLimit);
 		        }
 				
-    			returnUrl = "redirect:/Dashboard/";
+    			returnUrl = "redirect:/";
     			
     		} else {
     			errorcode = "ERR00002";

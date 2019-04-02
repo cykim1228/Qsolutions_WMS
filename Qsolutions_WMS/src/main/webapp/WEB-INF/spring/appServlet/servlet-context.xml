@@ -34,6 +34,7 @@
     <beans:bean id="authenticationInterceptor" class="kr.co.qsolutions.cowork.Util.AuthenticationInterceptor"></beans:bean>
 	<interceptors>
 		<interceptor>
+			<mapping path="/"/>
 			<mapping path="/Cowork/**"/>
 			<mapping path="/Company/**"/>
 			<mapping path="/Admin/**"/>

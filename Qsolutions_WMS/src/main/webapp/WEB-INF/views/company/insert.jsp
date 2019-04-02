@@ -33,7 +33,7 @@
 			return formData.companyclass.focus();
 		}
 		
-		if(formData.companyaddress.value == "") {
+		/* if(formData.companyaddress.value == "") {
 			alert("회사 주소를 검색해주세요.")
 			return formData.companyaddress.focus();
 		}
@@ -41,7 +41,7 @@
 		if(formData.companyaddress2.value == "") {
 			alert("회사 상세주소를 입력해주세요.")
 			return formData.companyaddress2.focus();
-		}
+		} */
 		
 		if(formData.companyhomepg.value == "https://") {
 			alert("올바른 홈페이지 주소를 입력해주세요.")
@@ -325,11 +325,12 @@ body {
 </style>
   
 </head>
+<%@ include file="/WEB-INF/views/header/header.jsp"%>
 <%@ include file="/WEB-INF/views/header/footer.jsp"%>
 
 <!-- <body  style="background-color: #d4d4d4"> -->
 
-	<!-- 네비에이션 부분 (검색 및 확인 필요) -->	
+	<%-- <!-- 네비에이션 부분 (검색 및 확인 필요) -->	
     <nav class="navbar navbar-inverse">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -360,7 +361,7 @@ body {
     			</form>
 			</div>
 		</div>
-	</nav>
+	</nav> --%>
     
 
 <!-- 상세 뷰 페이지  -->
@@ -390,12 +391,13 @@ body {
 			</select>
 		<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">회사 주소</p>
 		<input type="text" class="form-control d-inline" id="store_zip"	value="${companyVO.companyzipcode}" name="companyzipcode" readonly="readonly" placeholder="우편번호" size="50" style="width: 85%; display: inline-block; margin-bottom: 4px;">
-		<button type="button" class="btn btn-primary text-white pull-right" id="find_zip" onclick="execDaumPostcode()"style="width: 15%;">우편번호 찾기</button>
+		<button type="button" class="btn btn-primary text-white pull-right hidden-xs" id="find_zip" onclick="execDaumPostcode()"style="width: 15%;">우편번호 찾기</button>
+		<button type="button" class="btn btn-primary text-white pull-right visible-xs" id="find_zip" onclick="execDaumPostcode()"style="width: 15%;">찾기</button>
 		
         <input type="text" id="companyaddress" name="companyaddress" value="${companyVO.companyaddress}" class="form-control" placeholder="도로명주소" readonly="readonly" size="50" style="width: 100%; display: inline-block; margin-bottom: 4px;">
         <input type="text" class="form-control" id="companyaddress2" value="${companyVO.companyaddress2}" name="companyaddress2" placeholder="상세주소" size="50" style="width: 100%; display: inline-block;">
 		<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">회사 홈페이지</p>
-		<input id="companyhomepg" name="companyhomepg" type="text" class="form-control" placeholder="" value="https://" size="50" style="width: 100%; display: inline-block;">
+		<input id="companyhomepg" name="companyhomepg" type="text" class="form-control" placeholder="" value="https://" size="50" style="width: 100%; display: inline-block; margin-bottom: 50px;">
 		
 		<%-- <p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">담당자</p>
 		<select class="selectpicker show-tick" data-style="btn-primary" name="manager" id="manager" data-live-search="true" title="담당자 선택.." data-width="100%" data-size="5" onchange="changeSelect()">

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!DOCTYPE html>
 <html>
@@ -12,6 +13,10 @@
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/util.js"></script>
+
+<link rel="stylesheet" media="screen and (max-width: 767px)" href="${pageContext.request.contextPath}/resources/css/min-767px.css" />
+<link rel="stylesheet" media="screen and (min-width: 768px) and (max-width: 959px)" href="${pageContext.request.contextPath}/resources/css/max-960px.css" />
+<link rel="stylesheet" media="screen and (min-width: 960px)" href="${pageContext.request.contextPath}/resources/css/max-960px.css" />
 
 <script type="text/javascript">
 function updateuserform(){
@@ -30,129 +35,7 @@ function todayCowork(){
 
 <style>
 
-body {
-	margin-top: 100px;
-	margin-bottom: 100px;
-}
 
-.viewListTop{
-	width: 80%;
-	height: 80%;
-	margin: 0 auto; 
-}
-
-.viewList {
-	width: 80%;
-	height: 80%;
-	margin: 0 auto; 
-	
-}
-
-.viewListCenter {
-	width: 60%;
-	height: 80%;
-	margin: 0 auto; 
-	margin-top: 50px;
-}
-
-.pagingView {
-	width: 80%;
-	height: 80%;
-	margin: 0 auto; 
-}
-
-.rounded {
-	width: 100%;
-	height: 200px;
-	background-color: #E6E6E6;
-	border:2px solid #ddd;
-	padding:0.5em;
-	line-height: 1em;
-	border-radius:0.5em;
-	-moz-border-radius: 0.5em;
-	-webkit-border-radius: 0.5em;
-}
-
-.roundedUserInfo {
-	display: inline-block;
-	width: 26%;
-	height: 400px;
-	background-color: white;
-	border:2px solid #ddd;
-	padding:0.5em;
-	line-height: 1em;
-	border-radius:3em;
-	-moz-border-radius: 3em;
-	-webkit-border-radius: 3em;
-	text-align: center;
-}
-
-.roundedEvent {
-	display: inline-block;
-	float:none !important;
-    margin: 0 auto;
-	width: 36%;
-	height: 400px;
-	background-color: white;
-	border:2px solid #ddd;
-	padding:0.5em;
-	line-height: 1em;
-	border-radius:3em;
-	-moz-border-radius: 3em;
-	-webkit-border-radius: 3em;
-	text-align: center;
-}
-
-.roundedMessage {
-	display: inline-block;
-	width: 36%; 
-	height: 400px;
-	background-color: white;
-	border:2px solid #ddd;
-	padding:0.5em;
-	line-height: 1em;
-	border-radius:3em;
-	-moz-border-radius: 3em;
-	-webkit-border-radius: 3em;
-}
-
-/* datepicer 버튼 롤오버 시 손가락 모양 표시 */
-.ui-datepicker-trigger {
-	cursor: pointer;
-}
-
-/* datepicer input 롤오버 시 손가락 모양 표시 */
-.hasDatepicker {
-	cursor: pointer;
-}
-
-h2 {
-	padding: 0 20px 10px 20px;
-	font-size: 20px;
-	font-weight: 400;
-}
-
-@media(max-width: 300px) {
-	.well { 
-		margin : 0
-	}
-}
-
-::-webkit-scrollbar {
-	display:none;
-}
-
-.coworkCount{
-	width : 20px;
-	height : 20px;
-	background-color : red;
-	color : white;
-	border-radius : 10em;
-	z-index : 1;
-	position: relative;
-	bottom: 17px;
-	left: 21px;
-}
 
 </style>
 
@@ -181,7 +64,7 @@ h2 {
 		<div class = "coworkCount pull-right">${todaycowork}</div>
 		</button>
 		</c:if>
-		<button type="button" id="save" class="btn btn-info" onclick="updateuserform()" style="margin-top: 2%; width: 80%; height: 10%">내정보 수정</button>
+		<button type="button" id="save" class="btn btn-info" onclick="updateuserform()" style="margin-top: 2%; margin-bottom: 6%; width: 80%; height: 10%">내정보 수정</button>
 	</div>
 	<div class="roundedEvent center-block" style="line-height: 1.3em; overflow: scroll; overflow-x : hidden; word-break:break-all; word-wrap:break-word; -ms-overflow-style: none; padding: 20px;">
 		<h3 style="text-align: center; font-weight: bold;">이벤트</h3>
@@ -222,17 +105,135 @@ h2 {
 
 <div class="viewList">
 	<h3 style="font-weight: bold;">나의 최근 업무</h3>
-	<div class="table-responsive">
+	<div class="table-responsive tables">
 		<table class="table table-striped">
-			<thead align="center">
+			<thead>
 				<tr>
 					<th style="width: 15%; text-align: center;">카테고리</th>
 					<th style="width: 35%; text-align: center;">업무명</th>
-					<th style="width: 30%; text-align: center;">고객사명</th89>
+					<th style="width: 30%; text-align: center;">고객사명</th>
 					<th style="width: 20%; text-align: center;">진행단계</th>
 				</tr>
 			</thead>
-			<tbody align="center">
+			<tbody class="visible-xs">
+				<c:forEach items="${coworkMyListVO}" var="coworkMyListVO" varStatus="rowCount">
+				<tr>
+					<td>
+					${coworkMyListVO.coworksubject}
+					<input type="hidden" id="coworkcode" value="${coworkMyListVO.coworkcode}"/>
+					</td>
+					<c:choose>
+						<c:when test="${fn:length(coworkMyListVO.coworktitle) > 12}">
+							<td style="font-weight: bold;"><a href='${pageContext.request.contextPath}/Cowork/View?coworkcode=${coworkMyListVO.coworkcode}'><c:out value="${fn:substring(coworkMyListVO.coworktitle,0,11)}"/>...</a></td>
+						</c:when>
+						<c:otherwise>
+							<td style="font-weight: bold;"><a href='${pageContext.request.contextPath}/Cowork/View?coworkcode=${coworkMyListVO.coworkcode}'>${coworkMyListVO.coworktitle}</a></td>
+						</c:otherwise> 
+					</c:choose>
+					<td><a href='${pageContext.request.contextPath}/Company/View?companycode=${coworkMyListVO.companycode}'>${coworkMyListVO.companyname}</a></td>
+					<td>
+						<c:if test="${coworkMyListVO.coworkstep == '견적'}">
+							<!-- <p style="margin-bottom: 0px;">견적</p> -->
+							<div class="progress" style="margin-bottom: 0px;">
+								<div class="progress-bar progress-bar-warning" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">견적</div>
+							</div>
+						</c:if>
+						<c:if test="${coworkMyListVO.coworkstep == '발주'}">
+							<div class="progress" style="margin-bottom: 0px;">
+								<div class="progress-bar progress-bar-warning" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">발주</div>
+							</div>
+						</c:if>
+						<c:if test="${coworkMyListVO.coworkstep == '입찰'}">
+							<div class="progress" style="margin-bottom: 0px;">
+								<div class="progress-bar progress-bar-warning" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">입찰</div>
+							</div>
+						</c:if>
+						<c:if test="${coworkMyListVO.coworkstep == '수주'}">
+							<div class="progress" style="margin-bottom: 0px;">
+								<div class="progress-bar progress-bar-warning" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">수주</div>
+							</div>
+						</c:if>
+						<c:if test="${coworkMyListVO.coworkstep == '계약'}">
+							<div class="progress" style="margin-bottom: 0px;">
+								<div class="progress-bar progress-bar-warning" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">계약</div>
+							</div>
+						</c:if>
+						<c:if test="${coworkMyListVO.coworkstep == '이슈발생'}">
+							<div class="progress" style="margin-bottom: 0px;">
+								<div class="progress-bar progress-bar-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+							</div>
+						</c:if>
+						<c:if test="${coworkMyListVO.coworkstep == '원인파악'}">
+							<div class="progress" style="margin-bottom: 0px;">
+								<div class="progress-bar progress-bar-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
+							</div>
+						</c:if>
+						<c:if test="${coworkMyListVO.coworkstep == '작업진행'}">
+							<div class="progress" style="margin-bottom: 0px;">
+								<div class="progress-bar progress-bar-success" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>
+							</div>
+						</c:if>
+						<c:if test="${coworkMyListVO.coworkstep == '진행중'}">
+							<div class="progress" style="margin-bottom: 0px;">
+								<div class="progress-bar progress-bar-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
+							</div>
+						</c:if>
+						<%-- <c:if test="${coworkMyListVO.coworkstep == '유지보수전'}">
+							<div class="progress" style="margin-bottom: 0px;">
+								<div class="progress-bar progress-bar-info" role="progressbar" style="width: 25%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">25%</div>
+							</div>
+						</c:if> --%>
+						<c:if test="${coworkMyListVO.coworkstep == '점검전'}">
+							<div class="progress" style="margin-bottom: 0px;">
+								<div class="progress-bar progress-bar-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">20%</div>
+							</div>
+						</c:if>
+						<c:if test="${coworkMyListVO.coworkstep == '점검중'}">
+							<div class="progress" style="margin-bottom: 0px;">
+								<div class="progress-bar progress-bar-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
+							</div>
+						</c:if>
+						<c:if test="${coworkMyListVO.coworkstep == '0'}">
+							<div class="progress" style="margin-bottom: 0px;">
+								<div class="progress-bar progress-bar-info" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+							</div>
+						</c:if>
+						<c:if test="${coworkMyListVO.coworkstep == '20'}">
+							<div class="progress" style="margin-bottom: 0px;">
+								<div class="progress-bar progress-bar-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">20%</div>
+							</div>
+						</c:if>
+						<c:if test="${coworkMyListVO.coworkstep == '40'}">
+							<div class="progress" style="margin-bottom: 0px;">
+								<div class="progress-bar progress-bar-info" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">40%</div>
+							</div>
+						</c:if>
+						<c:if test="${coworkMyListVO.coworkstep == '60'}">
+							<div class="progress" style="margin-bottom: 0px;">
+								<div class="progress-bar progress-bar-success" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div>
+							</div>
+						</c:if>
+						<c:if test="${coworkMyListVO.coworkstep == '80'}">
+							<div class="progress" style="margin-bottom: 0px;">
+								<div class="progress-bar progress-bar-success" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">80%</div>
+							</div>
+						</c:if>
+						<c:if test="${coworkMyListVO.coworkstep == '완료'}">
+							<div class="progress" style="margin-bottom: 0px;">
+								<div class="progress-bar progress-bar-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
+							</div>
+						</c:if>
+						<c:if test="${coworkMyListVO.coworkstep eq null}">
+							<div class="progress" style="margin-bottom: 0px;">
+								<p style="font-size: 80%; color: gray; margin-top: 4px;">미선택</p>
+								<div class="progress-bar progress-bar-warning" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+						</c:if>
+					</td>
+				</tr>
+				</c:forEach>
+			</tbody>
+			<tbody class="hidden-xs">
 				<c:forEach items="${coworkMyListVO}" var="coworkMyListVO" varStatus="rowCount">
 				<tr>
 					<td>

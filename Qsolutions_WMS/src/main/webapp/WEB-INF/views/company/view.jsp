@@ -464,12 +464,22 @@ body {
 <!-- <body  style="background-color: #d4d4d4"> -->
 
     <!-- 상세 뷰 페이지  -->
-    <div class="viewListTop">
+    <div class="viewListTop hidden-xs">
     	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 30px; font-weight: bold;">${companyVO.companyname}</span>
+    	<br class="visible-xs">
     	<button type="button" class="btn btn-danger pull-right" onclick="deleteform()" style="margin-right: 10px; margin-top: 8px;">고객사 삭제</button>
     	<button type="button" class="btn btn-primary pull-right" onclick="updateform()" style="margin-right: 10px; margin-top: 8px;">고객사 수정</button>
     	<input type="button" class="btn btn-success pull-right" name="excelConvertBtn" id="excelConvertBtn" value="엑셀 출력" style="cursor:hand; margin-right:10px; margin-top: 8px;" />
-    </div>
+		<br class="visible-xs">
+	</div>
+	<div class="viewListTop visible-xs">
+    	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 30px; font-weight: bold;">${companyVO.companyname}</span>
+    	<br class="visible-xs">
+    	<button type="button" class="btn btn-danger pull-right" onclick="deleteform()" style="margin-top: 8px; margin-bottom: 10px;">삭제</button>
+    	<button type="button" class="btn btn-primary pull-right" onclick="updateform()" style="margin-right: 10px; margin-top: 8px; margin-bottom: 10px;">수정</button>
+    	<input type="button" class="btn btn-success pull-right" name="excelConvertBtn" id="excelConvertBtn" value="엑셀 출력" style="cursor:hand; margin-right:10px; margin-top: 8px; margin-bottom: 10px;" />
+		<br class="visible-xs">
+	</div>
 <!--  -->
 	<div class="viewList">
 		<div class="table-responsive">
@@ -477,8 +487,8 @@ body {
 				<thead align="center">
 					<tr>
 						<th style="width: 15%; text-align: center;">분류</th>
-						<th style="width: 20%; text-align: center;">고객사코드</th>
-						<th style="width: 35%; text-align: center;">홈페이지</th>
+						<th class="hidden-xs" style="width: 20%; text-align: center;">고객사코드</th>
+						<th class="hidden-xs" style="width: 35%; text-align: center;">홈페이지</th>
 						<th style="width: 40%; text-align: center;">주소</th>
 					</tr>
 				</thead>
@@ -488,12 +498,12 @@ body {
 							${companyVO.companyclass}
 							<input type="hidden" id="coworkcode" value="${companyVO.companycode}"/>
 							</td>
-							<td>
+							<td class="hidden-xs">
 							${companyVO.companycode}
 							<input type="hidden" id="companycode" name="companycode" value="${companyVO.companycode}"/>
 							<input type="hidden" id="companyname" name="companyname" value="${companyVO.companyname}"/>
 							</td>
-							<td><a href="${companyVO.companyhomepg}">${companyVO.companyhomepg}</a></td>
+							<td class="hidden-xs"><a href="${companyVO.companyhomepg}">${companyVO.companyhomepg}</a></td>
 							<td>[${companyVO.companyzipcode}] ${companyVO.companyaddress} ${companyVO.companyaddress2}</td>
 						</tr>
 				</tbody>
@@ -608,7 +618,7 @@ body {
 									<td>${coworkList.coworkcode}</td>
 									<td><a href='${pageContext.request.contextPath}/Cowork/View?coworkcode=${coworkList.coworkcode}'>${coworkList.coworktitle}</a></td>
 									<td><a href='${pageContext.request.contextPath}/User/View?userid=${coworkList.userid}'>${coworkList.username}</a></td>
-									<td><fmt:formatDate value="${coworkList.coworkdate}" pattern="yyyy/MM/dd"/></td>
+									<td>${coworkList.coworkdate}</td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -617,15 +627,19 @@ body {
 			</div>
 	</div>
 	
-	<div class="viewList">
+	<div class="viewList" style="margin-bottom: 100px;">
 	<form id="fileForm" name="fileForm" action="fileUpload" method="post" enctype="multipart/form-data" style="height: 40px;">
 	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 23px; font-weight: bold;">파일 목록</span>
+	<br class="visible-xs">
+	<br class="visible-xs">
+		<input class="btn btn-primary pull-right visible-xs" type="file" id="fileUp" name="fileUp" style="width: 90%; margin-right: 10px; margin-bottom: 10px;"><br>
         <input class="btn btn-primary pull-right" type="button" value="파일업로드" onClick="fileSubmit();">
-       	<input type="text" class="form-control pull-right" placeholder="업로드 이름.." id="filename" name="filename" style="width: 20%; margin-right: 10px;">
-        <input class="btn btn-primary pull-right" type="file" id="fileUp" name="fileUp" style="width: 20%; margin-right: 10px;"><br>
+       	<input type="text" class="form-control pull-right visible-xs" placeholder="업로드 이름.." id="filename" name="filename" style="width: 60%; margin-right: 10px; margin-bottom: 10px;">
+       	<input type="text" class="form-control pull-right hidden-xs" placeholder="업로드 이름.." id="filename" name="filename" style="width: 20%; margin-right: 10px;">
+        <input class="btn btn-primary pull-right hidden-xs" type="file" id="fileUp" name="fileUp" style="width: 20%; margin-right: 10px;"><br>
         <input type="hidden" id="companycode" name="companycode" value="${companyVO.companycode}">
     </form>
-    <br>
+    <br><br>
 		<div>
 				<div class="table-responsive">
 					<table class="table table-striped tableFile">
@@ -670,7 +684,7 @@ body {
 							<c:forEach items="${fileList}" var="fileList" varStatus="rowCount">
 								<tr>
 									<td><input type="hidden" id="filepathname" name="filepathname" value="${fileList.filepathname}">
-									<a href="http://localhost:8080/${fileList.filepathname}">${fileList.filename}</a></td>
+									<a href="http://qsol.synology.me/${fileList.filepathname}">${fileList.filename}</a></td>
 									<td><fmt:formatDate value="${fileList.uploaddate}" pattern="yyyy/MM/dd"/></td>
 									<td><button id="checkBtn" type="button" class="btn btn-danger" value="${fileList.filepathname}" onclick="deletefile(this.value)" style="display: inline-block;">삭제</button>
 									</td>

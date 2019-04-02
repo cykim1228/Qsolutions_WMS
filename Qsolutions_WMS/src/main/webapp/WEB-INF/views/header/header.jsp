@@ -1,113 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<%-- <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
-<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script> --%>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/util.js"></script>
-
-<script type="text/javascript">
-
-$(window).load(function() {    
-	$('#loading').hide();  
-});
-
-//FadeOut page loader
-$(window).load(function(){
-    $(".page-loader").fadeOut("slow");
-});
-
-</script>
-
-<style>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+	<title>Google Nexus Website Menu</title>
+	<meta name="description" content="A sidebar menu as seen on the Google Nexus 7 website" />
+	<meta name="keywords" content="google nexus 7 menu, css transitions, sidebar, side menu, slide out menu" />
+	<meta name="author" content="Codrops" />
+	<link rel="shortcut icon" href="../favicon.ico">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/normalize.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/demo.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/component.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome.css">
+<style type="text/css">
 body {
-	
+	padding-top: 80px;
+	background-color: white;
 }
-
+.iconcss {
+	margin: 0px 15px;
+} 
 .header {
-	position: fixed;
-	top: 0;
-	width: 100%;
-	z-index: 5;
+  position: fixed;
+  display: inline-block;
 }
 
-.viewListTop {
-	width: 80%;
-	height: 80%;
-	margin: 0 auto;
-}
-
-.viewList {
-	width: 80%;
-	height: 80%;
-	margin: 0 auto;
-	margin-top: 15px;
-}
-
-.pagingView {
-	width: 80%;
-	height: 80%;
-	margin: 0 auto;
-}
-
-.rounded {
-	width: 100%;
-	height: 200px;
-	background-color: #E6E6E6;
-	border: 2px solid #ddd;
-	padding: 0.5em;
-	line-height: 1em;
-	border-radius: 0.5em;
-	-moz-border-radius: 0.5em;
-	-webkit-border-radius: 0.5em;
-}
-
-.roundedSubNo {
-	display: inline-block;
-	width: 8%;
-	height: 74px;
-	background-color: #E6E6E6;
-	border: 2px solid #ddd;
-	padding: 0.5em;
-	line-height: 1em;
-	border-radius: 0.5em;
-	-moz-border-radius: 0.5em;
-	-webkit-border-radius: 0.5em;
-	text-align: center;
-}
-
-.roundedSubName {
-	display: inline-block;
-	width: 15%;
-	height: 74px;
-	background-color: #E6E6E6;
-	border: 2px solid #ddd;
-	padding: 0.5em;
-	line-height: 1em;
-	border-radius: 0.5em;
-	-moz-border-radius: 0.5em;
-	-webkit-border-radius: 0.5em;
-	text-align: center;
-}
-
-.roundedSubText {
-	display: inline-block;
-	width: 51%;
-	height: 74px;
-	background-color: #E6E6E6;
-	border: 2px solid #ddd;
-	padding: 0.5em;
-	line-height: 1em;
-	border-radius: 0.5em;
-	-moz-border-radius: 0.5em;
-	-webkit-border-radius: 0.5em;
-}
 #loading {
 	width: 100%;  
 	height: 100%;  
@@ -168,48 +88,81 @@ body {
 
 </style>
 
+<script type="text/javascript">
+
+$(window).load(function() {    
+	$('#loading').hide();  
+});
+
+//FadeOut page loader
+$(window).load(function(){
+    $(".page-loader").fadeOut("slow");
+});
+
+</script>
+
 </head>
 <body>
-	<%-- <div id="loading">
-		<img id="loading-image" src="${pageContext.request.contextPath}/resources/img/logo.png" alt="Loading..." />
-	</div> --%>
 
-	<!-- ========== LOADER ========== -->
-    <div class="page-loader">
-        <img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="" width="180" class="logo-img logo-loader animated infinite pulse">
-    </div>
+<!-- ========== LOADER ========== -->
+<div class="page-loader">
+    <img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="" width="180" class="logo-img logo-loader animated infinite pulse">
+</div>
 
-	<!-- 네비에이션 부분 (검색 및 확인 필요) -->
-	<nav class="navbar navbar-inverse header">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-					aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand"
-					href="${pageContext.request.contextPath}/Dashboard">업무관리 시스템</a>
-			</div>
-			<div id="navbar" class="navbar-collapse collapse">
-				<ul class="nav navbar-nav navbar-center">
-					<li><a href="${pageContext.request.contextPath}/Cowork/List">업무</a></li>
-					<li><a href="${pageContext.request.contextPath}/Company/List">사이트</a></li>
-					<li><a href="${pageContext.request.contextPath}/User/List">담당자</a></li>
-					<li><a href="${pageContext.request.contextPath}/Cowork/Calendar">업무캘린더</a></li>
-					<li><a href="${pageContext.request.contextPath}/Cowork/CalendarGoogle">구글캘린더</a></li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="${pageContext.request.contextPath}/Logout">LOGOUT</a></li>
-				</ul>
-				<form action="${pageContext.request.contextPath}/Search/List" method="post" class="navbar-form navbar-right">
-			    	<input type="text" class="form-control" placeholder="통합검색.." value="${SearchData}" name=SearchData>
-			    	<input type="submit" class="btn btn-primary" value="검색">
-    			</form>
-			</div>
-		</div>
-	</nav>
+<div class="header" style="z-index: 5">
+	<div class="container indexs">
+		<ul id="gn-menu" class="gn-menu-main">
+			<li class="gn-trigger">
+				<a class="gn-icon gn-icon-menu indexs"><span>Menu</span></a>
+				<nav class="gn-menu-wrapper indexs">
+					<div class="gn-scroller">
+						<ul class="gn-menu">
+							<li class="gn-search-item">
+								<form action="${pageContext.request.contextPath}/Search/List" method="post">
+								<input placeholder="통합검색.." type="search" class="gn-search" value="${SearchData}" name=SearchData>
+								<a class="gn-icon gn-icon-search"><span>Search</span></a>
+								</form>
+							</li>
+							<%-- <li>
+								<a class="gn-icon gn-icon-download" href="${pageContext.request.contextPath}/Cowork/List">업무</a>
+								<ul class="gn-submenu">
+									<li><a class="gn-icon gn-icon-illustrator">Vector Illustrations</a></li>
+									<li><a class="gn-icon gn-icon-photoshop">Photoshop files</a></li>
+								</ul>
+							</li> --%>
+							<li><a href="${pageContext.request.contextPath}/Cowork/List"><i class="fa fa-clipboard fa-fw fa-lg iconcss" aria-hidden="true"></i>업무</a></li>
+							<li><a href="${pageContext.request.contextPath}/Company/List"><i class="fa fa-building fa-fw fa-lg iconcss" aria-hidden="true"></i>사이트</a></li>
+							<li><a href="${pageContext.request.contextPath}/User/List"><i class="fa fa-user fa-fw fa-lg iconcss" aria-hidden="true"></i>담당자</a></li>
+							<li><a href="${pageContext.request.contextPath}/Cowork/Calendar"><i class="fa fa-calendar fa-fw fa-lg iconcss" aria-hidden="true"></i>업무캘린더</a></li>
+							<li><a href="${pageContext.request.contextPath}/Cowork/CalendarGoogle"><i class="fa fa-google fa-fw fa-lg iconcss" aria-hidden="true"></i>구글캘린더</a></li>
+							<%-- <li><a href="${pageContext.request.contextPath}/Cowork/GNtest"><i class="fa fa-home fa-fw fa-lg iconcss" aria-hidden="true"></i>테스트</a></li> --%>
+							<!-- <li><a class="gn-icon gn-icon-cog">Settings</a></li>
+							<li><a class="gn-icon gn-icon-help">Help</a></li>
+							<li>
+								<a class="gn-icon gn-icon-archive">Archives</a>
+								<ul class="gn-submenu">
+									<li><a class="gn-icon gn-icon-article">Articles</a></li>
+									<li><a class="gn-icon gn-icon-pictures">Images</a></li>
+									<li><a class="gn-icon gn-icon-videos">Videos</a></li>
+								</ul>
+							</li> -->
+						</ul>
+					</div><!-- /gn-scroller -->
+				</nav>
+			</li>
+			<li><a style="padding: 0 20px;" href="${pageContext.request.contextPath}/"><img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="" style="width: 120px;"></a></li>
+			<li><a style="padding: 0 20px;" href="${pageContext.request.contextPath}/Logout"><i class="fa fa-sign-out fa-fw fa-lg" aria-hidden="true"></i>LOGOUT</a></li>
+		</ul>
+		<!-- <header>
+			<h1>Google Nexus Website Menu <span>A sidebar menu as seen on the <a href="http://www.google.com/nexus/index.html">Google Nexus 7</a> page</span></h1>	
+		</header>  -->
+	</div><!-- /container -->
+</div>
+	<script src="${pageContext.request.contextPath}/resources/js/classie.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/gnmenu.js"></script>
+	<script>
+		new gnMenu( document.getElementById( 'gn-menu' ) );
+	</script>
+
 </body>
 </html>

@@ -71,7 +71,7 @@
 	
 	<select id="SelectFileUpload" resultType="FileVO" parameterType="CompanyDTO">
 		select
-			*
+			companycode, filename, filepathname, date_format(uploaddate, '%Y-%m-%d') AS uploaddate
 		from
 			fileupload
 		where

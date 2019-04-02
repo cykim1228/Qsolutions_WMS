@@ -558,4 +558,11 @@ public class CoworkController {
 		returnUrl = "redirect:/Cowork/List";
 		return returnUrl;
 	}
+	
+	@RequestMapping(value = "/Cowork/GNtest")
+	public String GNtest() throws Exception {
+
+		return "header/GNtest";
+	}
+	
 }

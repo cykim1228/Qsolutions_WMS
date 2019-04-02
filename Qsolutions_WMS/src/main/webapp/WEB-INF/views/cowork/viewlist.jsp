@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,6 +62,7 @@ body {
 	width: 80%;
 	height: 80%;
 	margin: 0 auto; 
+	margin-bottom: 80px;
 }
 
 </style>
@@ -73,8 +75,9 @@ body {
 	<!-- 상세 뷰 페이지 -->
 	<div class="viewListTop">
     	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 30px; font-weight: bold;">업무 리스트</span>
-    	<button type="button" class="btn btn-primary pull-right" onclick="insertView()" style="margin-left:10px; margin-right: 10px; margin-top: 8px;">업무 등록</button>
-    	<form class="navbar-form navbar-right" style="border-right-width: 2px; border-right-style: solid; border-right-color: gray; margin-right: 5px;">
+    	<br class="visible-xs">
+    	<button type="button" class="btn btn-primary pull-right" onclick="insertView()" style="margin-left:10px; margin-right: 10px; margin-top: 8px; margin-bottom: 10px;">업무 등록</button>
+    	<form class="navbar-form navbar-right hidden-xs" style="border-right-width: 2px; border-right-style: solid; border-right-color: gray; margin-right: 5px;">
 			<select class="btn btn-primary" name="SearchType">
 	            <option value="coworktitle"<c:if test="${pagingVO.searchType == 'coworktitle'}">seleted</c:if> >업무명</option>
 	            <option value="companyname"<c:if test="${pagingVO.searchType == 'companyname'}">seleted</c:if> >사이트명</option>
@@ -92,20 +95,36 @@ body {
 					<!-- <th style="width: 15%; text-align: center;">업무코드</th> -->
 					<th style="width: 30%; text-align: center;">고객사명</th>
 					<th style="width: 35%; text-align: center;">제목</th>
-					<th style="width: 15%; text-align: center;">카테고리</th>
-					<th style="width: 10%; text-align: center;">등록자</th>
-					<th style="width: 10%; text-align: center;">작성일</th>
+					<th class="hidden-xs" style="width: 15%; text-align: center;">카테고리</th>
+					<th class="hidden-xs" style="width: 10%; text-align: center;">등록자</th>
+					<th class="hidden-xs" style="width: 10%; text-align: center;">작성일</th>
 				</tr>
 			</thead>
 			<tbody align="center">
 				<c:forEach items="${coworklistvo}" var="coworklistvo" varStatus="rowCount">
 					<tr>
 						<%-- <td>${coworklistvo.coworkcode}</td> --%>
-						<td style="font-weight: bold;"><a href='${pageContext.request.contextPath}/Company/View?companycode=${coworklistvo.companycode}'>${coworklistvo.companyname}</a></td>
-						<td style="font-weight: bold;"><a href='${pageContext.request.contextPath}/Cowork/View?coworkcode=${coworklistvo.coworkcode}'>${coworklistvo.coworktitle}</a></td>
-						<td>${coworklistvo.coworksubject}</td>
-						<td><a href='${pageContext.request.contextPath}/User/View?userid=${coworklistvo.userid}'>${coworklistvo.username}</a></td>
-						<td><fmt:formatDate value="${coworklistvo.coworkdate}" pattern="yyyy/MM/dd"/></td>
+						<c:choose>
+							<c:when test="${fn:length(coworklistvo.companyname) > 12}">
+								<td class="visible-xs" style="font-weight: bold;"><a href='${pageContext.request.contextPath}/Company/View?companycode=${coworklistvo.companycode}'><c:out value="${fn:substring(coworklistvo.companyname,0,11)}"/>...</a></td>
+							</c:when>
+							<c:otherwise>
+								<td class="visible-xs" style="font-weight: bold;"><a href='${pageContext.request.contextPath}/Company/View?companycode=${coworklistvo.companycode}'>${coworklistvo.companyname}</a></td>
+							</c:otherwise> 
+						</c:choose>
+						<c:choose>
+							<c:when test="${fn:length(coworklistvo.coworktitle) > 12}">
+								<td class="visible-xs" style="font-weight: bold;"><a href='${pageContext.request.contextPath}/Cowork/View?coworkcode=${coworklistvo.coworkcode}'><c:out value="${fn:substring(coworklistvo.coworktitle,0,11)}"/>...</a></td>
+							</c:when>
+							<c:otherwise>
+								<td class="visible-xs" style="font-weight: bold;"><a href='${pageContext.request.contextPath}/Cowork/View?coworkcode=${coworklistvo.coworkcode}'>${coworklistvo.coworktitle}</a></td>
+							</c:otherwise> 
+						</c:choose>
+						<td class="hidden-xs" style="font-weight: bold;"><a href='${pageContext.request.contextPath}/Company/View?companycode=${coworklistvo.companycode}'>${coworklistvo.companyname}</a></td>
+						<td class="hidden-xs" style="font-weight: bold;"><a href='${pageContext.request.contextPath}/Cowork/View?coworkcode=${coworklistvo.coworkcode}'>${coworklistvo.coworktitle}</a></td>
+						<td class="hidden-xs">${coworklistvo.coworksubject}</td>
+						<td class="hidden-xs"><a href='${pageContext.request.contextPath}/User/View?userid=${coworklistvo.userid}'>${coworklistvo.username}</a></td>
+						<td class="hidden-xs"><fmt:formatDate value="${coworklistvo.coworkdate}" pattern="yyyy/MM/dd"/></td>
 					</tr>
 				</c:forEach>
 			</tbody>

@@ -268,13 +268,13 @@ body {
     	<c:choose>
 			<c:when test="${userVO.usercompanycode eq 'C0000001'}">
 				<c:if test="${loginVO.userid eq 'admin'}">
-				<button type="button" class="btn btn-danger pull-right" onclick="deleteuserdata()" style="margin-right: 10px; margin-top: 8px;">담당자 삭제</button>
-    			<button type="button" class="btn btn-primary pull-right" onclick="updateuserform()" style="margin-right: 10px; margin-top: 8px;">담당자 수정</button>
+				<button type="button" class="btn btn-danger pull-right" onclick="deleteuserdata()" style="margin-right: 10px; margin-top: 8px; margin-bottom: 10px;">담당자 삭제</button>
+    			<button type="button" class="btn btn-primary pull-right" onclick="updateuserform()" style="margin-right: 10px; margin-top: 8px; margin-bottom: 10px;">담당자 수정</button>
 				</c:if>
 			</c:when>
 			<c:otherwise>
-				<button type="button" class="btn btn-danger pull-right" onclick="deleteuserdata()" style="margin-right: 10px; margin-top: 8px;">담당자 삭제</button>
-    			<button type="button" class="btn btn-primary pull-right" onclick="updateuserform()" style="margin-right: 10px; margin-top: 8px;">담당자 수정</button>
+				<button type="button" class="btn btn-danger pull-right" onclick="deleteuserdata()" style="margin-right: 10px; margin-top: 8px; margin-bottom: 10px;">담당자 삭제</button>
+    			<button type="button" class="btn btn-primary pull-right" onclick="updateuserform()" style="margin-right: 10px; margin-top: 8px; margin-bottom: 10px;">담당자 수정</button>
 			</c:otherwise>
 		</c:choose>
     	
@@ -373,7 +373,7 @@ body {
 			</table>
 		</div>
 	</div>
-	<div class="viewList">
+	<div class="viewList" style="margin-bottom: 100px;">
 	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 23px; font-weight: bold;">담당 업무 목록</span>
 		<div class="table-responsive">
 			<table class="table table-striped tableCowork">

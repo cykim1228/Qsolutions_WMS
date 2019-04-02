@@ -425,6 +425,7 @@
 body {
 	margin-top: 100px;
 	margin-bottom: 100px;
+	background-color: #E6E6E6;
 }
 
 .viewListTop{
@@ -445,6 +446,7 @@ body {
 	height: 80%;
 	margin: 0 auto; 
 	margin-top: 50px;
+	margin-bottom: 70px;
 }
 
 .pagingView {

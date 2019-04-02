@@ -232,7 +232,7 @@ body {
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">연락처</p>
 			<input id="usermobile" name="usermobile" type="text" class="form-control" placeholder="연락처 입력.." size="50" style="width: 100%; display: inline-block;">
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">이메일</p>
-			<input id="useremail" name="useremail" type="text" class="form-control" placeholder="이메일 입력.." size="50" style="width: 100%; display: inline-block;">
+			<input id="useremail" name="useremail" type="text" class="form-control" placeholder="이메일 입력.." size="50" style="width: 100%; display: inline-block; margin-bottom: 100px;">
 			
 		</div>
 	</form>
