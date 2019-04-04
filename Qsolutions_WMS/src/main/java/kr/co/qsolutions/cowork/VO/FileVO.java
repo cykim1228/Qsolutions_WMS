@@ -9,6 +9,10 @@ public class FileVO {
 	private String filepathname;
 	private Date uploaddate;
 	
+	private String userid;
+	private String profilepathname;
+	private String usercolor;
+	
 	public String getCompanycode() {
 		return companycode;
 	}
@@ -41,10 +45,35 @@ public class FileVO {
 		this.uploaddate = uploaddate;
 	}
 	
+	public String getUserid() {
+		return userid;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+
+	public String getProfilepathname() {
+		return profilepathname;
+	}
+
+	public void setProfilepathname(String profilepathname) {
+		this.profilepathname = profilepathname;
+	}
+
+	public String getUsercolor() {
+		return usercolor;
+	}
+
+	public void setUsercolor(String usercolor) {
+		this.usercolor = usercolor;
+	}
+
 	@Override
 	public String toString() {
 		return "FileVO [companycode=" + companycode + ", filename=" + filename + ", filepathname=" + filepathname
-				+ ", uploaddate=" + uploaddate + "]";
+				+ ", uploaddate=" + uploaddate + ", userid=" + userid + ", profilepathname=" + profilepathname
+				+ ", usercolor=" + usercolor + "]";
 	}
-	
+
 }

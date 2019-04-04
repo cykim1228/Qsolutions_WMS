@@ -10,11 +10,20 @@
 	<meta name="description" content="A sidebar menu as seen on the Google Nexus 7 website" />
 	<meta name="keywords" content="google nexus 7 menu, css transitions, sidebar, side menu, slide out menu" />
 	<meta name="author" content="Codrops" />
-	<link rel="shortcut icon" href="../favicon.ico">
+	
+	<!-- 파비콘 (웹페이지 아이콘) -->
+	<link rel="apple-touch-icon" sizes="180x180" href="${pageContext.request.contextPath}/resources/img/Q_logo.png"> 
+	<link rel="shortcut icon"" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/resources/img/Q_logo.png"> 
+	<link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/resources/img/Q_logo.png"> 
+	<link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/resources/img/Q_logo.png"> 
+	<link rel="manifest" href="${pageContext.request.contextPath}/resources/img/manifest.json"> 
+	<meta name="theme-color" content="#ffffff">
+	
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/normalize.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/demo.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/component.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome.css">
+	
 <style type="text/css">
 body {
 	padding-top: 80px;
@@ -99,6 +108,13 @@ $(window).load(function(){
     $(".page-loader").fadeOut("slow");
 });
 
+function usersetting(){
+	var userid = $("#userid").val();
+	var url = "/User/Setting?userid="+userid;
+	// alert(url);
+	location.href = url;
+}
+
 </script>
 
 </head>
@@ -135,6 +151,7 @@ $(window).load(function(){
 							<li><a href="${pageContext.request.contextPath}/User/List"><i class="fa fa-user fa-fw fa-lg iconcss" aria-hidden="true"></i>담당자</a></li>
 							<li><a href="${pageContext.request.contextPath}/Cowork/Calendar"><i class="fa fa-calendar fa-fw fa-lg iconcss" aria-hidden="true"></i>업무캘린더</a></li>
 							<li><a href="${pageContext.request.contextPath}/Cowork/CalendarGoogle"><i class="fa fa-google fa-fw fa-lg iconcss" aria-hidden="true"></i>구글캘린더</a></li>
+							<li><a onclick="usersetting()"><i class="fa fa-cog fa-fw fa-lg iconcss" aria-hidden="true"></i>설정</a></li>
 							<%-- <li><a href="${pageContext.request.contextPath}/Cowork/GNtest"><i class="fa fa-home fa-fw fa-lg iconcss" aria-hidden="true"></i>테스트</a></li> --%>
 							<!-- <li><a class="gn-icon gn-icon-cog">Settings</a></li>
 							<li><a class="gn-icon gn-icon-help">Help</a></li>

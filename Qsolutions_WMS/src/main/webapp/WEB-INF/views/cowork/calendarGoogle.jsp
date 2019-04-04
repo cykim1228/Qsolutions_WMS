@@ -144,21 +144,9 @@
 					textColor : "#FFFFFF"
 				},
 				{
-					googleCalendarId : "kasd1032@gmail.com", 
-					className : "홍재영", 
-					color : "#D7DF01", 
-					textColor : "#FFFFFF"
-				},
-				{
 					googleCalendarId : "rainnizm@gmail.com", 
 					className : "유지헌", 
 					color : "#04B404", 
-					textColor : "#FFFFFF"
-				},
-				{
-					googleCalendarId : "ydy000@gmail.com", 
-					className : "윤도영", 
-					color : "#088A68", 
 					textColor : "#FFFFFF"
 				},
 				{
@@ -313,21 +301,9 @@
 					textColor : "#FFFFFF"
 				},
 				{
-					googleCalendarId : "kasd1032@gmail.com", 
-					className : "홍재영", 
-					color : "#D7DF01", 
-					textColor : "#FFFFFF"
-				},
-				{
 					googleCalendarId : "rainnizm@gmail.com", 
 					className : "유지헌", 
 					color : "#04B404", 
-					textColor : "#FFFFFF"
-				},
-				{
-					googleCalendarId : "ydy000@gmail.com", 
-					className : "윤도영", 
-					color : "#088A68", 
 					textColor : "#FFFFFF"
 				},
 				{

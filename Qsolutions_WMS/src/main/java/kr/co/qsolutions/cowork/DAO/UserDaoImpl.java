@@ -13,8 +13,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import kr.co.qsolutions.cowork.DTO.CoworkDTO;
+import kr.co.qsolutions.cowork.DTO.FileDTO;
 import kr.co.qsolutions.cowork.DTO.UserDTO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
+import kr.co.qsolutions.cowork.VO.FileVO;
 import kr.co.qsolutions.cowork.VO.PagingVO;
 import kr.co.qsolutions.cowork.VO.UserVO;
 
@@ -128,6 +130,36 @@ public class UserDaoImpl implements UserDao {
 	public String UserIdSelect(String nowdate) throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(Namespace + ".UserIdSelect", nowdate);
+	}
+
+	@Override
+	public int InsertProfileUpload(FileDTO fileDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.insert(Namespace + ".InsertProfileUpload", fileDTO);
+	}
+
+	@Override
+	public FileVO SelectProfile(String userid) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(Namespace + ".SelectProfile", userid);
+	}
+
+	@Override
+	public FileVO SelectUserColor(String userid) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(Namespace + ".SelectUserColor", userid);
+	}
+
+	@Override
+	public int InsertUserColor(FileDTO fileDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.insert(Namespace + ".InsertUserColor", fileDTO);
+	}
+
+	@Override
+	public List<FileVO> SelectListUserColor() throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(Namespace + ".SelectListUserColor");
 	}
 
 }

@@ -19,6 +19,7 @@ import kr.co.qsolutions.cowork.Service.CompanyService;
 import kr.co.qsolutions.cowork.Service.CoworkService;
 import kr.co.qsolutions.cowork.Service.UserService;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
+import kr.co.qsolutions.cowork.VO.FileVO;
 import kr.co.qsolutions.cowork.VO.PagingVO;
 import kr.co.qsolutions.cowork.VO.SubCoworkVO;
 import kr.co.qsolutions.cowork.VO.UserVO;
@@ -47,6 +48,8 @@ public class DashboardController {
 		UserVO loginVO = (UserVO)session.getAttribute("login");
 		
 		String userid = loginVO.getUserid();
+		
+		System.out.println("userid : " + userid);
 
 		CoworkDTO coworkDTO = new CoworkDTO();
 		coworkDTO.setUserid(userid);
@@ -66,6 +69,8 @@ public class DashboardController {
 		
 		todaycowork = coworkservice.CountTodayCowork(coworkDTO);
 		
+		FileVO profileVO = userservice.SelectProfile(userid);
+		
 		System.out.println("subcoworkListVO : " + subcoworkListVO);
 		
 		System.out.println("coworkMyListVO : " + coworkMyListVO);
@@ -73,6 +78,8 @@ public class DashboardController {
 		System.out.println("coworkListVO : " + coworkListVO);
 		
 		System.out.println("todaycowork : " + todaycowork);
+		
+		System.out.println("profileVO : " + profileVO);
 		
 		model.addAttribute("coworkMyListVO",coworkMyListVO);
 		model.addAttribute("coworklistvo",listvo);
@@ -82,6 +89,7 @@ public class DashboardController {
 		model.addAttribute("subcoworkListVO",subcoworkListVO);
 		model.addAttribute("coworkListVO",coworkListVO);
 		model.addAttribute("todaycowork",todaycowork);
+		model.addAttribute("profileVO",profileVO);
 		
 		return "Login/dashboard";
 	}

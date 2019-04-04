@@ -7,8 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import kr.co.qsolutions.cowork.DTO.CoworkDTO;
+import kr.co.qsolutions.cowork.DTO.FileDTO;
 import kr.co.qsolutions.cowork.DTO.UserDTO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
+import kr.co.qsolutions.cowork.VO.FileVO;
 import kr.co.qsolutions.cowork.VO.PagingVO;
 import kr.co.qsolutions.cowork.VO.UserVO;
 
@@ -45,5 +47,15 @@ public interface UserDao {
 	public List<CoworkVO> selectManagerCowork(CoworkDTO coworkDTO) throws Exception;
 
 	public String UserIdSelect(String nowdate) throws Exception;
+
+	public int InsertProfileUpload(FileDTO fileDTO) throws Exception;
+
+	public FileVO SelectProfile(String userid) throws Exception;
+
+	public FileVO SelectUserColor(String userid) throws Exception;
+
+	public int InsertUserColor(FileDTO fileDTO) throws Exception;
+
+	public List<FileVO> SelectListUserColor() throws Exception;
 
 }

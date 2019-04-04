@@ -94,26 +94,86 @@
 						title : '${coworklistvo.coworktitle}',
 						start : '${coworklistvo.startdate}',
 						end : '${coworklistvo.enddate}'
+						<c:forEach items="${colorlistVO}" var="colorlistVO" varStatus="rowCount">
 							<c:choose>
-			                    <c:when test="${coworklistvo.username=='관리자'}">,color : '#000000'</c:when>
-			                    <c:when test="${coworklistvo.username=='김찬영'}">,color : '#FA5858'</c:when>
-			                    <c:when test="${coworklistvo.username=='이다해'}">,color : '#FF0000'</c:when>
-			                    <c:when test="${coworklistvo.username=='김도균'}">,color : '#FF8000'</c:when>
-			                    <c:when test="${coworklistvo.username=='김동현'}">,color : '#FFBF00'</c:when>
-			                    <c:when test="${coworklistvo.username=='이건수'}">,color : '#D7DF01'</c:when>
-			                    <c:when test="${coworklistvo.username=='조형찬'}">,color : '#04B404'</c:when>
-			                    <c:when test="${coworklistvo.username=='홍재영'}">,color : '#088A68'</c:when>
-			                    <c:when test="${coworklistvo.username=='박종신'}">,color : '#01DFD7'</c:when>
-			                    <c:when test="${coworklistvo.username=='이준호'}">,color : '#01A9DB'</c:when>
-			                    <c:when test="${coworklistvo.username=='조만수'}">,color : '#0080FF'</c:when>
-			                    <c:when test="${coworklistvo.username=='서미향'}">,color : '#0040FF'</c:when>
-			                    <c:when test="${coworklistvo.username=='임문혁'}">,color : '#0101DF'</c:when>
-			                    <c:when test="${coworklistvo.username=='윤도영'}">,color : '#8258FA'</c:when>
-			                    <c:when test="${coworklistvo.username=='유지헌'}">,color : '#BF00FF'</c:when>
-			                    <c:when test="${coworklistvo.username=='유웅재'}">,color : '#B4045F'</c:when>
-			                    <c:when test="${coworklistvo.username=='짠짠영'}">,color : '#8A0829'</c:when>
-			                    <c:otherwise>,color : '#000000' </c:otherwise>
+								<c:when test="${coworklistvo.username=='관리자'}">
+									<c:if test="${colorlistVO.userid==coworklistvo.userid}">
+										,color : '${colorlistVO.usercolor}'
+									</c:if>
+								</c:when>
+	                   			<c:when test="${coworklistvo.username=='김찬영'}">
+									<c:if test="${colorlistVO.userid==coworklistvo.userid}">
+										,color : '${colorlistVO.usercolor}'
+									</c:if>
+								</c:when>
+								<c:when test="${coworklistvo.username=='이다해'}">
+									<c:if test="${colorlistVO.userid==coworklistvo.userid}">
+										,color : '${colorlistVO.usercolor}'
+									</c:if>
+								</c:when>
+								<c:when test="${coworklistvo.username=='김도균'}">
+									<c:if test="${colorlistVO.userid==coworklistvo.userid}">
+										,color : '${colorlistVO.usercolor}'
+									</c:if>
+								</c:when>
+								<c:when test="${coworklistvo.username=='김동현'}">
+									<c:if test="${colorlistVO.userid==coworklistvo.userid}">
+										,color : '${colorlistVO.usercolor}'
+									</c:if>
+								</c:when>
+								<c:when test="${coworklistvo.username=='이건수'}">
+									<c:if test="${colorlistVO.userid==coworklistvo.userid}">
+										,color : '${colorlistVO.usercolor}'
+									</c:if>
+								</c:when>
+								<c:when test="${coworklistvo.username=='조형찬'}">
+									<c:if test="${colorlistVO.userid==coworklistvo.userid}">
+										,color : '${colorlistVO.usercolor}'
+									</c:if>
+								</c:when>
+								<c:when test="${coworklistvo.username=='박종신'}">
+									<c:if test="${colorlistVO.userid==coworklistvo.userid}">
+										,color : '${colorlistVO.usercolor}'
+									</c:if>
+								</c:when>
+								<c:when test="${coworklistvo.username=='이준호'}">
+									<c:if test="${colorlistVO.userid==coworklistvo.userid}">
+										,color : '${colorlistVO.usercolor}'
+									</c:if>
+								</c:when>
+								<c:when test="${coworklistvo.username=='조만수'}">
+									<c:if test="${colorlistVO.userid==coworklistvo.userid}">
+										,color : '${colorlistVO.usercolor}'
+									</c:if>
+								</c:when>
+								<c:when test="${coworklistvo.username=='서미향'}">
+									<c:if test="${colorlistVO.userid==coworklistvo.userid}">
+										,color : '${colorlistVO.usercolor}'
+									</c:if>
+								</c:when>
+								<c:when test="${coworklistvo.username=='임문혁'}">
+									<c:if test="${colorlistVO.userid==coworklistvo.userid}">
+										,color : '${colorlistVO.usercolor}'
+									</c:if>
+								</c:when>
+								<c:when test="${coworklistvo.username=='유지헌'}">
+									<c:if test="${colorlistVO.userid==coworklistvo.userid}">
+										,color : '${colorlistVO.usercolor}'
+									</c:if>
+								</c:when>
+								<c:when test="${coworklistvo.username=='유웅재'}">
+									<c:if test="${colorlistVO.userid==coworklistvo.userid}">
+										,color : '${colorlistVO.usercolor}'
+									</c:if>
+								</c:when>
+								<c:when test="${coworklistvo.username=='조형찬'}">
+									<c:if test="${colorlistVO.userid==coworklistvo.userid}">
+										,color : '${colorlistVO.usercolor}'
+									</c:if>
+								</c:when>
+								<c:otherwise>,color : '#000000' </c:otherwise>
 							</c:choose>
+						</c:forEach>
 					},
 				</c:forEach>
 			]
@@ -262,26 +322,86 @@
 						title : '${coworklistvo.coworktitle}',
 						start : '${coworklistvo.startdate}',
 						end : '${coworklistvo.enddate}'
-							<c:choose>
-			                    <c:when test="${coworklistvo.username=='관리자'}">,color : '#000000'</c:when>
-			                    <c:when test="${coworklistvo.username=='김찬영'}">,color : '#FA5858'</c:when>
-			                    <c:when test="${coworklistvo.username=='이다해'}">,color : '#FF0000'</c:when>
-			                    <c:when test="${coworklistvo.username=='김도균'}">,color : '#FF8000'</c:when>
-			                    <c:when test="${coworklistvo.username=='김동현'}">,color : '#FFBF00'</c:when>
-			                    <c:when test="${coworklistvo.username=='이건수'}">,color : '#D7DF01'</c:when>
-			                    <c:when test="${coworklistvo.username=='조형찬'}">,color : '#04B404'</c:when>
-			                    <c:when test="${coworklistvo.username=='홍재영'}">,color : '#088A68'</c:when>
-			                    <c:when test="${coworklistvo.username=='박종신'}">,color : '#01DFD7'</c:when>
-			                    <c:when test="${coworklistvo.username=='이준호'}">,color : '#01A9DB'</c:when>
-			                    <c:when test="${coworklistvo.username=='조만수'}">,color : '#0080FF'</c:when>
-			                    <c:when test="${coworklistvo.username=='서미향'}">,color : '#0040FF'</c:when>
-			                    <c:when test="${coworklistvo.username=='임문혁'}">,color : '#0101DF'</c:when>
-			                    <c:when test="${coworklistvo.username=='윤도영'}">,color : '#8258FA'</c:when>
-			                    <c:when test="${coworklistvo.username=='유지헌'}">,color : '#BF00FF'</c:when>
-			                    <c:when test="${coworklistvo.username=='유웅재'}">,color : '#B4045F'</c:when>
-			                    <c:when test="${coworklistvo.username=='짠짠영'}">,color : '#8A0829'</c:when>
-			                    <c:otherwise>,color : '#000000' </c:otherwise>
-							</c:choose>
+							<c:forEach items="${colorlistVO}" var="colorlistVO" varStatus="rowCount">
+								<c:choose>
+									<c:when test="${coworklistvo.username=='관리자'}">
+										<c:if test="${colorlistVO.userid==coworklistvo.userid}">
+											,color : '${colorlistVO.usercolor}'
+										</c:if>
+									</c:when>
+			               			<c:when test="${coworklistvo.username=='김찬영'}">
+										<c:if test="${colorlistVO.userid==coworklistvo.userid}">
+											,color : '${colorlistVO.usercolor}'
+										</c:if>
+									</c:when>
+									<c:when test="${coworklistvo.username=='이다해'}">
+										<c:if test="${colorlistVO.userid==coworklistvo.userid}">
+											,color : '${colorlistVO.usercolor}'
+										</c:if>
+									</c:when>
+									<c:when test="${coworklistvo.username=='김도균'}">
+										<c:if test="${colorlistVO.userid==coworklistvo.userid}">
+											,color : '${colorlistVO.usercolor}'
+										</c:if>
+									</c:when>
+									<c:when test="${coworklistvo.username=='김동현'}">
+										<c:if test="${colorlistVO.userid==coworklistvo.userid}">
+											,color : '${colorlistVO.usercolor}'
+										</c:if>
+									</c:when>
+									<c:when test="${coworklistvo.username=='이건수'}">
+										<c:if test="${colorlistVO.userid==coworklistvo.userid}">
+											,color : '${colorlistVO.usercolor}'
+										</c:if>
+									</c:when>
+									<c:when test="${coworklistvo.username=='조형찬'}">
+										<c:if test="${colorlistVO.userid==coworklistvo.userid}">
+											,color : '${colorlistVO.usercolor}'
+										</c:if>
+									</c:when>
+									<c:when test="${coworklistvo.username=='박종신'}">
+										<c:if test="${colorlistVO.userid==coworklistvo.userid}">
+											,color : '${colorlistVO.usercolor}'
+										</c:if>
+									</c:when>
+									<c:when test="${coworklistvo.username=='이준호'}">
+										<c:if test="${colorlistVO.userid==coworklistvo.userid}">
+											,color : '${colorlistVO.usercolor}'
+										</c:if>
+									</c:when>
+									<c:when test="${coworklistvo.username=='조만수'}">
+										<c:if test="${colorlistVO.userid==coworklistvo.userid}">
+											,color : '${colorlistVO.usercolor}'
+										</c:if>
+									</c:when>
+									<c:when test="${coworklistvo.username=='서미향'}">
+										<c:if test="${colorlistVO.userid==coworklistvo.userid}">
+											,color : '${colorlistVO.usercolor}'
+										</c:if>
+									</c:when>
+									<c:when test="${coworklistvo.username=='임문혁'}">
+										<c:if test="${colorlistVO.userid==coworklistvo.userid}">
+											,color : '${colorlistVO.usercolor}'
+										</c:if>
+									</c:when>
+									<c:when test="${coworklistvo.username=='유지헌'}">
+										<c:if test="${colorlistVO.userid==coworklistvo.userid}">
+											,color : '${colorlistVO.usercolor}'
+										</c:if>
+									</c:when>
+									<c:when test="${coworklistvo.username=='유웅재'}">
+										<c:if test="${colorlistVO.userid==coworklistvo.userid}">
+											,color : '${colorlistVO.usercolor}'
+										</c:if>
+									</c:when>
+									<c:when test="${coworklistvo.username=='조형찬'}">
+										<c:if test="${colorlistVO.userid==coworklistvo.userid}">
+											,color : '${colorlistVO.usercolor}'
+										</c:if>
+									</c:when>
+									<c:otherwise>,color : '#000000' </c:otherwise>
+								</c:choose>
+							</c:forEach>
 					},
 				</c:forEach>
 			]

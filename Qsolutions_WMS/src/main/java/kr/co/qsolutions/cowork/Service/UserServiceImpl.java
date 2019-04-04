@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 
 import kr.co.qsolutions.cowork.DAO.UserDao;
 import kr.co.qsolutions.cowork.DTO.CoworkDTO;
+import kr.co.qsolutions.cowork.DTO.FileDTO;
 import kr.co.qsolutions.cowork.DTO.UserDTO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
+import kr.co.qsolutions.cowork.VO.FileVO;
 import kr.co.qsolutions.cowork.VO.PagingVO;
 import kr.co.qsolutions.cowork.VO.UserVO;
 
@@ -107,6 +109,36 @@ public class UserServiceImpl implements UserService {
 	public String UserIdSelect(String nowdate) throws Exception {
 		// TODO Auto-generated method stub
 		return dao.UserIdSelect(nowdate);
+	}
+
+	@Override
+	public int InsertProfileUpload(FileDTO fileDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.InsertProfileUpload(fileDTO);
+	}
+
+	@Override
+	public FileVO SelectProfile(String userid) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.SelectProfile(userid);
+	}
+
+	@Override
+	public FileVO SelectUserColor(String userid) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.SelectUserColor(userid);
+	}
+
+	@Override
+	public int InsertUserColor(FileDTO fileDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.InsertUserColor(fileDTO);
+	}
+
+	@Override
+	public List<FileVO> SelectListUserColor() throws Exception {
+		// TODO Auto-generated method stub
+		return dao.SelectListUserColor();
 	}
 
 }

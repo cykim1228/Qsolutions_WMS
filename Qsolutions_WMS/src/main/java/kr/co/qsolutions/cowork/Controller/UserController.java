@@ -1,6 +1,7 @@
 package kr.co.qsolutions.cowork.Controller;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -36,9 +37,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -47,14 +48,17 @@ import com.google.gson.JsonParser;
 
 import kr.co.qsolutions.cowork.DTO.CompanyDTO;
 import kr.co.qsolutions.cowork.DTO.CoworkDTO;
+import kr.co.qsolutions.cowork.DTO.FileDTO;
 import kr.co.qsolutions.cowork.DTO.SubCoworkDTO;
 import kr.co.qsolutions.cowork.DTO.UserDTO;
 import kr.co.qsolutions.cowork.Service.CompanyService;
 import kr.co.qsolutions.cowork.Service.CoworkService;
 import kr.co.qsolutions.cowork.Service.UserService;
 import kr.co.qsolutions.cowork.Util.AccountControl;
+import kr.co.qsolutions.cowork.Util.FileUploadService;
 import kr.co.qsolutions.cowork.VO.CompanyVO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
+import kr.co.qsolutions.cowork.VO.FileVO;
 import kr.co.qsolutions.cowork.VO.PagingVO;
 import kr.co.qsolutions.cowork.VO.SubCoworkVO;
 import kr.co.qsolutions.cowork.VO.UserVO;
@@ -81,6 +85,9 @@ public class UserController {
     private OAuth2Parameters googleOAuth2Parameters;
  
     private OAuth2Operations oauthOperations;
+    
+    @Autowired
+	FileUploadService fileUploadService;
 	
 	String returnUrl;
 	
@@ -237,7 +244,7 @@ public class UserController {
 		model.addAttribute("companyVO", companyVO);
 		
 		returnUrl = "user/modifyUser";
-		return returnUrl;
+		return returnUrl; 
 	}
 	
 	@RequestMapping(value = "/User/Update")
@@ -272,6 +279,83 @@ public class UserController {
 	}
 	
 	
+	@RequestMapping(value = "/User/Setting")
+	public String UserSetting(HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
+		UserVO loginVO = (UserVO)session.getAttribute("login");
+		
+		System.out.println("loginVO : " + loginVO);
+		
+		String userid = loginVO.getUserid();
+		
+		String tmpID = request.getParameter("userid");
+		
+		List<CompanyVO> companyVO = (List<CompanyVO>) coworkservice.CompanyAllSelect();
+		
+		UserVO userVO = (UserVO)userservice.UserViewSelect(userid);
+		List<UserVO> deptVO = (List<UserVO>)userservice.SelectDeptList();
+		List<UserVO> positionVO = (List<UserVO>)userservice.SelectPositionList();
+		
+		FileVO usercolorVO = userservice.SelectUserColor(userid);
+		
+		System.out.println("--usercolorVO : " + usercolorVO);
+		model.addAttribute("deptVO", deptVO);
+		model.addAttribute("positionVO", positionVO);
+		model.addAttribute("userVO", userVO);
+		model.addAttribute("companyVO", companyVO);
+		model.addAttribute("usercolorVO", usercolorVO);
+		
+		returnUrl = "user/setting";
+		return returnUrl;
+	}
+	
+	@RequestMapping(value = "/User/Color")
+	public String ColorUpdate(@RequestBody String body,HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
+		UserVO loginVO = (UserVO)session.getAttribute("login");
+		
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+		FileDTO fileDTO = mapper.readValue(body, FileDTO.class);
+        String jsonStr = mapper.writeValueAsString(fileDTO);
+        
+        System.out.println("fileDTO : " + fileDTO);
+        
+        userservice.InsertUserColor(fileDTO);
+		
+		returnUrl = "redirect:/";
+		return returnUrl;
+	}
+	
+	@RequestMapping(value = "/User/Upload")
+	public String upload(HttpServletResponse response, HttpServletRequest request, HttpSession session, Model model, @RequestParam("file") MultipartFile file) throws Exception {
 
+		UserVO loginVO = (UserVO)session.getAttribute("login");
+		
+		String userid = loginVO.getUserid();
+		
+		String path = "C://upload//" + userid;
+		
+		System.out.println("userid : " + userid);
+		
+		File files = new File(path);
+		
+		if(!files.exists()){
+			//디렉토리 생성 메서드
+			files.mkdirs();
+			System.out.println("created directory successfully!");
+		}
+		
+		String url = fileUploadService.restore(userid, file);
+		
+		FileDTO fileDTO = new FileDTO();
+		fileDTO.setUserid(userid);
+        
+        System.out.println("fileDTO : " + fileDTO);
+        
+        userservice.InsertProfileUpload(fileDTO);
+		
+		model.addAttribute("url", url);
+		
+	    return "Login/dashboard";
+	}
 
 }

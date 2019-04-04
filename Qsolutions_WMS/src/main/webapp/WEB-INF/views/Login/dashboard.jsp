@@ -35,7 +35,30 @@ function todayCowork(){
 
 <style>
 
-
+.border {
+    width: 40%;
+    border-radius: 50%;
+    -webkit-border-radius:50%;
+    -moz-border-radius: 50%;
+    text-align: center;
+    border: 6px solid #fff;
+    box-shadow: 0 0 16px rgb(221,221,221);
+    -webkit-box-shadow: 0 0 16px rgb(221,221,221);
+    -moz-box-shadow: 0 0 16px rgb(221,221,221);
+    position: relative;
+    display: inline-block;
+    margin-top: 20px;
+    margin-left: 10%;
+    background-size: contain;
+    background-image: url('http://qsol.synology.me/${profileVO.profilepathname}');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.border:before {
+    content: "";
+    display: block;
+    padding-top: 100%; /* 1:1 비율 */
+}
 
 </style>
 
@@ -48,7 +71,14 @@ function todayCowork(){
 	<div class="roundedUserInfo pull-left">
 		<img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="" style="width: 80%; margin-top: 10px">
 		<br>
-		<img src="${pageContext.request.contextPath}/resources/img/user.png" alt="" style="width: 40%; margin-left: 10%; margin-top: 8%;" class="pull-left">
+		<c:choose>
+			<c:when test="${empty profileVO.profilepathname}">
+				<img src="${pageContext.request.contextPath}/resources/img/user.png" alt="" class="pull-left" style="width: 40%; margin-left: 10%; margin-top: 8%;" class="pull-left">
+			</c:when>
+			<c:otherwise>
+			<div class="border pull-left"></div>
+			</c:otherwise>
+		</c:choose>
 		<p style="padding-left:55%; margin-top:12%; text-align:left; font-weight: bold; font-size: 150%">
 		${userVO.username}
 		<input type="hidden" id="userid" value="${userVO.userid}"/>

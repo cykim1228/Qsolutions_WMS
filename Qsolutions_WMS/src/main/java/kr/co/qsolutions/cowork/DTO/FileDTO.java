@@ -13,7 +13,11 @@ public class FileDTO {
 	
     private String fname;
     private MultipartFile uploadFile;
-
+    
+    private String userid;
+    private String profilepathname;
+    private String usercolor;
+    
     public FileDTO() {
     }
     
@@ -63,11 +67,36 @@ public class FileDTO {
 	public void setUploadFile(MultipartFile uploadFile) {
 		this.uploadFile = uploadFile;
 	}
+	
+	public String getUserid() {
+		return userid;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+
+	public String getProfilepathname() {
+		return profilepathname;
+	}
+
+	public void setProfilepathname(String profilepathname) {
+		this.profilepathname = profilepathname;
+	}
+
+	public String getUsercolor() {
+		return usercolor;
+	}
+
+	public void setUsercolor(String usercolor) {
+		this.usercolor = usercolor;
+	}
 
 	@Override
 	public String toString() {
 		return "FileDTO [companycode=" + companycode + ", filename=" + filename + ", filepathname=" + filepathname
-				+ ", uploaddate=" + uploaddate + ", fname=" + fname + ", uploadFile=" + uploadFile + "]";
+				+ ", uploaddate=" + uploaddate + ", fname=" + fname + ", uploadFile=" + uploadFile + ", userid="
+				+ userid + ", profilepathname=" + profilepathname + ", usercolor=" + usercolor + "]";
 	}
 
 }

@@ -24,7 +24,9 @@ import kr.co.qsolutions.cowork.DTO.CompanyDTO;
 import kr.co.qsolutions.cowork.DTO.FileDTO;
 import kr.co.qsolutions.cowork.DTO.SubCoworkDTO;
 import kr.co.qsolutions.cowork.Service.CompanyService;
+import kr.co.qsolutions.cowork.Service.UserService;
 import kr.co.qsolutions.cowork.Util.FileUploadService;
+import kr.co.qsolutions.cowork.VO.UserVO;
 
 @Controller
 public class FileUploadController {
@@ -67,6 +69,9 @@ public class FileUploadController {
 	
 	@Inject
 	private CompanyService companyservice;
+	
+	@Inject
+	private UserService userservice;
      
 	String returnUrl;
 	
@@ -141,6 +146,63 @@ public class FileUploadController {
 		
 		returnUrl = "redirect:/Company/List";
 		return returnUrl;
+    }
+    
+    @RequestMapping(value = "/User/profileUpload")
+    public String profileUp(MultipartHttpServletRequest multi) throws Exception {
+        
+    	String userid = multi.getParameter("userid");
+    	
+    	System.out.println("userid : " +userid);
+    	
+        // 저장 경로 설정
+        String root = multi.getSession().getServletContext().getRealPath("/");
+        String path = "C://upload//" + userid + "/";
+        String filepathname = "upload/" + userid +"/";
+         
+        String newFileName = ""; // 업로드 되는 파일명
+        
+        File dir = new File(path);
+		/*
+		 * if(!dir.isDirectory()){ dir.mkdir(); }
+		 */
+        if(!dir.exists()){
+			//디렉토리 생성 메서드
+        	dir.mkdirs();
+			System.out.println("created directory successfully!");
+		}
+        
+        FileDTO fileDTO = new FileDTO();
+		fileDTO.setUserid(userid);
+		
+        Iterator<String> files = multi.getFileNames();
+        while(files.hasNext()){
+            String uploadFile = files.next();
+            
+            MultipartFile mFile = multi.getFile(uploadFile);
+            String fileName = mFile.getOriginalFilename();
+            System.out.println("실제 프로필 이름 : " +fileName);
+            
+            newFileName = System.currentTimeMillis()+"."
+                    +fileName.substring(fileName.lastIndexOf(".")+1);
+            try {
+                mFile.transferTo(new File(path+newFileName));
+                System.out.println("filepathname : " + newFileName);
+                fileDTO.setProfilepathname(filepathname+newFileName);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        
+		System.out.println("fileDTO : " + fileDTO);
+		
+		userservice.InsertProfileUpload(fileDTO);
+        
+        System.out.println("filename : " + multi.getParameter("filename"));
+        // System.out.println("id : " + multi.getParameter("id"));
+        // System.out.println("pw : " + multi.getParameter("pw"));
+        
+        return "/Login/dashboard";
     }
     
 }

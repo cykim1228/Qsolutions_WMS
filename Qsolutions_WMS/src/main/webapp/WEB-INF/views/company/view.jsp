@@ -632,11 +632,9 @@ body {
 	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 23px; font-weight: bold;">파일 목록</span>
 	<br class="visible-xs">
 	<br class="visible-xs">
-		<input class="btn btn-primary pull-right visible-xs" type="file" id="fileUp" name="fileUp" style="width: 90%; margin-right: 10px; margin-bottom: 10px;"><br>
         <input class="btn btn-primary pull-right" type="button" value="파일업로드" onClick="fileSubmit();">
-       	<input type="text" class="form-control pull-right visible-xs" placeholder="업로드 이름.." id="filename" name="filename" style="width: 60%; margin-right: 10px; margin-bottom: 10px;">
-       	<input type="text" class="form-control pull-right hidden-xs" placeholder="업로드 이름.." id="filename" name="filename" style="width: 20%; margin-right: 10px;">
-        <input class="btn btn-primary pull-right hidden-xs" type="file" id="fileUp" name="fileUp" style="width: 20%; margin-right: 10px;"><br>
+       	<input type="text" class="form-control pull-right placeholder="업로드 이름.." id="filename" name="filename" style="width: 20%; margin-right: 10px;">
+        <input class="btn btn-primary pull-right" type="file" id="fileUp" name="fileUp" style="width: 20%; margin-right: 10px;"><br>
         <input type="hidden" id="companycode" name="companycode" value="${companyVO.companycode}">
     </form>
     <br><br>

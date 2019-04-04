@@ -240,4 +240,53 @@
 			m.IsUse != 1
 	</select>
     
+    <insert id="InsertProfileUpload" parameterType="FileDTO">
+		INSERT INTO usersetting 
+			(userid, profilepathname) 
+		VALUES 
+			(#{userid}, #{profilepathname})  
+		ON DUPLICATE KEY 
+		UPDATE 
+		userid=#{userid}, profilepathname=#{profilepathname}
+	</insert>
+    
+    <select id="SelectProfile" resultType="FileVO" parameterType="String">
+		select 
+			us.userid, us.profilepathname
+		from 
+			usersetting us left join user u ON us.userid = u.userid
+		where
+			us.userid = #{userid} and
+			us.IsUse != 1
+	</select>
+	
+	<select id="SelectUserColor" resultType="FileVO" parameterType="String">
+		select 
+			us.userid, us.usercolor
+		from 
+			usersetting us left join user u ON us.userid = u.userid
+		where
+			us.userid = #{userid} and
+			us.IsUse != 1
+	</select>
+	
+	<select id="SelectListUserColor" resultType="FileVO">
+		SELECT 
+			us.userid, us.usercolor, us.IsUse
+		FROM 
+			usersetting us INNER JOIN user u ON us.userid = u.userid
+		WHERE
+			us.IsUse != 1
+	</select>
+	
+    <insert id="InsertUserColor" parameterType="FileDTO">
+		INSERT INTO usersetting 
+			(userid, usercolor) 
+		VALUES 
+			(#{userid}, #{usercolor})  
+		ON DUPLICATE KEY 
+		UPDATE 
+		userid=#{userid}, usercolor=#{usercolor}
+	</insert>
+	
 </mapper>

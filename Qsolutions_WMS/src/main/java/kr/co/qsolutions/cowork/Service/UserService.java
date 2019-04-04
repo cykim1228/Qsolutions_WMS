@@ -4,8 +4,10 @@ import java.util.Date;
 import java.util.List;
 
 import kr.co.qsolutions.cowork.DTO.CoworkDTO;
+import kr.co.qsolutions.cowork.DTO.FileDTO;
 import kr.co.qsolutions.cowork.DTO.UserDTO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
+import kr.co.qsolutions.cowork.VO.FileVO;
 import kr.co.qsolutions.cowork.VO.PagingVO;
 import kr.co.qsolutions.cowork.VO.UserVO;
 
@@ -41,5 +43,15 @@ public interface UserService {
 	public List<CoworkVO> selectManagerCowork(CoworkDTO coworkDTO) throws Exception;
 
 	public String UserIdSelect(String nowdate) throws Exception;
-    
+
+	public int InsertProfileUpload(FileDTO fileDTO) throws Exception;
+
+	public FileVO SelectProfile(String userid) throws Exception;
+
+	public FileVO SelectUserColor(String userid) throws Exception;
+
+	public int InsertUserColor(FileDTO fileDTO) throws Exception;
+
+	public List<FileVO> SelectListUserColor() throws Exception;
+	
 }

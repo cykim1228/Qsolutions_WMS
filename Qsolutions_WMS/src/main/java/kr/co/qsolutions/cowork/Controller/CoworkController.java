@@ -39,8 +39,10 @@ import kr.co.qsolutions.cowork.DTO.UserDTO;
 import kr.co.qsolutions.cowork.Service.CompanyService;
 import kr.co.qsolutions.cowork.Service.CoworkService;
 import kr.co.qsolutions.cowork.Service.ManagerService;
+import kr.co.qsolutions.cowork.Service.UserService;
 import kr.co.qsolutions.cowork.VO.CompanyVO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
+import kr.co.qsolutions.cowork.VO.FileVO;
 import kr.co.qsolutions.cowork.VO.ManagerVO;
 import kr.co.qsolutions.cowork.VO.PagingVO;
 import kr.co.qsolutions.cowork.VO.SubCoworkVO;
@@ -60,6 +62,9 @@ public class CoworkController {
 	
 	@Inject
 	private ManagerService managerservice;
+	
+	@Inject
+	private UserService userservice;
 	
 	String returnUrl;
 	
@@ -82,14 +87,17 @@ public class CoworkController {
 	public String CoworkCalendar(PagingVO pagingVO, HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
 
 		UserVO loginVO = (UserVO)session.getAttribute("login");
-
+		
 		List<CoworkVO> listvo = coworkservice.CoworkViewListCalendar(pagingVO);
 
+		List<FileVO> colorlistVO = userservice.SelectListUserColor();
+		
 		model.addAttribute("coworklistvo",listvo);
 		model.addAttribute("pagingVO", pagingVO);
-		model.addAttribute("userid", loginVO.getUserid());
+		model.addAttribute("colorlistVO", colorlistVO);
 		
-		System.out.println("확인용 : " + listvo);
+		System.out.println("확인용 업무리스트 : " + listvo);
+		System.out.println("확인용 컬러리스트 : " + colorlistVO);
 		
 		return "cowork/calendar";
 	}
