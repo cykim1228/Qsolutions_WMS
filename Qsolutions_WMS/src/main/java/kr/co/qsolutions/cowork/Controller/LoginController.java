@@ -125,11 +125,11 @@ public class LoginController {
     			 
     			PrintWriter out = response.getWriter();
     			 
-    			out.println("<script>alert('비밀번호가 틀렸습니다.'); location.href='/';</script>");
+    			out.println("<script>alert('비밀번호가 틀렸습니다.'); location.href='/Check';</script>");
     			 
     			out.flush();
     			
-    			// returnUrl = "redirect:/";
+    			returnUrl = "Login/login";
     		}
     		
 		} else {
@@ -140,11 +140,11 @@ public class LoginController {
 			 
 			PrintWriter out = response.getWriter();
 			 
-			out.println("<script>alert('로그인 계정이 존재하지 않습니다.'); location.href='/';</script>");
+			out.println("<script>alert('로그인 계정이 존재하지 않습니다.'); location.href='/Check';</script>");
 			 
 			out.flush();
 			
-			// returnUrl = "redirect:/";
+			returnUrl = "Login/login";
 		}
 		
 		return returnUrl;

@@ -62,6 +62,10 @@ function todayCowork(){
     padding-top: 100%; /* 1:1 비율 */
 }
 
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: #dae4f7;
+}
+
 </style>
 
 </head>
@@ -138,7 +142,7 @@ function todayCowork(){
 <div class="viewList">
 	<h3 style="font-weight: bold;">나의 최근 업무</h3>
 	<div class="table-responsive tables">
-		<table class="table table-striped">
+		<table class="table table-striped table-hover">
 			<thead>
 				<tr>
 					<th style="width: 15%; text-align: center;">카테고리</th>
