@@ -104,9 +104,9 @@ public class CoworkController {
 	
 	@RequestMapping(value = "/Cowork/Calendar", method = RequestMethod.POST)
 	@ResponseBody
-	public CoworkVO CoworkCalendarSelect(String coworktitle) throws Exception {
+	public CoworkVO CoworkCalendarSelect(String coworkcode) throws Exception {
 		CoworkDTO coworkDTO = new CoworkDTO();
-		coworkDTO.setCoworktitle(coworktitle);
+		coworkDTO.setCoworkcode(coworkcode);
 		CoworkVO coworkVO = coworkservice.CoworkCalendarSelect(coworkDTO);
 		
 		System.out.println("È®ÀÎ¿ë : " + coworkVO);

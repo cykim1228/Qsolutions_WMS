@@ -78,6 +78,8 @@ public void sendMail(String userId, String filePath, HttpSession session) throws
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/util.js"></script>
 
+<link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/resources/img/Q_logo.png"> 
+
 <script type="text/javascript">
 	function updateform(){
 		//var coworkcode = document.getElementById("coworkcode").value
@@ -231,7 +233,7 @@ public void sendMail(String userId, String filePath, HttpSession session) throws
 		
 	}
 	
-	$('document').ready(function() {
+	/* $('document').ready(function() {
 		'[]'
 		$.ajax({
 			type : 'post',
@@ -267,7 +269,7 @@ public void sendMail(String userId, String filePath, HttpSession session) throws
 			}
 		});
 		
-	})
+	}) */
 	
 	
   </script>

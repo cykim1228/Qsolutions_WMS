@@ -14,6 +14,9 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/paging.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/util.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.tablesorter.js"></script>
+
+<link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/resources/img/Q_logo.png"> 
+
 	<script type="text/javascript">
 
 	    $(document).ready(function(){

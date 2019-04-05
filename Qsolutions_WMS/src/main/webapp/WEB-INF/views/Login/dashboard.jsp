@@ -18,6 +18,8 @@
 <link rel="stylesheet" media="screen and (min-width: 768px) and (max-width: 959px)" href="${pageContext.request.contextPath}/resources/css/max-960px.css" />
 <link rel="stylesheet" media="screen and (min-width: 960px)" href="${pageContext.request.contextPath}/resources/css/max-960px.css" />
 
+<link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/resources/img/Q_logo.png"> 
+
 <script type="text/javascript">
 function updateuserform(){
 		var userid = $("#userid").val();
@@ -50,7 +52,7 @@ function todayCowork(){
     margin-top: 20px;
     margin-left: 10%;
     background-size: cover;
-    background-image: url('http://localhost:8080/${profileVO.profilepathname}');
+    background-image: url('http://qsol.synology.me/${profileVO.profilepathname}');
     background-repeat: no-repeat;
     background-position: center;
 }

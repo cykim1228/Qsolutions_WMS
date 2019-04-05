@@ -86,7 +86,7 @@
 			user u inner join cowork cw ON u.userid = cw.userid     
 			inner join company c ON cw.coworkcompany = c.companycode
 		<where>
-        	cw.coworktitle = #{coworktitle}
+        	cw.coworkcode = #{coworkcode}
 		</where>
 	</select>
 	

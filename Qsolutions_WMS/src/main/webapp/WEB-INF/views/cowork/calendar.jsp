@@ -19,6 +19,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/fullcalendar.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/fullcalendar.min.css">
 <link rel="stylesheet" media="print" type="text/css" href="${pageContext.request.contextPath}/resources/css/fullcalendar.print.min.css">
+<link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/resources/img/Q_logo.png"> 
 
 <script type='text/javascript'>
 
@@ -47,13 +48,15 @@
 			/* googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE", */
 			eventClick: function(calEvent, jsEvent, view) {
 				var coworktitle = calEvent.title;
+				var coworkcode = calEvent.eventClassNames;
 				console.log(coworktitle);
+				console.log(coworkcode);
 				
 				$.ajax({
 					type : 'post',
 					url : '/Cowork/Calendar',
 					data : {
-						coworktitle : coworktitle
+						coworkcode : coworkcode
 					},
 					success : function(data) {
 						
@@ -93,7 +96,8 @@
 					{
 						title : '${coworklistvo.coworktitle}',
 						start : '${coworklistvo.startdate}',
-						end : '${coworklistvo.enddate}'
+						end : '${coworklistvo.enddate}',
+						eventClassNames : '${coworklistvo.coworkcode}'
 						<c:forEach items="${colorlistVO}" var="colorlistVO" varStatus="rowCount">
 							<c:choose>
 								<c:when test="${coworklistvo.username=='관리자'}">
@@ -275,13 +279,15 @@
 			/* googleCalendarApiKey : "AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE", */
 			eventClick: function(calEvent, jsEvent, view) {
 				var coworktitle = calEvent.title;
+				var coworkcode = calEvent.eventClassNames;
 				console.log(coworktitle);
+				console.log(coworkcode);
 				
 				$.ajax({
 					type : 'post',
 					url : '/Cowork/Calendar',
 					data : {
-						coworktitle : coworktitle
+						coworkcode : coworkcode
 					},
 					success : function(data) {
 						
@@ -321,7 +327,8 @@
 					{
 						title : '${coworklistvo.coworktitle}',
 						start : '${coworklistvo.startdate}',
-						end : '${coworklistvo.enddate}'
+						end : '${coworklistvo.enddate}',
+						eventClassNames : '${coworklistvo.coworkcode}'
 							<c:forEach items="${colorlistVO}" var="colorlistVO" varStatus="rowCount">
 								<c:choose>
 									<c:when test="${coworklistvo.username=='관리자'}">

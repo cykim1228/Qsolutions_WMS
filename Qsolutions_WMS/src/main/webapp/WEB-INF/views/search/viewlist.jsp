@@ -25,6 +25,8 @@
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery.tablesorter.pager.js"></script>
 
+<link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/resources/img/Q_logo.png"> 
+
 <script type="text/javascript">
 	function search_user() {
 		var searchUser = document.SearchUser;

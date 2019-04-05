@@ -19,6 +19,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/fullcalendar.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/fullcalendar.min.css">
 <link rel="stylesheet" media="print" type="text/css" href="${pageContext.request.contextPath}/resources/css/fullcalendar.print.min.css">
+<link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/resources/img/Q_logo.png"> 
 
 <script type='text/javascript'>
 
