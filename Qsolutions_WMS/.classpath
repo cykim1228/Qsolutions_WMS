@@ -30,18 +30,18 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/KCY_QS/Downloads/com.springsource.javax.mail-1.4.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/KCY_QS/Downloads/JAR_Files/com.springsource.javax.mail-1.4.0.jar"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/KCY_QS/Downloads/jxl-2.6.12.jar"/>
-	<classpathentry kind="lib" path="C:/Users/KCY_QS/Downloads/poi-4.0.1/poi-4.0.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/KCY_QS/Downloads/poi-4.0.1/poi-examples-4.0.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/KCY_QS/Downloads/poi-4.0.1/poi-excelant-4.0.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/KCY_QS/Downloads/poi-4.0.1/poi-ooxml-4.0.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/KCY_QS/Downloads/poi-4.0.1/poi-ooxml-schemas-4.0.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/KCY_QS/Downloads/poi-4.0.1/poi-scratchpad-4.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/KCY_QS/Downloads/JAR_Files/jxl-2.6.12.jar"/>
+	<classpathentry kind="lib" path="C:/Users/KCY_QS/Downloads/JAR_Files/poi-4.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/KCY_QS/Downloads/JAR_Files/poi-examples-4.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/KCY_QS/Downloads/JAR_Files/poi-excelant-4.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/KCY_QS/Downloads/JAR_Files/poi-ooxml-4.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/KCY_QS/Downloads/JAR_Files/poi-ooxml-schemas-4.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/KCY_QS/Downloads/JAR_Files/poi-scratchpad-4.0.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

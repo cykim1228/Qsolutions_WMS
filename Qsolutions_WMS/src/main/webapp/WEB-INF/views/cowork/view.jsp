@@ -467,7 +467,7 @@ body {
 			<c:forEach items="${userList}" var="userList" varStatus="rowCount">
 				<tr>
 					<td style="font-weight:bold; width: 30%;">담당자</td>
-					<td><a href="${pageContext.request.contextPath}/User/View?userid=${userList.userid}">${userList.username}</a></td>
+					<td><a href='${pageContext.request.contextPath}/Company/View?companycode=${userList.usercompanycode}' style="color: #FAAC58; font-weight: bold;">[${userList.companyname}]</a>&nbsp;<a href="${pageContext.request.contextPath}/User/View?userid=${userList.userid}" style="color: #58ACFA; font-weight: bold;">${userList.username}</a></td>
 				</tr>
 			</c:forEach>
 			<tr>
@@ -539,8 +539,9 @@ body {
 			<table class="table table-striped">
 				<thead align="center">
 					<tr>
+						<th style="width: 7%; text-align: center;">구분</th>
 						<th style="width: 20%; text-align: center;">소속</th>
-						<th style="width: 15%; text-align: center;">직급</th>
+						<th style="width: 8%; text-align: center;">직급</th>
 						<th style="width: 15%; text-align: center;">담당자</th>
 						<th style="width: 20%; text-align: center;">담당자연락처</th>
 						<th style="width: 30%; text-align: center;">담당자이메일</th>
@@ -549,6 +550,13 @@ body {
 				<tbody align="center">
 					<c:forEach items="${userList}" var="userList" varStatus="rowCount">
 						<tr>
+						<c:choose>
+							<c:when test="${userList.deptname == '개발팀'}"><td><p style="color: blue; font-weight: bold;">기술</p></td></c:when>
+							<c:when test="${userList.deptname == '기술본부'}"><td><p style="color: blue; font-weight: bold;">기술</p></td></c:when>
+							<c:when test="${userList.deptname == '고객사'}"><td><p style="color: red; font-weight: bold;">고객사</p></td></c:when>
+							<c:when test="${userList.deptname == '파트너사'}"><td><p style="color: green; font-weight: bold;">파트너사</p></td></c:when>
+							<c:otherwise><td><p style="color: orange; font-weight: bold;">영업</p></td></c:otherwise>
+						</c:choose>
 							<td><a href='${pageContext.request.contextPath}/Company/View?companycode=${userList.usercompanycode}'>${userList.companyname}</a></td>
 							<td>${userList.positionname}</td>
 							<td><a href="${pageContext.request.contextPath}/User/View?userid=${userList.userid}">${userList.username}</a></td>

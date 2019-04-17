@@ -9,6 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-material-datetimepicker.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/plugins/summernote/summernote.css" />
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   
@@ -21,6 +22,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/material.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/moment-with-locales.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap-material-datetimepicker.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/plugins/summernote/summernote.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/plugins/summernote/lang/summernote-ko-KR.js"></script>
 <script src="https://code.jquery.com/ui/1.9.1/jquery-ui.js" integrity="sha256-tXuytmakTtXe6NCDgoePBXiKe1gB+VA3xRvyBs/sq94=" crossorigin="anonymous"></script>
 
 <!-- Include Choices CSS -->
@@ -304,6 +307,16 @@
 		
 	});
 	
+	$(function() {
+		$('.summernote').summernote({
+			height : 300, // 기본 높이값
+			minHeight : null, // 최소 높이값(null은 제한 없음)
+			maxHeight : null, // 최대 높이값(null은 제한 없음)
+			// focus : true, // 페이지가 열릴때 포커스를 지정함
+			lang : 'ko-KR' // 한국어 지정(기본값은 en-US)
+		});
+	});
+	
   </script>
 
 <style>
@@ -466,7 +479,7 @@ body {
 			<input type="hidden" id="companycode" value="${CoworkVO.companycode}" name="companycode" />
 			<input type="text" class="form-control" id="companyname" value="${CoworkVO.companyname}" name="companyname" size="50" style="width: 100%; display: inline-block;" readonly="readonly">
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">업무 내용</p>
-			<textarea id="coworktext" name="coworktext" class="form-control" rows="3" placeholder="업무 내용을 입력해주세요.." style="width: 100%; display: inline-block;">${CoworkVO.coworktext}</textarea>
+			<textarea id="coworktext" name="coworktext" class="form-control summernote" rows="3" placeholder="업무 내용을 입력해주세요.." style="width: 100%; display: inline-block;">${CoworkVO.coworktext}</textarea>
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">업무 날짜</p>
 			<input id="startdate" name="startdate" value="${CoworkVO.startdate}" type="text" class="form-control" placeholder="시작 시간.." value="" size="50" style="width: 49%; display: inline-block;">
 			<input id="enddate" name="enddate" value="${CoworkVO.enddate}" type="text" class="form-control pull-right" placeholder="종료 시간.." value="" size="50" style="width: 49%; display: inline-block;">

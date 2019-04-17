@@ -13,6 +13,7 @@
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-material-datetimepicker.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/plugins/summernote/summernote.css" />
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -21,6 +22,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/material.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/moment-with-locales.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap-material-datetimepicker.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/plugins/summernote/summernote.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/plugins/summernote/lang/summernote-ko-KR.js"></script>
 <script src="https://code.jquery.com/ui/1.9.1/jquery-ui.js" integrity="sha256-tXuytmakTtXe6NCDgoePBXiKe1gB+VA3xRvyBs/sq94=" crossorigin="anonymous"></script>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.css">
@@ -421,6 +424,45 @@
 		
 	}
 	
+	$.ajax({
+		url : 'https://api.github.com/emojis',
+		async : false
+	}).then(function(data) {
+		window.emojis = Object.keys(data);
+		window.emojiUrls = data;
+	});;
+	
+	$(function() {
+		$('.summernote').summernote({
+			height : 300, // 기본 높이값
+			minHeight : null, // 최소 높이값(null은 제한 없음)
+			maxHeight : null, // 최대 높이값(null은 제한 없음)
+			// focus : true, // 페이지가 열릴때 포커스를 지정함
+			lang : 'ko-KR', // 한국어 지정(기본값은 en-US)
+			hint : {
+				match : /:([\-+\w]+)$/,
+				search : function(keyword, callback) {
+					callback($.grep(emojis, function(item) {
+						return item.indexOf(keyword) === 0;
+					}));
+				},
+				template : function(item) {
+					var content = emojiUrls[item];
+					return '<img src="' + content + '" width="20" /> :'
+							+ item + ':';
+				},
+				content : function(item) {
+					var url = emojiUrls[item];
+					if (url) {
+						return $('<img />').attr('src', url).css('width',
+								20)[0];
+					}
+					return '';
+				}
+			}
+		});
+	});
+	
 </script>
 
 <style>
@@ -533,17 +575,22 @@ h2 {
 	}
 }
 
+.note-toolbar.panel-heading{
+    position: relative;
+    top: 0px !important;
+}
+
 </style>
 
 </head>
 <body>
 <%@ include file="/WEB-INF/views/header/header.jsp"%>
 <%@ include file="/WEB-INF/views/header/footer.jsp"%>
-
+<div id="header-space"></div>
 <!-- <body style="background-color: #d4d4d4"> -->
 
 	<!-- 상세 뷰 페이지  -->
-	<form action="${pageContext.request.contextPath}/Cowork/Insert" method="post" id="insertData" name="insertData">
+	<form action="${pageContext.request.contextPath}/Cowork/Insert" method="post" id="insertData" name="insertData" style="margin-bottom: 100px;">
 	    <div class="viewListTop">
 	    	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 30px; font-weight: bold;">업무 등록</span>
 	    	<!-- <input type="submit" id="save" class="btn btn-primary pull-right" onclick="insertdata()" style="margin-right: 10px; margin-top: 8px;" value="업무 등록"> -->
@@ -612,7 +659,7 @@ h2 {
 				</c:forEach>
 			</select>
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">업무 내용</p>
-			<textarea id="coworktext" name="coworktext" class="form-control" rows="3" placeholder="업무 내용을 입력해주세요.." style="width: 100%; display: inline-block;" required></textarea>
+			<textarea id="coworktext" name="coworktext" class="form-control summernote hint2emoji" rows="3" placeholder="업무 내용을 입력해주세요.." style="width: 100%; display: inline-block;" required></textarea>
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">업무 날짜</p>
 			<input id="startdate" name="startdate" type="text" class="form-control" placeholder="시작 시간.." value="" size="50" style="width: 49%; display: inline-block;">
 			<input id="enddate" name="enddate" type="text" class="form-control pull-right" placeholder="종료 시간.." value="" size="50" style="width: 49%; display: inline-block;">

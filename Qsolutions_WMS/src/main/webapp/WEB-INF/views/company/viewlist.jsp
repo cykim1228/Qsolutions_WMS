@@ -24,9 +24,9 @@
 			location.href = "/Company/Insertform";
 		}
 		
-		$(function() {
-			  $("#myTable").tablesorter();
-			});
+		/* $(function() {
+			$("#myTable").tablesorter();
+		}); */
 		
 		$(document).ready(function() {
 			$("#excelConvertBtn").on('click', function() {

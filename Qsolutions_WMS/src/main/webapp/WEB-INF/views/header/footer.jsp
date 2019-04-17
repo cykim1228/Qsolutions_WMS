@@ -21,7 +21,7 @@
 
 </head>
 <body>
-	<div class="footer" style="padding-top: 5px; z-index: 5">
+	<div class="footer" style="padding-top: 5px; z-index: 5000">
 		  © 2019 Copyright: 
 		  <a href="http://www.qsolutions.co.kr/" style="color: white;"> Quantum Solutions</a>
 	  <p style="font-size: 80%;">The Dominant in Wireless Lifecycle</p>

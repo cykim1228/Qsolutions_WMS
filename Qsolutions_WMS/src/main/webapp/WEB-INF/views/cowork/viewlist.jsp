@@ -33,9 +33,9 @@
 			location.href = "/Cowork/Insertform";
 		}
 		
-		$(function() {
-			  $("#myTable").tablesorter();
-			});
+		/* $(function() {
+			$("#myTable").tablesorter();
+		}); */
 		
 		var list = '';
 		

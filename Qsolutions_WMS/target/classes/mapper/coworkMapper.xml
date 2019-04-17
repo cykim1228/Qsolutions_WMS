@@ -178,12 +178,13 @@
 	
 	<select id="SelectCoworkUser" resultType="UserVO" parameterType="CompanyDTO">
 		select distinct
-			u.userid, u.username, u.usermobile, u.useremail, u.usercompanycode, c.companyname, u.positioncode, p.positionname
+			u.userid, u.username, u.usermobile, u.useremail, u.usercompanycode, c.companyname, u.positioncode, p.positionname, d.deptcode, d.deptname
 		from 
 			user u inner join usercoworkcompany ucc ON u.userid = ucc.userid
 		    <!-- inner join company c ON uc.companycode = c.companycode -->
 		    left join company c ON u.usercompanycode = c.companycode
 		    left join positions p ON u.positioncode = p.positioncode
+		    left join dept d ON u.deptcode = d.deptcode
 		where
 			ucc.coworkcode = #{coworkcode}
 	</select>

@@ -124,7 +124,7 @@ function usersetting(){
     <img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="" width="180" class="logo-img logo-loader animated infinite pulse">
 </div>
 
-<div class="header" style="z-index: 5">
+<div class="header" style="z-index: 5000">
 	<div class="container indexs">
 		<ul id="gn-menu" class="gn-menu-main">
 			<li class="gn-trigger">

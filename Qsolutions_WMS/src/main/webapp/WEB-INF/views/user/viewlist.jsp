@@ -42,9 +42,9 @@
 			location.href = "/User/Insertform";
 		}
 		
-		$(function() {
-			  $("#myTable").tablesorter();
-			});
+		/* $(function() {
+			$("#myTable").tablesorter();
+		}); */
 		
 </script>
 
