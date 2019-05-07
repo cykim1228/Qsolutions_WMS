@@ -289,4 +289,15 @@
 		userid=#{userid}, usercolor=#{usercolor}
 	</insert>
 	
+	<select id="selectManagerCoworkList" resultType="CoworkVO" parameterType="String">
+   		SELECT distinct
+			co.coworkcode, co.coworksubject, co.coworktitle, date_format(co.coworkdate, '%Y-%m-%d') AS coworkdates, co.userid, c.companycode, c.companyname, u.username
+		FROM
+			cowork co left join usercoworkcompany ucc ON co.coworkcode = ucc.coworkcode
+		    left join company c ON co.coworkcompany = c.companycode
+		    left join user u ON co.userid = u.userid
+		WHERE
+			ucc.userid = #{userid};
+   	</select>
+	
 </mapper>

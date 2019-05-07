@@ -563,6 +563,10 @@ body {
 	font-weight: bold;
 }
 
+.modal-content {
+	margin-top: 100px;
+}
+
 </style>
 
 </head>

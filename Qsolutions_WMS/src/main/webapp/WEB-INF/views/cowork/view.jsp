@@ -233,6 +233,39 @@ public void sendMail(String userId, String filePath, HttpSession session) throws
 		
 	}
 	
+	function mailSends(){
+		
+		var receiver = $("#receivers").val(); // 받는사람
+		var subject = $("#subject").val(); // 제목
+		var content = $("#content").val(); // 내용
+		
+		if(receiver == "" || receiver == null){
+			alert("받는사람을 선택해주시기 바랍니다.");
+			
+			return;
+		}
+		
+		$.ajax({
+	        url:"send",
+	        type:"post",
+	        data:{
+	        	receiver:receiver,
+	        	subject:subject,
+	        	content:content
+	        },
+	        success:function(data){
+	            alert("메일이 전송되었습니다.");
+	            
+	            location.reload();
+	            
+	        },
+	        error:function(jqXHR, textStatus, errorThrown){
+	            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
+	        }
+		});
+		
+	}
+	
 	/* $('document').ready(function() {
 		'[]'
 		$.ajax({
@@ -474,7 +507,7 @@ body {
 				<td colspan="2">${fn:replace(CoworkVO.coworktext, newLineChar, "<br>")}</td>
 			</tr>
 		</table>
-		<select class="form-control pull-left receiver" id="receiver" name="receiver" style="width: 60%;">
+		<select class="form-control pull-left receiver" id="receivers" name="receivers" style="width: 60%;">
 			<option value="" selected disabled hidden>== 받는사람 ==</option>
 			<option value="we@qsolutions.co.kr">전체</option>
 			<c:forEach items="${userList}" var="userList" varStatus="rowCount">
@@ -483,7 +516,7 @@ body {
 				</c:if>
 			</c:forEach>
 		</select>
-    	<button type="button" class="btn btn-info pull-right" onclick="mailSend()" style="width:38%; margin-top: 10px; margin-bottom: 10px;">메일 전송</button>
+    	<button type="button" class="btn btn-info pull-right" onclick="mailSends()" style="width:38%; margin-top: 10px; margin-bottom: 10px;">메일 전송</button>
 		<button type="button" class="btn btn-danger pull-right" onclick="deleteform()" style="width:49%; margin-top: 8px; margin-bottom: 20px;">업무 삭제</button>
     	<button type="button" class="btn btn-primary pull-left" onclick="updateform()" style="width:49%; margin-top: 8px; margin-bottom: 20px;">업무 수정</button>
 	</div>
@@ -555,6 +588,8 @@ body {
 							<c:when test="${userList.deptname == '기술본부'}"><td><p style="color: blue; font-weight: bold;">기술</p></td></c:when>
 							<c:when test="${userList.deptname == '고객사'}"><td><p style="color: red; font-weight: bold;">고객사</p></td></c:when>
 							<c:when test="${userList.deptname == '파트너사'}"><td><p style="color: green; font-weight: bold;">파트너사</p></td></c:when>
+							<c:when test="${userList.deptname == '총판'}"><td><p style="color: brown; font-weight: bold;">총판</p></td></c:when>
+							<c:when test="${userList.deptname == '제조사'}"><td><p style="color: gray; font-weight: bold;">제조사</p></td></c:when>
 							<c:otherwise><td><p style="color: orange; font-weight: bold;">영업</p></td></c:otherwise>
 						</c:choose>
 							<td><a href='${pageContext.request.contextPath}/Company/View?companycode=${userList.usercompanycode}'>${userList.companyname}</a></td>

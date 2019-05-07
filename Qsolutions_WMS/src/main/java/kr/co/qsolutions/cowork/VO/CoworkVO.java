@@ -22,6 +22,8 @@ public class CoworkVO {
 	private String enddate;
 	private String coworkstep;
 	
+	private String coworkdates;
+	
 
 	public String getStartdate() {
 		return startdate;
@@ -145,6 +147,12 @@ public class CoworkVO {
 	public void setCoworkstep(String coworkstep) {
 		this.coworkstep = coworkstep;
 	}
+	public String getCoworkdates() {
+		return coworkdates;
+	}
+	public void setCoworkdates(String coworkdates) {
+		this.coworkdates = coworkdates;
+	}
 	
 	@Override
 	public String toString() {
@@ -153,6 +161,7 @@ public class CoworkVO {
 				+ usercompanycode + ", companycode=" + companycode + ", companyname=" + companyname + ", coworkcode="
 				+ coworkcode + ", coworktext=" + coworktext + ", coworktitle=" + coworktitle + ", coworkdate="
 				+ coworkdate + ", coworksubject=" + coworksubject + ", startdate=" + startdate + ", enddate=" + enddate
-				+ ", coworkstep=" + coworkstep + "]";
+				+ ", coworkstep=" + coworkstep + ", coworkdates=" + coworkdates + "]";
 	}
+	
 }

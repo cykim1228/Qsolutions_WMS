@@ -22,6 +22,9 @@ public class UserVO {
 	private String companyname;
 	
 	private List<UserVO> managerList;
+	
+	private int startIndex;
+	private int cntPerPage;
 
 	public String getUserid() {
 		return userid;
@@ -126,6 +129,18 @@ public class UserVO {
 	public void setManagerList(List<UserVO> managerList) {
 		this.managerList = managerList;
 	}
+	public int getStartIndex() {
+		return startIndex;
+	}
+	public void setStartIndex(int startIndex) {
+		this.startIndex = startIndex;
+	}
+	public int getCntPerPage() {
+		return cntPerPage;
+	}
+	public void setCntPerPage(int cntPerPage) {
+		this.cntPerPage = cntPerPage;
+	}
 	
 	@Override
 	public String toString() {
@@ -134,7 +149,7 @@ public class UserVO {
 				+ ", positioncode=" + positioncode + ", positionname=" + positionname + ", usercompanyname="
 				+ usercompanyname + ", useCookie=" + useCookie + ", gmail=" + gmail + ", gname=" + gname
 				+ ", oauthcode=" + oauthcode + ", usercompanycode=" + usercompanycode + ", companyname=" + companyname
-				+ ", managerList=" + managerList + "]";
+				+ ", managerList=" + managerList + ", startIndex=" + startIndex + ", cntPerPage=" + cntPerPage + "]";
 	}
 	
 }

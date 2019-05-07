@@ -17,11 +17,13 @@ import kr.co.qsolutions.cowork.DTO.CompanyDTO;
 import kr.co.qsolutions.cowork.DTO.CoworkDTO;
 import kr.co.qsolutions.cowork.DTO.FileDTO;
 import kr.co.qsolutions.cowork.VO.CompanyVO;
+import kr.co.qsolutions.cowork.VO.CoworkPagingVO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
 import kr.co.qsolutions.cowork.VO.FileVO;
 import kr.co.qsolutions.cowork.DAO.UserDao;
 import kr.co.qsolutions.cowork.VO.PagingVO;
 import kr.co.qsolutions.cowork.VO.SubCoworkVO;
+import kr.co.qsolutions.cowork.VO.UserPagingVO;
 import kr.co.qsolutions.cowork.VO.UserVO;
 
 @Service
@@ -147,6 +149,40 @@ public class CompanyServiceImpl implements CompanyService {
 		return dao.DeleteFile(fileDTO);
 	}
 
-	
-	
+	@Override
+	public int SelectUserCompanyCount(CompanyDTO companyDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.SelectUserCompanyCount(companyDTO);
+	}
+
+	@Override
+	public int CoworkViewSelectCompanyCount(CompanyDTO companyDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.CoworkViewSelectCompanyCount(companyDTO);
+	}
+
+	@Override
+	public int SelectFileUploadCount(CompanyDTO companyDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.SelectFileUploadCount(companyDTO);
+	}
+
+	@Override
+	public List<UserVO> SelectUserCompanyList(String companycode) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.SelectUserCompanyList(companycode);
+	}
+
+	@Override
+	public int SelectUserCompanyCount(PagingVO pagingVO) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.SelectUserCompanyCount(pagingVO);
+	}
+
+	@Override
+	public List<CoworkVO> CoworkViewSelectCompanyList(String companycode) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.CoworkViewSelectCompanyList(companycode);
+	}
+
 }

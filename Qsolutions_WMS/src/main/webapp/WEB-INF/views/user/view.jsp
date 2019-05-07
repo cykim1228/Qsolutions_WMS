@@ -117,7 +117,7 @@
 
 		});
 		
-		$(".tableCowork").tablesorter(
+		/* $(".tableCowork").tablesorter(
 				{
 					theme : "bootstrap",
 
@@ -167,9 +167,154 @@
 				// possible variables: {page}, {totalPages}, {filteredPages}, {startRow}, {endRow}, {filteredRows} and {totalRows}
 				output : '{startRow} - {endRow} / {filteredRows} ({totalRows})'
 
-			});
+			}); */
 		
 	});
+		
+		
+	// 만들어진 테이블에 페이지 처리
+	function page(){ 
+		var reSortColors = function($table) {
+			$('tbody tr:odd td', $table).removeClass('even').removeClass('listtd').addClass('odd');
+			$('tbody tr:even td', $table).removeClass('odd').removeClass('listtd').addClass('even');
+		};
+		$('table.paginated').each(function() {
+	 	var pagesu = 5;  //페이지 번호 갯수
+	 	var currentPage = 0;
+	 	var numPerPage = 5;  //목록의 수
+	 	var $table = $(this);    
+
+		//length로 원래 리스트의 전체길이구함
+	  	var numRows = $table.find('tbody tr').length;
+		//Math.ceil를 이용하여 반올림
+		var numPages = Math.ceil(numRows / numPerPage);
+		//리스트가 없으면 종료
+		if (numPages==0) return;
+		//pager라는 클래스의 div엘리먼트 작성
+		var $pager = $('<td align="center" id="remo" colspan="10"><div class="pager"></div></td>');
+
+		var nowp = currentPage;
+		var endp = nowp+5;
+
+		//페이지를 클릭하면 다시 셋팅
+		$table.bind('repaginate', function() {
+		//기본적으로 모두 감춘다, 현재페이지+1 곱하기 현재페이지까지 보여준다
+
+			$table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
+			$("#remo").html("");
+	   
+			if (numPages > 1) {     // 한페이지 이상이면
+			if (currentPage < 2 && numPages-currentPage >= 2) {   // 현재 5p 이하이면
+				nowp = 0;     // 1부터 
+				endp = pagesu;    // 10까지
+			} else {
+				nowp = currentPage -3;  // 6넘어가면 2부터 찍고
+				endp = nowp+pagesu;   // 10까지
+				pi = 1;
+			}
+
+			if (numPages < endp) {   // 10페이지가 안되면
+				endp = numPages;   // 마지막페이지를 갯수 만큼
+				nowp = numPages-pagesu;  // 시작페이지를   갯수 -10
+			}
+			if (nowp < 1) {     // 시작이 음수 or 0 이면
+				nowp = 0;     // 1페이지부터 시작
+			}
+		} else {       // 한페이지 이하이면
+			nowp = 0;      // 한번만 페이징 생성
+			endp = numPages;
+		}
+		// [처음]
+		$('<br /><span class="page-number box" cursor: "pointer"><<</span>').bind('click', {newPage: page},function(event) {
+			currentPage = 0;   
+			$table.trigger('repaginate');  
+			$($(".page-number")[2]).addClass('active').siblings().removeClass('active');
+		}).appendTo($pager).addClass('clickable');
+		// [이전]
+		$('<span class="page-number box" cursor: "pointer"><</span>').bind('click', {newPage: page},function(event) {
+			if(currentPage == 0) return; 
+			currentPage = currentPage-1;
+			$table.trigger('repaginate'); 
+			$($(".page-number")[(currentPage-nowp)+2]).addClass('active').siblings().removeClass('active');
+		}).appendTo($pager).addClass('clickable');
+	    // [1,2,3,4,5,6,7,8]
+		for (var page = nowp ; page < endp; page++) {
+			$('<span class="page-number box" cursor: "pointer"></span>').text(page + 1).bind('click', {newPage: page}, function(event) {
+				currentPage = event.data['newPage'];
+			$table.trigger('repaginate');
+			$($(".page-number")[(currentPage-nowp)+2]).addClass('active').siblings().removeClass('active');
+			}).appendTo($pager).addClass('clickable');
+		} 
+	    // [다음]
+		$('<span class="page-number box" cursor: "pointer">></span>').bind('click', {newPage: page},function(event) {
+			if(currentPage == numPages-1) return;
+			currentPage = currentPage+1;
+	    	$table.trigger('repaginate'); 
+			$($(".page-number")[(currentPage-nowp)+2]).addClass('active').siblings().removeClass('active');
+		}).appendTo($pager).addClass('clickable');
+	    // [끝]
+		$('<span class="page-number box" cursor: "pointer">>></span>').bind('click', {newPage: page},function(event) {
+			currentPage = numPages-1;
+			$table.trigger('repaginate');
+			$($(".page-number")[endp-nowp+1]).addClass('active').siblings().removeClass('active');
+		}).appendTo($pager).addClass('clickable');
+
+		$($(".page-number")[2]).addClass('active');
+			reSortColors($table);
+		});
+		$pager.insertAfter($table).find('span.page-number:first').next().next().addClass('active');   
+		$pager.appendTo($table);
+		$table.trigger('repaginate');
+		});
+	}
+	
+	$(document).ready(
+		function pagingCowork(){
+			var userid = $("#userid").val();
+			// var userpagenum = $("#userpagenum").val();
+			console.log("userid : " + userid);
+			
+		    var temp_obj = {};
+		    temp_obj["userid"] = userid;
+		    // temp_obj["userpagenum"] = userpagenum;
+		    
+		    $.ajax({
+	        url:"PagingCowork",
+	        type:"get",
+	        data:{'userid':userid},
+	        datatype:"json",
+	        contentType:"application/json;charset=UTF-8",
+	        success:function(data){
+	        	
+	            var lists = JSON.stringify(data);
+	            
+	            var temp = "<thead align='center'><tr>"+
+	            "<th class='listth' style='width: 15%; text-align: center;' >카테고리</th>"+
+	            "<th class='listth' style='width: 20%; text-align: center;' >고객사명</th>"+
+	            "<th class='listth' style='width: 25%; text-align: center;' >제목</th>"+
+	            "<th class='listth' style='width: 10%; text-align: center;' >등록자</th>"+
+	            "<th class='listth' style='width: 15%; text-align: center;' >업무코드</th>"+
+	            "<th class='listth' style='width: 15%; text-align: center;' >작성일</th></tr></thead>";
+	            
+	            for (var i=0; i< data.length; i++) {
+	            temp += '<tbody align="center"><tr><td class="listtd" >' + data[i].coworksubject +'</td>' +
+	            '<td class="listtd" ><a href="${pageContext.request.contextPath}/Company/View?companycode=' + data[i].companycode + '">' + data[i].companyname +'</a></td>' +
+	            '<td class="listtd" ><a href="${pageContext.request.contextPath}/Cowork/View?coworkcode=' + data[i].coworkcode + '">' + data[i].coworktitle +'</a></td>' +
+	            '<td class="listtd" ><a href="${pageContext.request.contextPath}/User/View?userid=' + data[i].userid + '">' + data[i].username +'</a></td>' +
+	            '<td class="listtd" >' + data[i].coworkcode +'</td>' +
+	            '<td class="listtd" >' + data[i].coworkdates +'</td>' +
+	            '</tr></tbody>';
+	            }
+	            
+	            $("#tbl").html(temp);
+	            page();
+	        },
+	        error:function(jqXHR, textStatus, errorThrown){
+	            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
+	        }
+			});
+			
+		});
 	
   </script>
 
@@ -255,6 +400,22 @@ body {
 .tablesorter-pager .btn-group-sm .btn {
 	font-size: 1.2em; /* make pager arrows more visible */
 }
+
+.box {
+	border:0.5px solid #ddd;
+	padding:8px 12px;
+	border-radius:5px;
+}
+.box:hover{
+	background-color:#A9D0F5;
+}
+
+.clickable {cursor: pointer;}
+.hover {text-decoration: underline;}
+.odd{ background: #FFFFFF;}
+.even{ background: #F9F9F9;}
+.active{ width:10px; height:10px; background:#337ab7; color:white;}
+
 
 </style>
 
@@ -368,7 +529,7 @@ body {
 						<td style="font-weight: bold;"><a href='${pageContext.request.contextPath}/Cowork/View?coworkcode=${coworkVO.coworkcode}'>${coworkVO.coworktitle}</a></td>
 						<td><a href='${pageContext.request.contextPath}/User/View?userid=${coworkVO.userid}'>${coworkVO.username}</a></td>
 						<td>${coworkVO.coworkcode}</td>
-						<td><fmt:formatDate value="${coworkVO.coworkdate}" pattern="yyyy/MM/dd"/></td>
+						<td><fmt:formatDate value="${coworkVO.coworkdate}" pattern="yyyy-MM-dd"/></td>
 					</tr>
 					</c:forEach>
 				</tbody>
@@ -378,7 +539,12 @@ body {
 	<div class="viewList" style="margin-bottom: 100px;">
 	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 23px; font-weight: bold;">담당 업무 목록</span>
 		<div class="table-responsive">
-			<table class="table table-striped tableCowork">
+			
+			<table class="tbl paginated table table-striped tablesorter" id="tbl">
+	
+			</table>
+			
+			<%-- <table class="table table-striped tableCowork">
 				<thead align="center">
 					<tr>
 						<th style="width: 10%; text-align: center;" class="filter-select filter-exact" data-placeholder="카테고리">카테고리</th>
@@ -431,7 +597,7 @@ body {
 					</tr>
 					</c:forEach>
 				</tbody>
-			</table>
+			</table> --%>
 		</div>
 	</div>
 	

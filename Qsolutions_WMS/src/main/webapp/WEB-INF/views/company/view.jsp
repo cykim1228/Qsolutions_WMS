@@ -17,6 +17,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.tablesorter.widgets.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery.tablesorter.pager.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.tablesorter.pager.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/paging.js"></script>
 
 <link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/resources/img/Q_logo.png"> 
 
@@ -292,9 +293,6 @@
 					// this is ONLY needed for bootstrap theming if you are using the filter widget, because rows are hidden
 					zebra : [ "even", "odd" ],
 
-					// class names added to columns when sorted
-					columns : [ "primary", "secondary", "tertiary" ],
-
 					// reset filters button
 					filter_reset : ".reset",
 
@@ -339,7 +337,306 @@
 			location.href = "../toExcel/companyViewToExcel?companycode=${companyVO.companycode}";
 		})
 	})
-						
+	
+	$(document).ready(function() {
+		$("#excelConvertBtns").on('click', function() {
+			location.href = "../toExcel/companyViewToExcel?companycode=${companyVO.companycode}";
+		})
+	})
+	
+	function fn_paging(curPage) {
+		location.href = "/Company/View?curPage=" + curPage;
+	}
+  </script>
+  
+  <script>
+	// $(window).on("load", pagingUser); 
+	/* $(document).ready(
+		function pagingUser(){
+			var companycode = $("#companycode").val();
+			// var userpagenum = $("#userpagenum").val();
+			console.log("companycode : " + companycode);
+			
+		    var temp_obj = {};
+		    temp_obj["companycode"] = companycode;
+		    // temp_obj["userpagenum"] = userpagenum;
+		    
+		    $.ajax({
+	        url:"PagingUser",
+	        type:"get",
+	        data:{'companycode':companycode},
+	        datatype:"json",
+	        contentType:"application/json;charset=UTF-8",
+	        success:function(data){
+	        	
+	        	console.log("data : " + data);
+	        	
+	            var lists = JSON.stringify(data);
+	            
+	            console.log("lists : " + lists);
+	            
+	            var temp = "<thead align='center'><tr>"+
+	            "<th class='listth' style='width: 15%; text-align: center;' >직급</th>"+
+	            "<th class='listth' style='width: 15%; text-align: center;' >이름</th>"+
+	            "<th class='listth' style='width: 35%; text-align: center;' >연락처</th>"+
+	            "<th class='listth' style='width: 35%; text-align: center;' >이메일</th></tr></thead>";
+	            
+	            for (var i=0; i< data.length; i++) {
+	            temp += '<tbody align="center"><tr><td class="listtd" >' + data[i].positionname +'</td>' +
+	            '<td class="listtd" ><a href="${pageContext.request.contextPath}/User/View?userid=' + data[i].userid + '">' + data[i].username +'</a></td>' +
+	            '<td class="listtd" ><a href="tel:' + data[i].usermobile + '">' + data[i].usermobile +'</a></td>' +
+	            '<td class="listtd" ><a href="mailto:' + data[i].useremail + '">' + data[i].useremail +'</a></td>' +
+	            '</tr></tbody>';
+	            }
+	            
+	            $("#tbl").html(temp);
+	            page();
+	        },
+	        error:function(jqXHR, textStatus, errorThrown){
+	            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
+	        }
+			});
+			
+		}); */
+	
+		// 만들어진 테이블에 페이지 처리
+		function page(){ 
+		var reSortColors = function($table) {
+		  $('tbody tr:odd td', $table).removeClass('even').removeClass('listtd').addClass('odd');
+		  $('tbody tr:even td', $table).removeClass('odd').removeClass('listtd').addClass('even');
+		 };
+		 $('table.paginated').each(function() {
+		  var pagesu = 5;  //페이지 번호 갯수
+		  var currentPage = 0;
+		  var numPerPage = 5;  //목록의 수
+		  var $table = $(this);    
+		  
+		  //length로 원래 리스트의 전체길이구함
+		  var numRows = $table.find('tbody tr').length;
+		  //Math.ceil를 이용하여 반올림
+		  var numPages = Math.ceil(numRows / numPerPage);
+		  //리스트가 없으면 종료
+		  if (numPages==0) return;
+		  //pager라는 클래스의 div엘리먼트 작성
+		  var $pager = $('<td align="center" id="remo" colspan="10"><div class="pager"></div></td>');
+		  
+		  var nowp = currentPage;
+		  var endp = nowp+5;
+		  
+		  //페이지를 클릭하면 다시 셋팅
+		  $table.bind('repaginate', function() {
+		  //기본적으로 모두 감춘다, 현재페이지+1 곱하기 현재페이지까지 보여준다
+		  
+		   $table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
+		   $("#remo").html("");
+		   
+		   if (numPages > 1) {     // 한페이지 이상이면
+		    if (currentPage < 2 && numPages-currentPage >= 2) {   // 현재 5p 이하이면
+		     nowp = 0;     // 1부터 
+		     endp = pagesu;    // 10까지
+		    }else{
+		     nowp = currentPage -3;  // 6넘어가면 2부터 찍고
+		     endp = nowp+pagesu;   // 10까지
+		     pi = 1;
+		    }
+		    
+		    if (numPages < endp) {   // 10페이지가 안되면
+		     endp = numPages;   // 마지막페이지를 갯수 만큼
+		     nowp = numPages-pagesu;  // 시작페이지를   갯수 -10
+		    }
+		    if (nowp < 1) {     // 시작이 음수 or 0 이면
+		     nowp = 0;     // 1페이지부터 시작
+		    }
+		   }else{       // 한페이지 이하이면
+		    nowp = 0;      // 한번만 페이징 생성
+		    endp = numPages;
+		   }
+		   // [처음]
+		   $('<br /><span class="page-number box" cursor: "pointer"><<</span>').bind('click', {newPage: page},function(event) {
+		          currentPage = 0;   
+		          $table.trigger('repaginate');  
+		          $($(".page-number")[2]).addClass('active').siblings().removeClass('active');
+		      }).appendTo($pager).addClass('clickable');
+		    // [이전]
+		      $('<span class="page-number box" cursor: "pointer"><</span>').bind('click', {newPage: page},function(event) {
+		          if(currentPage == 0) return; 
+		          currentPage = currentPage-1;
+		    $table.trigger('repaginate'); 
+		    $($(".page-number")[(currentPage-nowp)+2]).addClass('active').siblings().removeClass('active');
+		   }).appendTo($pager).addClass('clickable');
+		    // [1,2,3,4,5,6,7,8]
+		   for (var page = nowp ; page < endp; page++) {
+		    $('<span class="page-number box" cursor: "pointer"></span>').text(page + 1).bind('click', {newPage: page}, function(event) {
+		     currentPage = event.data['newPage'];
+		     $table.trigger('repaginate');
+		     $($(".page-number")[(currentPage-nowp)+2]).addClass('active').siblings().removeClass('active');
+		     }).appendTo($pager).addClass('clickable');
+		   } 
+		    // [다음]
+		      $('<span class="page-number box" cursor: "pointer">></span>').bind('click', {newPage: page},function(event) {
+		    if(currentPage == numPages-1) return;
+		        currentPage = currentPage+1;
+		    $table.trigger('repaginate'); 
+		     $($(".page-number")[(currentPage-nowp)+2]).addClass('active').siblings().removeClass('active');
+		   }).appendTo($pager).addClass('clickable');
+		    // [끝]
+		   $('<span class="page-number box" cursor: "pointer">>></span>').bind('click', {newPage: page},function(event) {
+		           currentPage = numPages-1;
+		           $table.trigger('repaginate');
+		           $($(".page-number")[endp-nowp+1]).addClass('active').siblings().removeClass('active');
+		   }).appendTo($pager).addClass('clickable');
+		     
+		     $($(".page-number")[2]).addClass('active');
+		reSortColors($table);
+		  });
+		   $pager.insertAfter($table).find('span.page-number:first').next().next().addClass('active');   
+		   $pager.appendTo($table);
+		   $table.trigger('repaginate');
+		 });
+		}
+		
+	$(document).ready(
+		function pagingCowork(){
+			var companycode = $("#companycode").val();
+			// var userpagenum = $("#userpagenum").val();
+			console.log("companycode : " + companycode);
+			
+		    var temp_obj = {};
+		    temp_obj["companycode"] = companycode;
+		    // temp_obj["userpagenum"] = userpagenum;
+		    
+		    $.ajax({
+	        url:"PagingCowork",
+	        type:"get",
+	        data:{'companycode':companycode},
+	        datatype:"json",
+	        contentType:"application/json;charset=UTF-8",
+	        success:function(data){
+	        	
+	            var lists = JSON.stringify(data);
+	            
+	            var temp = "<thead align='center'><tr>"+
+	            "<th class='listth' style='width: 20%; text-align: center;' >카테고리</th>"+
+	            "<th class='listth' style='width: 20%; text-align: center;' >업무코드</th>"+
+	            "<th class='listth' style='width: 20%; text-align: center;' >제목</th>"+
+	            "<th class='listth' style='width: 20%; text-align: center;' >등록자</th>"+
+	            "<th class='listth' style='width: 20%; text-align: center;' >작성일</th></tr></thead>";
+	            
+	            for (var i=0; i< data.length; i++) {
+	            temp += '<tbody align="center"><tr><td class="listtd" >' + data[i].coworksubject +'</td>' +
+	            '<td class="listtd" >' + data[i].coworkcode +'</a></td>' +
+	            '<td class="listtd" ><a href="${pageContext.request.contextPath}/Cowork/View?coworkcode=' + data[i].coworkcode + '">' + data[i].coworktitle +'</td>' +
+	            '<td class="listtd" ><a href="${pageContext.request.contextPath}/User/View?userid=' + data[i].userid + '">' + data[i].username +'</a></td>' +
+	            '<td class="listtd" >' + data[i].coworkdates +'</td>' +
+	            '</tr></tbody>';
+	            }
+	            
+	            $("#tbl").html(temp);
+	            page();
+	        },
+	        error:function(jqXHR, textStatus, errorThrown){
+	            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
+	        }
+			});
+			
+		});
+		
+	/* // 만들어진 테이블에 페이지 처리
+	function pageCowork(){ 
+	var reSortColorsc = function($tablec) {
+	  $('tbody tr:oddc td', $tablec).removeClass('evenc').removeClass('listtdc').addClass('oddc');
+	  $('tbody tr:evenc td', $tablec).removeClass('oddc').removeClass('listtdc').addClass('evenc');
+	 };
+	 $('tablec.paginated').each(function() {
+	  var pagesuc = 5;  //페이지 번호 갯수
+	  var currentPagec = 0;
+	  var numPerPagec = 5;  //목록의 수
+	  var $tablec = $(this);    
+	  
+	  //length로 원래 리스트의 전체길이구함
+	  var numRowsc = $tablec.find('tbody tr').length;
+	  //Math.ceil를 이용하여 반올림
+	  var numPagesc = Math.ceil(numRowsc / numPerPagec);
+	  //리스트가 없으면 종료
+	  if (numPagesc==0) return;
+	  //pager라는 클래스의 div엘리먼트 작성
+	  var $pagerc = $('<td align="center" id="remoc" colspan="10"><div class="pagerc"></div></td>');
+	  
+	  var nowpc = currentPagec;
+	  var endpc = nowpc+5;
+	  
+	  //페이지를 클릭하면 다시 셋팅
+	  $tablec.bind('repaginate', function() {
+	  //기본적으로 모두 감춘다, 현재페이지+1 곱하기 현재페이지까지 보여준다
+	  
+	   $tablec.find('tbody tr').hide().slice(currentPagec * numPerPagec, (currentPagec + 1) * numPerPagec).show();
+	   $("#remoc").html("");
+	   
+	   if (numPagesc > 1) {     // 한페이지 이상이면
+	    if (currentPagec < 2 && numPagesc-currentPagec >= 2) {   // 현재 5p 이하이면
+	     nowpc = 0;     // 1부터 
+	     endpc = pagesuc;    // 10까지
+	    }else{
+	     nowpc = currentPagec -3;  // 6넘어가면 2부터 찍고
+	     endpc = nowpc+pagesuc;   // 10까지
+	     pic = 1;
+	    }
+	    
+	    if (numPagesc < endpc) {   // 10페이지가 안되면
+	     endpc = numPagesc;   // 마지막페이지를 갯수 만큼
+	     nowpc = numPagesc-pagesuc;  // 시작페이지를   갯수 -10
+	    }
+	    if (nowpc < 1) {     // 시작이 음수 or 0 이면
+	     nowpc = 0;     // 1페이지부터 시작
+	    }
+	   }else{       // 한페이지 이하이면
+	    nowpc = 0;      // 한번만 페이징 생성
+	    endpc = numPagesc;
+	   }
+	   // [처음]
+	   $('<br /><span class="page-number box" cursor: "pointer"><<</span>').bind('click', {newPagec: pagec},function(event) {
+	          currentPagec = 0;   
+	          $tablec.trigger('repaginate');  
+	          $($(".page-number")[2]).addClass('active').siblings().removeClass('active');
+	      }).appendTo($pagerc).addClass('clickable');
+	    // [이전]
+	      $('<span class="page-number box" cursor: "pointer"><</span>').bind('click', {newPagec: pagec},function(event) {
+	          if(currentPagec == 0) return; 
+	          currentPagec = currentPagec-1;
+	    $tablec.trigger('repaginate'); 
+	    $($(".page-number")[(currentPagec-nowpc)+2]).addClass('active').siblings().removeClass('active');
+	   }).appendTo($pagerc).addClass('clickable');
+	    // [1,2,3,4,5,6,7,8]
+	   for (var pagec = nowpc ; pagec < endpc; pagec++) {
+	    $('<span class="page-number box" cursor: "pointer"></span>').text(pagec + 1).bind('click', {newPagec: pagec}, function(event) {
+	     currentPagec = event.data['newPagec'];
+	     $tablec.trigger('repaginate');
+	     $($(".page-number")[(currentPagec-nowpc)+2]).addClass('active').siblings().removeClass('active');
+	     }).appendTo($pagerc).addClass('clickable');
+	   } 
+	    // [다음]
+	      $('<span class="page-number box" cursor: "pointer">></span>').bind('click', {newPagec: pagec},function(event) {
+	    if(currentPagec == numPagesc-1) return;
+	        currentPagec = currentPagec+1;
+	    $tablec.trigger('repaginate'); 
+	     $($(".page-number")[(currentPagec-nowpc)+2]).addClass('active').siblings().removeClass('active');
+	   }).appendTo($pagerc).addClass('clickable');
+	    // [끝]
+	   $('<span class="page-number box" cursor: "pointer">>></span>').bind('click', {newPagec: pagec},function(event) {
+	           currentPagec = numPagesc-1;
+	           $tablec.trigger('repaginate');
+	           $($(".page-number")[endpc-nowpc+1]).addClass('active').siblings().removeClass('active');
+	   }).appendTo($pagerc).addClass('clickable');
+	     
+	     $($(".page-number")[2]).addClass('active');
+	reSortColorsc($tablec);
+	  });
+	   $pagerc.insertAfter($tablec).find('span.page-number:first').next().next().addClass('active');   
+	   $pagerc.appendTo($tablec);
+	   $tablec.trigger('repaginate');
+	 });
+	} */
+	
   </script>
 
 <style>
@@ -457,6 +754,21 @@ body {
 	-moz-opacity:0;
 }
 
+.box {
+	border:0.5px solid #ddd;
+	padding:8px 12px;
+	border-radius:5px;
+}
+.box:hover{
+	background-color:#A9D0F5;
+}
+
+.clickable {cursor: pointer;}
+.hover {text-decoration: underline;}
+.odd{ background: #FFFFFF;}
+.even{ background: #F9F9F9;}
+.active{ width:10px; height:10px; background:#337ab7; color:white;}
+
 </style>
 
 </head>
@@ -480,11 +792,12 @@ body {
     	<br class="visible-xs">
     	<button type="button" class="btn btn-danger pull-right" onclick="deleteform()" style="margin-top: 8px; margin-bottom: 10px;">삭제</button>
     	<button type="button" class="btn btn-primary pull-right" onclick="updateform()" style="margin-right: 10px; margin-top: 8px; margin-bottom: 10px;">수정</button>
-    	<input type="button" class="btn btn-success pull-right" name="excelConvertBtn" id="excelConvertBtn" value="엑셀 출력" style="cursor:hand; margin-right:10px; margin-top: 8px; margin-bottom: 10px;" />
+    	<input type="button" class="btn btn-success pull-right" name="excelConvertBtn" id="excelConvertBtns" value="엑셀 출력" style="cursor:hand; margin-right:10px; margin-top: 8px; margin-bottom: 10px;" />
 		<br class="visible-xs">
 	</div>
 <!--  -->
 	<div class="viewList">
+	
 		<div class="table-responsive">
 			<table class="table table-striped">
 				<thead align="center">
@@ -567,13 +880,83 @@ body {
 					</c:forEach>
 				</tbody>
 			</table>
+			
+			<%-- <table id="myTable" class="table table-striped tablesorter tableUser">
+				<thead align="center">
+					<tr>
+						<th style="width: 15%; text-align: center;">직급</th>
+						<th style="width: 15%; text-align: center;">이름</th>
+						<th style="width: 35%; text-align: center;">연락처</th>
+						<th style="width: 35%; text-align: center;">이메일</th>
+					</tr>
+				</thead>
+				
+				<tbody align="center">
+					<c:forEach items="${companyuserslist}" var="companyuserslist" varStatus="rowCount">
+						<tr>
+							<td>${companyuserslist.positionname}</td>
+							<td><a href="${pageContext.request.contextPath}/User/View?userid=${companyuserslist.userid}">${companyuserslist.username}</a></td>
+							<td><a href='tel:${companyuserslist.usermobile}'>${companyuserslist.usermobile}</a></td>
+							<td><a href='mailto:${companyuserslist.useremail}'>${companyuserslist.useremail}</a></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+			</div>
+			<!-- 5. paging view -->
+		    <div>
+			    <div align="center" class=".col-md-3 .col-md-offset-3 pagingView">
+				    <ul class="pagination">
+				        <c:if test="${userPagingVO.pageStartNum ne 1}">
+				            <!--맨 첫페이지 이동 -->
+				            <li><a onclick='pagePre(${userPagingVO.pageCnt+1},${userPagingVO.pageCnt});'>‹‹</a></li>
+				            <!--이전 페이지 이동 -->
+				            <li><a onclick='pagePre(${userPagingVO.pageStartNum},${userPagingVO.pageCnt});'>‹</a></li>
+				        </c:if>
+				        
+				        <!--페이지번호 -->
+				        <c:forEach var="i" begin="${userPagingVO.pageStartNum}" end="${userPagingVO.pageLastNum}" step="1">
+				            	<li class='pageIndex${i}'>
+				             		<a onclick="pageIndex(${i});">${i}</a>
+				            	</li>					
+				        </c:forEach>
+				        <c:if test="${userPagingVO.lastChk}">
+							<!--다음 페이지 이동 -->
+				            <li><a onclick='pageNext(${userPagingVO.pageStartNum},${userPagingVO.total},${userPagingVO.listCnt},${userPagingVO.pageCnt});'>›</a></li>
+				            <!--마지막 페이지 이동 -->
+				            <li><a onclick='pageLast(${userPagingVO.pageStartNum},${userPagingVO.total},${userPagingVO.listCnt},${userPagingVO.pageCnt});'>»</a></li>
+				        </c:if>
+				<!-- 	        	<select class='btn btn-primary' id='listCount' name='listCount' onchange='listCnt();'> -->
+				<!-- 		            <option value='5' >5</option> -->
+				<!-- 		            <option value='10'>10</option> -->
+				<!-- 		            <option value='15'>15</option> -->
+				<!-- 		            <option value='20'>20</option> -->
+				<!-- 	   		   </select>	 -->
+				    </ul>
+			    </div>
+		    </div>
+		    <div class="viewList">
+		    <form method="post" id='frmPaging'>
+		        <!--출력할 페이지번호, 출력할 페이지 시작 번호, 출력할 리스트 갯수 -->
+		        <input type='hidden' name='index' id='index' value='${userPagingVO.index}'>
+		        <input type='hidden' name='pageStartNum' id='pageStartNum' value='${userPagingVO.pageStartNum}'>
+		        <input type='hidden' name='listCnt' id='listCnt' value='${userPagingVO.listCnt}'>
+		        <input type='hidden' name='searchType' id='searchType' value='${userPagingVO.searchType}'>
+		        <input type='hidden' name='searchData' id='searchData' value='${userPagingVO.searchData}'>
+		    </form>
+		    </div> --%>
+		    
 		</div>
 	</div>
 	
 	<div class="viewList">
 	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 23px; font-weight: bold;">업무 목록</span>
 		<div>
-				<div class="table-responsive">
+		
+			<table class="tbl paginated table table-striped tablesorter" id="tbl">
+	
+			</table>
+				<%-- <div class="table-responsive">
 					<table class="table table-striped tableCowork">
 						<thead align="center">
 							<tr>
@@ -601,12 +984,12 @@ body {
 											<button type="button" class="btn btn-primary last"
 												title="last">⇥</button>
 										</div>
-										<!-- <select class="form-control-sm custom-select btn btn-primary px-1 pagesize" 
+										<select class="form-control-sm custom-select btn btn-primary px-1 pagesize" 
 											title="Select page size" style="width: 50px; height: 37px;">
 											<option selected="selected" value="5">5</option>
 											<option value="10">10</option>
 											<option value="15">15</option>
-										</select> -->
+										</select>
 										<select class="form-control-sm btn btn-primary custom-select pagenum"
 											title="Select page number" style="width: 50px; height: 37px;">
 										</select>
@@ -626,9 +1009,88 @@ body {
 							</c:forEach>
 						</tbody>
 					</table>
-				</div>
+				</div> --%>
 			</div>
 	</div>
+	
+	<%-- <div class="viewList">
+	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 23px; font-weight: bold;">업무 목록</span>
+		<div>
+				<div class="table-responsive">
+				
+				<table class="tbl paginated table table-striped tablesorter" id="tblc">
+	
+				</table>
+			
+					<table id="myTable" class="table table-striped tablesorter">
+						<thead align="center">
+							<tr>
+								<th style="width: 20%; text-align: center;" class="filter-select filter-exact" data-placeholder="카테고리를 선택해주세요.">카테고리</th>
+								<th style="width: 20%; text-align: center;">업무코드</th>
+								<th style="width: 20%; text-align: center;">제목</th>
+								<th style="width: 20%; text-align: center;">등록자</th>
+								<th style="width: 20%; text-align: center;">작성일</th>
+							</tr>
+						</thead>
+						
+						<tbody align="center">
+							<c:forEach items="${coworksList}" var="coworkList" varStatus="rowCount">
+								<tr>
+									<td>${coworkList.coworksubject}</td>
+									<td>${coworkList.coworkcode}</td>
+									<td><a href='${pageContext.request.contextPath}/Cowork/View?coworkcode=${coworkList.coworkcode}'>${coworkList.coworktitle}</a></td>
+									<td><a href='${pageContext.request.contextPath}/User/View?userid=${coworkList.userid}'>${coworkList.username}</a></td>
+									<td>${coworkList.coworkdate}</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<!-- 5. paging view -->
+		    <div>
+			    <div align="center" class=".col-md-3 .col-md-offset-3 pagingView">
+				    <ul class="pagination">
+				        <c:if test="${coworkpagingVO.pageStartNum ne 1}">
+				            <!--맨 첫페이지 이동 -->
+				            <li><a onclick='pagePreCowork(${coworkpagingVO.pageCnt+1},${coworkpagingVO.pageCnt});'>‹‹</a></li>
+				            <!--이전 페이지 이동 -->
+				            <li><a onclick='pagePreCowork(${coworkpagingVO.pageStartNum},${coworkpagingVO.pageCnt});'>‹</a></li>
+				        </c:if>
+				        
+				        <!--페이지번호 -->
+				        <c:forEach var="i" begin="${coworkpagingVO.pageStartNum}" end="${coworkpagingVO.pageLastNum}" step="1">
+				            	<li class='pageIndexCowork${i}'>
+				             		<a onclick="pageIndexCowork(${i});">${i}</a>
+				            	</li>					
+				        </c:forEach>
+				        <c:if test="${coworkpagingVO.lastChk}">
+							<!--다음 페이지 이동 -->
+				            <li><a onclick='pageNextCowork(${coworkpagingVO.pageStartNum},${coworkpagingVO.total},${coworkpagingVO.listCnt},${coworkpagingVO.pageCnt});'>›</a></li>
+				            <!--마지막 페이지 이동 -->
+				            <li><a onclick='pageLastCowork(${coworkpagingVO.pageStartNum},${coworkpagingVO.total},${coworkpagingVO.listCnt},${coworkpagingVO.pageCnt});'>»</a></li>
+				        </c:if>
+				<!-- 	        	<select class='btn btn-primary' id='listCount' name='listCount' onchange='listCnt();'> -->
+				<!-- 		            <option value='5' >5</option> -->
+				<!-- 		            <option value='10'>10</option> -->
+				<!-- 		            <option value='15'>15</option> -->
+				<!-- 		            <option value='20'>20</option> -->
+				<!-- 	   		   </select>	 -->
+				    </ul>
+			    </div>
+		    </div>
+		    <div class="viewList">
+		    <form method="post" id='frmPagingCowork'>
+		        <!--출력할 페이지번호, 출력할 페이지 시작 번호, 출력할 리스트 갯수 -->
+		        <input type='hidden' name='indexCowork' id='indexCowork' value='${coworkpagingVO.index}'>
+		        <input type='hidden' name='pageStartNumCowork' id='pageStartNumCowork' value='${coworkpagingVO.pageStartNum}'>
+		        <input type='hidden' name='listCntCowork' id='listCntCowork' value='${coworkpagingVO.listCnt}'>
+		        <input type='hidden' name='searchTypeCowork' id='searchTypeCowork' value='${coworkpagingVO.searchType}'>
+		        <input type='hidden' name='searchDataCowork' id='searchDataCowork' value='${coworkpagingVO.searchData}'>
+		    </form>
+		    </div>
+		    
+	</div> --%>
 	
 	<div class="viewList" style="margin-bottom: 100px;">
 	<form id="fileForm" name="fileForm" action="fileUpload" method="post" enctype="multipart/form-data" style="height: 40px;">
@@ -696,6 +1158,7 @@ body {
 					</table>
 				</div>
 			</div>
+			
 	</div>
 	
 	<%-- <form method="post" action="upload" enctype="multipart/form-data">

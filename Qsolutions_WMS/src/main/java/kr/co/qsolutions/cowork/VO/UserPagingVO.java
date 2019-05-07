@@ -2,7 +2,7 @@ package kr.co.qsolutions.cowork.VO;
 
 
 //1. PagingVo
-public class PagingVO {
+public class UserPagingVO {
   
 	private int pageCnt;          // 출력할 페이지번호 갯수
 	private int index;            // 출력할 페이지번호
@@ -17,12 +17,12 @@ public class PagingVO {
 	private String companycode;
 	
 	{
-		pageCnt = 10;
+		pageCnt = 5;
 		index = 0;
 		pageStartNum = 1;
-		listCnt = 15;
+		listCnt = 5;
 	}
-	public PagingVO() {}
+	public UserPagingVO() {}
 	  
 	public int getStart() {
 		return index*listCnt;

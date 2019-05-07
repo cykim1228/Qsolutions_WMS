@@ -17,6 +17,9 @@ public class UserDTO {
 	private String gname;
 	private String oauthcode;
 
+	private int startIndex;
+	private int cntPerPage;
+	
 	public String getUserid() {
 		return userid;
 	}
@@ -103,6 +106,18 @@ public class UserDTO {
 	public void setUsercompanycode(String usercompanycode) {
 		this.usercompanycode = usercompanycode;
 	}
+	public int getStartIndex() {
+		return startIndex;
+	}
+	public void setStartIndex(int startIndex) {
+		this.startIndex = startIndex;
+	}
+	public int getCntPerPage() {
+		return cntPerPage;
+	}
+	public void setCntPerPage(int cntPerPage) {
+		this.cntPerPage = cntPerPage;
+	}
 	
 	@Override
 	public String toString() {
@@ -110,7 +125,7 @@ public class UserDTO {
 				+ usermobile + ", useremail=" + useremail + ", deptcode=" + deptcode + ", deptname=" + deptname
 				+ ", positioncode=" + positioncode + ", positionname=" + positionname + ", usercompanycode="
 				+ usercompanycode + ", useCookie=" + useCookie + ", gmail=" + gmail + ", gname=" + gname
-				+ ", oauthcode=" + oauthcode + "]";
+				+ ", oauthcode=" + oauthcode + ", startIndex=" + startIndex + ", cntPerPage=" + cntPerPage + "]";
 	}
 	
 }

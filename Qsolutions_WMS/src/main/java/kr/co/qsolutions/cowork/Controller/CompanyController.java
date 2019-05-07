@@ -38,9 +38,12 @@ import kr.co.qsolutions.cowork.Service.CompanyService;
 import kr.co.qsolutions.cowork.Service.CoworkService;
 import kr.co.qsolutions.cowork.Util.FileUploadService;
 import kr.co.qsolutions.cowork.VO.CompanyVO;
+import kr.co.qsolutions.cowork.VO.CoworkPagingVO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
 import kr.co.qsolutions.cowork.VO.FileVO;
 import kr.co.qsolutions.cowork.VO.PagingVO;
+import kr.co.qsolutions.cowork.VO.PagingViewVO;
+import kr.co.qsolutions.cowork.VO.UserPagingVO;
 import kr.co.qsolutions.cowork.VO.UserVO;
 
 
@@ -183,7 +186,7 @@ public class CompanyController {
 	*/
 	
 	@RequestMapping(value = "/Company/View")
-	public String CoworkView(HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
+	public String CoworkView(HttpServletResponse response, HttpServletRequest request, HttpSession session, Model model, UserPagingVO userPagingVO, CoworkPagingVO coworkpagingVO) throws Exception {
 		
 		UserVO loginVO = (UserVO)session.getAttribute("login");
 		String tmpcode = (String)request.getParameter("companycode");
@@ -195,6 +198,34 @@ public class CompanyController {
 		
 		CoworkDTO coworkDTO = new CoworkDTO();
 		coworkDTO.setCoworkcompany(tmpcode);
+		
+		userPagingVO.setCompanycode(tmpcode);
+		coworkpagingVO.setCompanycode(tmpcode);
+		
+		// 전체 직원 수
+		// List<UserVO> companyuserslist = companyservice.SelectUserCompanyList(userPagingVO);
+		// userPagingVO.setTotal(companyservice.SelectUserCompanyCount(companyDTO));
+		
+		// int userCnt = companyservice.SelectUserCompanyCount(companyDTO);
+		
+		// System.out.println("userCnt : " + userCnt);
+		
+		// 전체 업무 수 
+		// List<CoworkVO> coworksList = companyservice.CoworkViewSelectCompanyList(coworkpagingVO);
+		// coworkpagingVO.setTotal(companyservice.CoworkViewSelectCompanyCount(companyDTO));
+		// int coworkCnt = companyservice.CoworkViewSelectCompanyCount(companyDTO);
+		
+		// System.out.println("coworkCnt : " + coworkCnt);
+		
+		// 전체 파일 수 
+		int fileCnt = companyservice.SelectFileUploadCount(companyDTO);
+		
+		System.out.println("fileCnt : " + fileCnt);
+		
+		// PagingViewVO pagingViewVO = new PagingViewVO(userCnt, curPage);
+		
+		// companyDTO.setStartIndex(pagingViewVO.getStartIndex());
+		// companyDTO.setCntPerPage(pagingViewVO.getPageSize());
 		
 		List<UserVO> userList = companyservice.SelectUserCompany(companyDTO);
 		
@@ -218,6 +249,10 @@ public class CompanyController {
 		
 		System.out.println("fileList : " + fileList);
 		
+		System.out.println("userPagingVO : " + userPagingVO);
+		
+		System.out.println("coworkpagingVO : " + coworkpagingVO);
+		
 		CompanyVO companyVO = companyservice.SelectCompanyView(companyDTO);
 		//담당자 추가
 		
@@ -227,6 +262,10 @@ public class CompanyController {
 		model.addAttribute("companyVO", companyVO);
 		model.addAttribute("companyuserList", companyuserList);
 		model.addAttribute("fileList", fileList);
+		// model.addAttribute("companyuserslist",companyuserslist);
+		model.addAttribute("userPagingVO", userPagingVO);
+		// model.addAttribute("coworksList", coworksList);
+		model.addAttribute("coworkpagingVO", coworkpagingVO);
 		
 		returnUrl = "company/view";
 		return returnUrl;
@@ -517,6 +556,34 @@ public class CompanyController {
 		
 		returnUrl = "redirect:/Company/List";
 		return returnUrl;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/Company/PagingUser", method = RequestMethod.GET)
+	public List<UserVO> PagingUser(@RequestParam(value="companycode")String companycode, Model model) throws Exception {
+
+		System.out.println("companycode : " + companycode);
+		
+        // 전체 직원 수
+		List<UserVO> companyuserslist = companyservice.SelectUserCompanyList(companycode);
+     	
+     	System.out.println("companyuserslist : " + companyuserslist);
+     	
+		return companyuserslist;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/Company/PagingCowork", method = RequestMethod.GET)
+	public List<CoworkVO> PagingCowork(@RequestParam(value="companycode")String companycode, Model model) throws Exception {
+
+		System.out.println("companycode : " + companycode);
+		
+        // 전체 직원 수
+		List<CoworkVO> companycoworkslist = companyservice.CoworkViewSelectCompanyList(companycode);
+     	
+     	System.out.println("companycoworkslist : " + companycoworkslist);
+     	
+		return companycoworkslist;
 	}
 	
 }

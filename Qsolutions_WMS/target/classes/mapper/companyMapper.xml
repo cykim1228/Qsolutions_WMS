@@ -80,6 +80,17 @@
 			IsUse != 1
 	</select>
 	
+	<select id="SelectFileUploadCount" resultType="Integer" parameterType="CompanyDTO">
+		select
+			count(filepathname)
+		from
+			fileupload
+		where
+			companycode = #{companycode}
+			AND
+			IsUse != 1
+	</select>
+	
 	<select id="DeleteFile" parameterType="CompanyDTO">
 		UPDATE fileupload
  			SET IsUse = 1
@@ -91,6 +102,26 @@
 	<select id="CoworkViewSelectCompany" resultType="CoworkVO" parameterType="CoworkDTO">
 		select 
 			cw.userid, u.username, c.companycode, cw.coworkcode, cw.coworktext, cw.coworktitle, cw.coworkdate, cw.coworksubject, cw.startdate, cw.enddate
+		from
+			cowork cw inner join company c ON c.companycode = cw.coworkcompany
+			left join user u ON cw.userid = u.userid
+		where
+			c.companycode = #{companycode};
+	</select>
+	
+	<select id="CoworkViewSelectCompanyList" resultType="CoworkVO" parameterType="String">
+		select 
+			cw.userid, u.username, c.companycode, cw.coworkcode, cw.coworktext, cw.coworktitle, date_format(cw.coworkdate, '%Y-%m-%d') AS coworkdates, cw.coworksubject, cw.startdate, cw.enddate
+		from
+			cowork cw inner join company c ON c.companycode = cw.coworkcompany
+			left join user u ON cw.userid = u.userid
+		where
+			c.companycode = #{companycode}
+	</select>
+	
+	<select id="CoworkViewSelectCompanyCount" resultType="Integer" parameterType="CoworkDTO">
+		select 
+			count(cw.coworkcode)
 		from
 			cowork cw inner join company c ON c.companycode = cw.coworkcompany
 			left join user u ON cw.userid = u.userid
@@ -167,6 +198,28 @@
 	<select id="SelectUserCompany" resultType="UserVO" parameterType="CompanyDTO">
 		select 
 			userid, username, usermobile,useremail,usercompanycode,u.deptcode,d.deptname,u.positioncode,p.positionname
+		from 
+    		user u left join dept d ON u.deptcode = d.deptcode
+            left join positions p ON u.positioncode = p.positioncode 
+            left join company c ON u.usercompanycode = c.companycode
+		where
+			usercompanycode = #{companycode}
+	</select>
+	
+	<select id="SelectUserCompanyList" resultType="UserVO" parameterType="String">
+		select 
+			userid, username, usermobile,useremail,usercompanycode,u.deptcode,d.deptname,u.positioncode,p.positionname
+		from 
+    		user u left join dept d ON u.deptcode = d.deptcode
+            left join positions p ON u.positioncode = p.positioncode 
+            left join company c ON u.usercompanycode = c.companycode
+		where
+			usercompanycode = #{companycode}
+	</select>
+	
+	<select id="SelectUserCompanyCount" resultType="Integer" parameterType="CompanyDTO">
+		select 
+			count(u.userid)
 		from 
     		user u left join dept d ON u.deptcode = d.deptcode
             left join positions p ON u.positioncode = p.positioncode 

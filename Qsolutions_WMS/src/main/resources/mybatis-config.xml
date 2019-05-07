@@ -35,6 +35,9 @@
             <typeAlias type="kr.co.qsolutions.cowork.VO.SearchVO" alias="SearchVO"/>
             <typeAlias type="kr.co.qsolutions.cowork.VO.ManagerVO" alias="ManagerVO"/>
             <typeAlias type="kr.co.qsolutions.cowork.VO.FileVO" alias="FileVO"/>
+            <typeAlias type="kr.co.qsolutions.cowork.VO.PagingViewVO" alias="PagingViewVO"/>
+            <typeAlias type="kr.co.qsolutions.cowork.VO.CoworkPagingVO" alias="CoworkPagingVO"/>
+            <typeAlias type="kr.co.qsolutions.cowork.VO.UserPagingVO" alias="UserPagingVO"/>
         </typeAliases>
         <mappers>
 	        <package name="kr.co.qsolutions.mapper"/>

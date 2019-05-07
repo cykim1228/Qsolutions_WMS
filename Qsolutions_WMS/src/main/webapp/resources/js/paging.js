@@ -79,3 +79,83 @@ window.onload = function() {
         }
     });
 }
+
+// ----------------------------------------------- //
+
+/*//submit
+function frmPagingCowork() {
+    document.getElementById("frmPagingCowork").submit();
+}
+// 이전 페이지 index
+function pagePreCowork(indexCowork, pageCntCowork) {
+    if (0 < indexCowork - pageCntCowork) {
+        indexCowork -= pageCntCowork;
+        document.getElementById("pageStartNumCowork").value = indexCowork;
+        document.getElementById("indexCowork").value = indexCowork - 1;
+        frmPagingCowork();
+    }		
+}
+// 다음 페이지 index
+function pageNextCowork(indexCowork, totalCowork, listCntCowork, pageCntCowork) {
+    var totalPageCntCowork = Math.ceil(totalCowork / listCntCowork);
+    var maxCowork = Math.ceil(totalPageCntCowork / pageCntCowork);
+
+    if (maxCowork * pageCntCowork > indexCowork + pageCntCowork) {
+            indexCowork += pageCntCowork;
+            document.getElementById("pageStartNumCowork").value = indexCowork;
+            document.getElementById("indexCowork").value = indexCowork - 1;
+            frmPagingCowork();
+    }
+
+}
+// 마지막 페이지 index
+function pageLastCowork(indexCowork, totalCowork, listCntCowork, pageCntCowork) {
+
+    var totalPageCntCowork = Math.ceil(totalCowork / listCntCowork);
+    var maxCowork = Math.ceil(totalPageCntCowork / pageCntCowork);
+    while (maxCowork * pageCntCowork > indexCowork + pageCntCowork) {
+        indexCowork += pageCntCowork;
+    }
+    var remainListCntCowork = totalCowork - listCntCowork * (indexCowork - 1);
+    var remainPageCntCowork = Math.floor(remainListCntCowork / listCntCowork);
+    if (remainListCntCowork % listCntCowork != 0) {
+        remainPageCntCowork++;
+    }
+    var pageLastNumCowork = 0;
+    if (remainListCntCowork <= listCntCowork) {
+        pageLastNumCowork = indexCowork;
+    } else if (remainPageCntCowork <= pageCntCowork) {
+        pageLastNumCowork = remainPageCntCowork + indexCowork - 1;
+    } else {
+        pageLastNumCowork = pageCntCowork + indexCowork - 1;
+    }
+    document.getElementById("pageStartNumCowork").value = indexCowork;
+    document.getElementById("indexCowork").value = pageLastNumCowork - 1;
+    frmPagingCowork();
+}
+// index 리스트 처리
+function pageIndexCowork(pageStartNumCowork) {
+    
+    document.getElementById("indexCowork").value = pageStartNumCowork - 1;
+    frmPagingCowork();
+}
+// 리스트출력개수 처리
+function listCntCowork() {
+    document.getElementById("indexCowork").value = 0;
+    document.getElementById("pageStartNumCowork").value = 1;
+    document.getElementById("listCntCowork").value = 5;
+    // document.getElementById("listCnt").value = document.getElementById("listCount").value;
+    frmPagingCowork();
+}*/
+//window.onload = function() {
+//    // 현재번호 active
+//    var indexCowork = document.getElementById("indexCowork").value;
+//    var pageIndexCowork = document.querySelector('.pageIndexCowork'+(Number(indexCowork)+1));
+//    pageIndexCowork.setAttribute("class", "active");
+//    // 리스트갯수 selected 처리
+//    $("#listCount > option").each(function () {
+//        if ($(this).val() == $('#listCntCowork').val()) {
+//            $(this).prop("selected", true);
+//        }
+//    });
+//}

@@ -141,4 +141,10 @@ public class UserServiceImpl implements UserService {
 		return dao.SelectListUserColor();
 	}
 
+	@Override
+	public List<CoworkVO> selectManagerCoworkList(String userid) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.selectManagerCoworkList(userid);
+	}
+
 }

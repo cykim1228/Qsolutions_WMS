@@ -357,5 +357,19 @@ public class UserController {
 		
 	    return "Login/dashboard";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/User/PagingCowork", method = RequestMethod.GET)
+	public List<CoworkVO> PagingCowork(@RequestParam(value="userid")String userid, Model model) throws Exception {
+
+		System.out.println("userid : " + userid);
+		
+        // 전체 직원 수
+		List<CoworkVO> companycoworkslists = userservice.selectManagerCoworkList(userid);
+     	
+     	System.out.println("companycoworkslists : " + companycoworkslists);
+     	
+		return companycoworkslists;
+	}
 
 }

@@ -405,6 +405,10 @@ body {
 	-webkit-border-radius: 0.5em;
 }
 
+.modal-content {
+	margin-top: 100px;
+}
+
 </style>
 
 </head>

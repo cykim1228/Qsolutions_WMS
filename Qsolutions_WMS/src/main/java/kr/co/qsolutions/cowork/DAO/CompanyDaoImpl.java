@@ -1,6 +1,7 @@
 package kr.co.qsolutions.cowork.DAO;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
  
@@ -14,10 +15,12 @@ import kr.co.qsolutions.cowork.DTO.CompanyDTO;
 import kr.co.qsolutions.cowork.DTO.CoworkDTO;
 import kr.co.qsolutions.cowork.DTO.FileDTO;
 import kr.co.qsolutions.cowork.VO.CompanyVO;
+import kr.co.qsolutions.cowork.VO.CoworkPagingVO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
 import kr.co.qsolutions.cowork.VO.FileVO;
 import kr.co.qsolutions.cowork.VO.PagingVO;
 import kr.co.qsolutions.cowork.VO.SubCoworkVO;
+import kr.co.qsolutions.cowork.VO.UserPagingVO;
 import kr.co.qsolutions.cowork.VO.UserVO;
  
 @Repository
@@ -140,6 +143,42 @@ public class CompanyDaoImpl implements CompanyDao  {
 	public int DeleteFile(FileDTO fileDTO) throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.delete(Namespace+".DeleteFile", fileDTO);
+	}
+
+	@Override
+	public int SelectUserCompanyCount(CompanyDTO companyDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(Namespace+".SelectUserCompanyCount", companyDTO);
+	}
+
+	@Override
+	public int CoworkViewSelectCompanyCount(CompanyDTO companyDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(Namespace+".CoworkViewSelectCompanyCount", companyDTO);
+	}
+
+	@Override
+	public int SelectFileUploadCount(CompanyDTO companyDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(Namespace+".SelectFileUploadCount", companyDTO);
+	}
+
+	@Override
+	public List<UserVO> SelectUserCompanyList(String companycode) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(Namespace+".SelectUserCompanyList", companycode);
+	}
+
+	@Override
+	public int SelectUserCompanyCount(PagingVO pagingVO) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(Namespace+".SelectUserCompanyCount");
+	}
+
+	@Override
+	public List<CoworkVO> CoworkViewSelectCompanyList(String companycode) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(Namespace+".CoworkViewSelectCompanyList", companycode);
 	}
 
 	

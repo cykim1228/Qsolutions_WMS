@@ -13,6 +13,80 @@
   
   <link rel="shortcut icon"" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/resources/img/Q_logo.png"> 
 
+<style type="text/css">
+
+/* The customcheck */
+.customcheck {
+    display: inline-block;
+    position: relative;
+    padding-left: 2px;
+    cursor: pointer;
+    font-size: 15px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    text-align: left;
+    margin-left: 15px;
+}
+
+/* Hide the browser's default checkbox */
+.customcheck input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+
+/* On mouse-over, add a grey background color */
+.customcheck:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.customcheck input:checked ~ .checkmark {
+    background-color: #02cf32;
+    border-radius: 5px;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.customcheck input:checked ~ .checkmark:after {
+    display: inline-block;
+}
+
+/* Style the checkmark/indicator */
+.customcheck .checkmark:after {
+    left: 6px;
+    top: 2px;
+    width: 7px;
+    height: 13px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+</style>
+
 </head>
 <body class="text-center">
 	<form class="form-signin" name="SendLogin" action="${pageContext.request.contextPath}/Login" method="POST"> 
@@ -28,12 +102,23 @@
 		<input type="password" id="userpasswd" name="userpasswd" class="form-control" placeholder="패스워드" style="width:330px; margin: 0 auto;" required>
 		<input type="hidden" name="Client" value="N"/>
 	</div>
-	<div class="checkbox mb-3">
+	<div style="padding: 10px 70px;">
+        <label class="customcheck"><p style="margin-left: 30px;">아이디기억</p>
+          <input type="checkbox" id="idSaveCheck">
+          <span class="checkmark"></span>
+        </label>
+        <br>
+        <label class="customcheck"><p style="margin-left: 30px;">로그인유지</p>
+          <input type="checkbox" name="useCookie">
+          <span class="checkmark"></span>
+        </label>
+	</div>
+	<!-- <div class="checkbox mb-3">
         <label>
         	<input type="checkbox" id="idSaveCheck">아이디 기억
-	        <!-- <input type="checkbox" name="useCookie"> 로그인유지 -->
+	        <input type="checkbox" name="useCookie" style="margin-left: 10px;"><p style="margin-left: 10px;">로그인유지</p>
         </label>
-      </div>
+      </div> -->
 		<button type="button" onclick="check()" id="loginBtn" class="btn btn-default btn-lg" style="width:330px; margin-bottom: 20px">LOGIN</button>
 		<!-- <button type="button" onclick="googleLogin()" id="loginBtn" class="btn btn-default btn-lg" style="width:330px; margin-bottom: 20px">GoogleLogin</button> -->
 		

@@ -53,5 +53,7 @@ public interface UserService {
 	public int InsertUserColor(FileDTO fileDTO) throws Exception;
 
 	public List<FileVO> SelectListUserColor() throws Exception;
+
+	public List<CoworkVO> selectManagerCoworkList(String userid) throws Exception;
 	
 }

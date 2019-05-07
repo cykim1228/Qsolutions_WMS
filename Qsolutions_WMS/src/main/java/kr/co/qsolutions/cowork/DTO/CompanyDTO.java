@@ -12,7 +12,8 @@ public class CompanyDTO {
 	private String companyaddress2;
 	private String companyclass;
 	
-
+	private int startIndex;
+	private int cntPerPage;
 
 	public String getCompanycode() {
 		return companycode;
@@ -56,12 +57,25 @@ public class CompanyDTO {
 	public void setCompanyclass(String companyclass) {
 		this.companyclass = companyclass;
 	}
+	public int getStartIndex() {
+		return startIndex;
+	}
+	public void setStartIndex(int startIndex) {
+		this.startIndex = startIndex;
+	}
+	public int getCntPerPage() {
+		return cntPerPage;
+	}
+	public void setCntPerPage(int cntPerPage) {
+		this.cntPerPage = cntPerPage;
+	}
 	
 	@Override
 	public String toString() {
 		return "CompanyDTO [companycode=" + companycode + ", companyname=" + companyname + ", companyhomepg="
 				+ companyhomepg + ", companyzipcode=" + companyzipcode + ", companyaddress=" + companyaddress
-				+ ", companyaddress2=" + companyaddress2 + ", companyclass=" + companyclass + "]";
+				+ ", companyaddress2=" + companyaddress2 + ", companyclass=" + companyclass + ", startIndex="
+				+ startIndex + ", cntPerPage=" + cntPerPage + "]";
 	}
 	
 }

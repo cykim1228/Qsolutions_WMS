@@ -11,11 +11,13 @@ import kr.co.qsolutions.cowork.DTO.CompanyDTO;
 import kr.co.qsolutions.cowork.DTO.CoworkDTO;
 import kr.co.qsolutions.cowork.DTO.FileDTO;
 import kr.co.qsolutions.cowork.VO.CompanyVO;
+import kr.co.qsolutions.cowork.VO.CoworkPagingVO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
 import kr.co.qsolutions.cowork.VO.FileVO;
 import kr.co.qsolutions.cowork.DTO.UserDTO;
 import kr.co.qsolutions.cowork.VO.PagingVO;
 import kr.co.qsolutions.cowork.VO.SubCoworkVO;
+import kr.co.qsolutions.cowork.VO.UserPagingVO;
 import kr.co.qsolutions.cowork.VO.UserVO;
 
 public interface CompanyDao {
@@ -56,5 +58,17 @@ public interface CompanyDao {
 	public List<FileVO> SelectFileUpload(CompanyDTO companyDTO) throws Exception;
 
 	public int DeleteFile(FileDTO fileDTO) throws Exception;
+
+	public int SelectUserCompanyCount(CompanyDTO companyDTO) throws Exception;
+
+	public int CoworkViewSelectCompanyCount(CompanyDTO companyDTO) throws Exception;
+
+	public int SelectFileUploadCount(CompanyDTO companyDTO) throws Exception;
+
+	public List<UserVO> SelectUserCompanyList(String companycode) throws Exception;
+
+	public int SelectUserCompanyCount(PagingVO pagingVO) throws Exception;
+
+	public List<CoworkVO> CoworkViewSelectCompanyList(String companycode) throws Exception;
 
 }

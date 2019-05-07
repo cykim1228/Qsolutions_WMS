@@ -162,4 +162,10 @@ public class UserDaoImpl implements UserDao {
 		return sqlSession.selectList(Namespace + ".SelectListUserColor");
 	}
 
+	@Override
+	public List<CoworkVO> selectManagerCoworkList(String userid) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(Namespace + ".selectManagerCoworkList", userid);
+	}
+
 }

@@ -580,6 +580,10 @@ h2 {
     top: 0px !important;
 }
 
+.modal-content {
+	margin-top: 100px;
+}
+
 </style>
 
 </head>

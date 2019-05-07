@@ -58,4 +58,6 @@ public interface UserDao {
 
 	public List<FileVO> SelectListUserColor() throws Exception;
 
+	public List<CoworkVO> selectManagerCoworkList(String userid) throws Exception;
+
 }
