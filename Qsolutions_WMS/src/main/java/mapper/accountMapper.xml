@@ -45,7 +45,7 @@
 			AND u.IsUse = 0
 		</trim>
 		ORDER BY
-			usercompanycode desc
+			userdate desc
 		Limit #{start},#{last}
     </select>
     

@@ -74,7 +74,7 @@
 				// widget code contained in the jquery.tablesorter.widgets.js file
 				// use the zebra stripe widget if you plan on hiding any rows (filter widget)
 				// the uitheme widget is NOT REQUIRED!
-				widgets : [ "filter", "columns", "zebra" ],
+				widgets : [ "columns", "zebra" ],
 
 				widgetOptions : {
 					// using the default zebra striping class name, so it actually isn't included in the theme variable above
@@ -103,7 +103,11 @@
 
 			// target the pager markup - see the HTML block below
 			container : $(".ts-pagerWrite"),
-
+			
+			size : 5,
+			
+			cssPageSize: '.pagesize', // page size selector - select dropdown that sets the "size" option
+			
 			// target the pager page select dropdown - choose a page
 			cssGoto : ".pagenum",
 
@@ -113,7 +117,7 @@
 
 			// output string - default is '{page}/{totalPages}';
 			// possible variables: {page}, {totalPages}, {filteredPages}, {startRow}, {endRow}, {filteredRows} and {totalRows}
-			output : '{startRow} - {endRow} / {filteredRows} ({totalRows})'
+			output : '{page} / {totalPages}'
 
 		});
 		
@@ -416,6 +420,9 @@ body {
 .even{ background: #F9F9F9;}
 .active{ width:10px; height:10px; background:#337ab7; color:white;}
 
+.listth {
+	background : #EEEEEE;
+}
 
 </style>
 
@@ -517,6 +524,10 @@ body {
 								<select class="form-control-sm btn btn-primary custom-select pagenum"
 									title="Select page number" style="width: 50px; height: 37px;">
 								</select>
+								<select class="pagesize" hidden="hidden">
+								    <option value="5">5</option>
+								    <option value="5" seleced>5</option>
+							    </select>
 							</div>
 						</th>
 					</tr>

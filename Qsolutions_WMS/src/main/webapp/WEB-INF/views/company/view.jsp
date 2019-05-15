@@ -174,7 +174,7 @@
 				// widget code contained in the jquery.tablesorter.widgets.js file
 				// use the zebra stripe widget if you plan on hiding any rows (filter widget)
 				// the uitheme widget is NOT REQUIRED!
-				widgets : [ "filter", "columns", "zebra" ],
+				widgets : [ "columns", "zebra" ],
 
 				widgetOptions : {
 					// using the default zebra striping class name, so it actually isn't included in the theme variable above
@@ -217,7 +217,7 @@
 
 			// output string - default is '{page}/{totalPages}';
 			// possible variables: {page}, {totalPages}, {filteredPages}, {startRow}, {endRow}, {filteredRows} and {totalRows}
-			output : '{startRow} - {endRow} / {filteredRows} ({totalRows})'
+			output : '{page} / {totalPages}'
 
 		});
 		
@@ -273,7 +273,7 @@
 
 				// output string - default is '{page}/{totalPages}';
 				// possible variables: {page}, {totalPages}, {filteredPages}, {startRow}, {endRow}, {filteredRows} and {totalRows}
-				output : '{startRow} - {endRow} / {filteredRows} ({totalRows})'
+				output : '{page} / {totalPages}'
 
 			});
 		
@@ -286,7 +286,7 @@
 				// widget code contained in the jquery.tablesorter.widgets.js file
 				// use the zebra stripe widget if you plan on hiding any rows (filter widget)
 				// the uitheme widget is NOT REQUIRED!
-				widgets : [ "filter", "columns", "zebra" ],
+				widgets : [ "columns", "zebra" ],
 
 				widgetOptions : {
 					// using the default zebra striping class name, so it actually isn't included in the theme variable above
@@ -326,7 +326,7 @@
 
 			// output string - default is '{page}/{totalPages}';
 			// possible variables: {page}, {totalPages}, {filteredPages}, {startRow}, {endRow}, {filteredRows} and {totalRows}
-			output : '{startRow} - {endRow} / {filteredRows} ({totalRows})'
+			output : '{page} / {totalPages}'
 
 		});
 	
@@ -347,6 +347,32 @@
 	function fn_paging(curPage) {
 		location.href = "/Company/View?curPage=" + curPage;
 	}
+	
+	/* function insertuserform(){
+		
+			var companycode = $("#companycode").val();
+			$.ajax({
+	        url:"InsertUserForm",
+	        type:"get",
+	        data:{"companycode":companycode},
+	        datatype:"text",
+	        contentType:"application/text;charset=UTF-8",
+	        success:function(response){
+	    		location.href = "/Company/InsertUserForm";
+	        },
+	       	 error:function(jqXHR, textStatus, errorThrown){
+	           alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
+	       }
+		});
+	} */
+	
+	function insertuserform(){
+		//var coworkcode = document.getElementById("coworkcode").value
+		var companycode = $("#companycode").val();
+		var url = "/Company/InsertUserForm?companycode="+companycode;
+		location.href = url;
+	}
+	
   </script>
   
   <script>
@@ -769,6 +795,10 @@ body {
 .even{ background: #F9F9F9;}
 .active{ width:10px; height:10px; background:#337ab7; color:white;}
 
+.listth {
+	background : #EEEEEE;
+}
+
 </style>
 
 </head>
@@ -785,6 +815,7 @@ body {
     	<button type="button" class="btn btn-danger pull-right" onclick="deleteform()" style="margin-right: 10px; margin-top: 8px;">고객사 삭제</button>
     	<button type="button" class="btn btn-primary pull-right" onclick="updateform()" style="margin-right: 10px; margin-top: 8px;">고객사 수정</button>
     	<input type="button" class="btn btn-success pull-right" name="excelConvertBtn" id="excelConvertBtn" value="엑셀 출력" style="cursor:hand; margin-right:10px; margin-top: 8px;" />
+		<button type="button" class="btn btn-info pull-right" onclick="insertuserform()" style="margin-right: 10px; margin-top: 8px;">담당자 등록</button>
 		<br class="visible-xs">
 	</div>
 	<div class="viewListTop visible-xs">
@@ -865,6 +896,10 @@ body {
 								<select class="form-control-sm btn btn-primary custom-select pagenum"
 									title="Select page number" style="width: 50px; height: 37px;">
 								</select>
+								<select class="pagesize" hidden="hidden">
+								    <option value="5">5</option>
+								    <option value="5" seleced>5</option>
+							    </select>
 							</div>
 						</th>
 					</tr>
@@ -1139,6 +1174,10 @@ body {
 										<select class="form-control-sm btn btn-primary custom-select pagenum"
 											title="Select page number" style="width: 50px; height: 37px;">
 										</select>
+										<select class="pagesize" hidden="hidden">
+										    <option value="5">5</option>
+										    <option value="5" seleced>5</option>
+									    </select>
 									</div>
 								</th>
 							</tr>

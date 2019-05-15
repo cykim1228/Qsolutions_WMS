@@ -336,7 +336,7 @@ body {
 .rounded {
 	width: 100%;
 	height: 200px;
-	background-color: #E6E6E6;
+	background-color: white;
 	border:2px solid #ddd;
 	padding:0.5em;
 	line-height: 1em;

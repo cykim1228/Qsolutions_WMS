@@ -34,8 +34,11 @@ import kr.co.qsolutions.cowork.DTO.CompanyDTO;
 import kr.co.qsolutions.cowork.DTO.CoworkDTO;
 import kr.co.qsolutions.cowork.DTO.FileDTO;
 import kr.co.qsolutions.cowork.DTO.SubCoworkDTO;
+import kr.co.qsolutions.cowork.DTO.UserDTO;
 import kr.co.qsolutions.cowork.Service.CompanyService;
 import kr.co.qsolutions.cowork.Service.CoworkService;
+import kr.co.qsolutions.cowork.Service.UserService;
+import kr.co.qsolutions.cowork.Util.AccountControl;
 import kr.co.qsolutions.cowork.Util.FileUploadService;
 import kr.co.qsolutions.cowork.VO.CompanyVO;
 import kr.co.qsolutions.cowork.VO.CoworkPagingVO;
@@ -61,6 +64,9 @@ public class CompanyController {
 	
 	@Inject
 	private CoworkService coworkservice;
+	
+	@Inject
+	private UserService userservice;
 	
 	@Autowired
 	FileUploadService fileUploadService;
@@ -584,6 +590,102 @@ public class CompanyController {
      	System.out.println("companycoworkslist : " + companycoworkslist);
      	
 		return companycoworkslist;
+	}
+	
+//	@RequestMapping(value = "/Company/InsertUserForm")
+//	public String UserInsertform(HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
+//		UserVO loginVO = (UserVO)session.getAttribute("login");
+//		
+//		UserVO userVO = new UserVO();
+//		
+//		List<CompanyVO> companyVO = (List<CompanyVO>) coworkservice.CompanyAllSelect();
+//		
+//		List<UserVO> deptVO = (List<UserVO>)userservice.SelectDeptList();
+//		List<UserVO> positionVO = (List<UserVO>)userservice.SelectPositionList();
+//		
+//		model.addAttribute("deptVO", deptVO);
+//		model.addAttribute("positionVO", positionVO);
+//		model.addAttribute("companyVO", companyVO);
+//		model.addAttribute("userVO", userVO);
+//		
+//		System.out.println("deptVO : " + deptVO);
+//		
+//		returnUrl = "company/insertCompanyUser";
+//		return returnUrl;
+//	}
+//	
+	@RequestMapping(value = "/Company/InsertUser")
+	public String UserInsert(@RequestBody String body,HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
+
+		String companycode = (String)request.getParameter("companycode");
+		
+		System.out.println("companycode : " + companycode);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+        UserDTO userDTO = mapper.readValue(body, UserDTO.class);
+        String jsonStr = mapper.writeValueAsString(userDTO);
+
+        String tmpcodeStr = "";
+		String tmpstr = "";
+		Date date = new Date();
+        SimpleDateFormat dt = new SimpleDateFormat("yyyyMMdd");
+    	String nowdate = dt.format(date.getTime());
+		// userid 생성 및 기본 입력 데이터 호출
+		String newuserid = userservice.UserIdSelect(nowdate);
+		
+		if(newuserid == null || newuserid == "") {
+			tmpcodeStr = "U" + nowdate + "00001";
+		} else {
+			tmpstr = newuserid.substring(9,14);
+			int tmpcode = Integer.parseInt(tmpstr,10);
+			tmpcodeStr = newuserid.substring(0, 9);
+			tmpcode = tmpcode + 1;
+			newuserid = tmpcodeStr + tmpcode;
+			if( newuserid.length() < 14) {
+				for(int i = newuserid.length();i < 14; i++)
+				tmpcodeStr = tmpcodeStr + 0;
+			}
+			tmpcodeStr = tmpcodeStr + tmpcode;
+		}
+		System.out.println("tmpcodeStr=="+tmpcodeStr);
+		//coworkcode생성=========================================================
+		UserVO userVO = new UserVO();
+		userVO.setUserid(tmpcodeStr);
+		
+		userDTO.setUserid(tmpcodeStr);
+        
+//        if(userDTO.getCompanyusercode()==0) {
+//        	userDTO.setDeptcode(deptcode);("");
+//        }
+        
+        userDTO.setUserpasswd(AccountControl.CryptPW(userDTO.getUserpasswd()));
+        userservice.InsertUser(userDTO);
+        
+		returnUrl = "redirect:/User/List";
+		return returnUrl;
+	}
+	
+	@RequestMapping(value = "/Company/InsertUserForm")
+	public String UserInsertform(HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
+		UserVO loginVO = (UserVO)session.getAttribute("login");
+		String tmpID = request.getParameter("userid");
+		String tmpcode = (String)request.getParameter("companycode");
+		
+		List<CompanyVO> companyVO = (List<CompanyVO>) coworkservice.CompanyAllSelect();
+		
+		UserVO userVO = (UserVO)userservice.UserViewSelect(tmpID);
+		List<UserVO> deptVO = (List<UserVO>)userservice.SelectDeptList();
+		List<UserVO> positionVO = (List<UserVO>)userservice.SelectPositionList();
+		
+		model.addAttribute("deptVO", deptVO);
+		model.addAttribute("positionVO", positionVO);
+		model.addAttribute("userVO", userVO);
+		model.addAttribute("companyVO", companyVO);
+		model.addAttribute("tmpcode", tmpcode);
+		
+		returnUrl = "user/insertCompanyUser";
+		return returnUrl;
 	}
 	
 }
