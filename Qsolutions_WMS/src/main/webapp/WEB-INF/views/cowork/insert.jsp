@@ -201,7 +201,7 @@
 			okText: 'OK',
 			/* nowButton : true, */
 			switchOnClick : true,
-			lang: 'ko'
+			lang: 'ko' 
 		});
 		
 		$('#startdate').bootstrapMaterialDatePicker ({
