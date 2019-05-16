@@ -78,6 +78,7 @@
 			companycode = #{companycode}
 			AND
 			IsUse != 1
+		ORDER BY fileupload.uploaddate desc
 	</select>
 	
 	<select id="SelectFileUploadCount" resultType="Integer" parameterType="CompanyDTO">
@@ -106,7 +107,8 @@
 			cowork cw inner join company c ON c.companycode = cw.coworkcompany
 			left join user u ON cw.userid = u.userid
 		where
-			c.companycode = #{companycode};
+			c.companycode = #{companycode}
+		ORDER BY cw.coworkdate desc
 	</select>
 	
 	<select id="CoworkViewSelectCompanyList" resultType="CoworkVO" parameterType="String">
@@ -117,6 +119,7 @@
 			left join user u ON cw.userid = u.userid
 		where
 			c.companycode = #{companycode}
+		ORDER BY coworkdates desc
 	</select>
 	
 	<select id="CoworkViewSelectCompanyCount" resultType="Integer" parameterType="CoworkDTO">
@@ -204,6 +207,7 @@
             left join company c ON u.usercompanycode = c.companycode
 		where
 			usercompanycode = #{companycode}
+		ORDER BY u.userdate desc
 	</select>
 	
 	<select id="SelectUserCompanyList" resultType="UserVO" parameterType="String">

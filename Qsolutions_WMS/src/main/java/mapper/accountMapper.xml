@@ -126,7 +126,8 @@
 		    left join company c ON co.coworkcompany = c.companycode
 		    left join user u ON co.userid = u.userid
 		WHERE
-			co.userid = #{userid};
+			co.userid = #{userid}
+		ORDER BY co.coworkdate desc
    	</select>
     
     <select id="selectManagerCowork" resultType="CoworkVO" parameterType="coworkDTO">
@@ -297,7 +298,8 @@
 		    left join company c ON co.coworkcompany = c.companycode
 		    left join user u ON co.userid = u.userid
 		WHERE
-			ucc.userid = #{userid};
+			ucc.userid = #{userid}
+		ORDER BY coworkdates desc
    	</select>
 	
 </mapper>

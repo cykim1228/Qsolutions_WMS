@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +9,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-material-datetimepicker.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/plugins/summernote/summernote.css" />
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -21,15 +21,23 @@
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap-select.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/material.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/moment-with-locales.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap-material-datetimepicker.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/plugins/summernote/summernote.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/plugins/summernote/lang/summernote-ko-KR.js"></script>
-<script src="https://code.jquery.com/ui/1.9.1/jquery-ui.js" integrity="sha256-tXuytmakTtXe6NCDgoePBXiKe1gB+VA3xRvyBs/sq94=" crossorigin="anonymous"></script>
+<!-- <script src="https://code.jquery.com/ui/1.9.1/jquery-ui.js" integrity="sha256-tXuytmakTtXe6NCDgoePBXiKe1gB+VA3xRvyBs/sq94=" crossorigin="anonymous"></script> -->
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/plugins/jquery_timepicker/jquery.timepicker.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/plugins/jquery_timepicker/jquery.timepicker.css">
 
 <!-- Include Choices CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js@4/public/assets/styles/choices.min.css">
 <!-- Include Choices JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/choices.js@4/public/assets/scripts/choices.min.js"></script>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-datepicker.css">
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap-datepicker.js"></script>
 
 <link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/resources/img/Q_logo.png"> 
 
@@ -56,8 +64,8 @@
 	    temp_obj["userid"] = $("#userid").val();
 	    temp_obj["companycode"] = $("#companycode").val();
 	    temp_obj["coworktext"] = $("#coworktext").val();
-	    temp_obj["startdate"] = $("#startdate").val();
-		temp_obj["enddate"] = $("#enddate").val();
+	    temp_obj["startdate"] = $("#startdate").val() + " " + $("#starttime").val();
+		temp_obj["enddate"] = $("#enddate").val() + " " + $("#endtime").val();
 
 		var selectdata = $('#coworksubject option:selected').val();
 		console.log("selectdata : " + selectdata);
@@ -143,14 +151,14 @@
 		
 	});
 	
-	$(document).ready(function() {
+	/* $(document).ready(function() {
 
 		$('#enddate').bootstrapMaterialDatePicker ({
 			weekStart: 0, 
 			format: 'YYYY-MM-DD HH:mm',
 			cancelText: 'Cancel',
 			okText: 'OK',
-			/* nowButton : true, */
+			nowButton : true,
 			switchOnClick : true,
 			lang: 'ko'
 		});
@@ -160,7 +168,7 @@
 			format: 'YYYY-MM-DD HH:mm',
 			cancelText: 'Cancel',
 			okText: 'OK',
-			/* nowButton : true, */
+			nowButton : true,
 			switchOnClick : true,
 			lang: 'ko'
 		}).on('change', function(e, date) {
@@ -174,7 +182,7 @@
 		
 		$.material.init()
 		
-	});
+	}); */
 		
 	function viewManager() {
 		
@@ -485,8 +493,34 @@ body {
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">업무 내용</p>
 			<textarea id="coworktext" name="coworktext" class="form-control summernote" rows="3" placeholder="업무 내용을 입력해주세요.." style="width: 100%; display: inline-block;">${CoworkVO.coworktext}</textarea>
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">업무 날짜</p>
-			<input id="startdate" name="startdate" value="${CoworkVO.startdate}" type="text" class="form-control" placeholder="시작 시간.." value="" size="50" style="width: 49%; display: inline-block;">
-			<input id="enddate" name="enddate" value="${CoworkVO.enddate}" type="text" class="form-control pull-right" placeholder="종료 시간.." value="" size="50" style="width: 49%; display: inline-block;">
+			<%-- <input id="startdate" name="startdate" value="${CoworkVO.startdate}" type="text" class="form-control" placeholder="시작 시간.." value="" size="50" style="width: 49%; display: inline-block;">
+			<input id="enddate" name="enddate" value="${CoworkVO.enddate}" type="text" class="form-control pull-right" placeholder="종료 시간.." value="" size="50" style="width: 49%; display: inline-block;"> --%>
+			
+			<div class="demo">
+				<p id="datepairExample">
+					<c:set var="startdate" value="${CoworkVO.startdate}"/>
+					<c:set var="enddate" value="${CoworkVO.enddate}"/>
+					<input type="text" class="form-control date start" id="startdate" name="startdate" value="${fn:substring(startdate,0,10)}" placeholder="시작 날짜.." size="50" style="width: 24%; display: inline-block;" autocomplete="off" />
+					<input type="text" class="form-control time start" id="starttime" name="starttime" value="${fn:substring(startdate,11,16)}" placeholder="시작 시간.." size="50" style="width: 24%; display: inline-block;" autocomplete="off" /> to
+					<input type="text" class="form-control date end" id="enddate" name="enddate" value="${fn:substring(enddate,0,10)}" placeholder="종료 날짜.." size="50" style="width: 24%; display: inline-block;" autocomplete="off" />
+					<input type="text" class="form-control time end" id="endtime" name="endtime" value="${fn:substring(enddate,11,16)}" placeholder="종료 시간.." size="50" style="width: 24%; display: inline-block;" autocomplete="off" />
+				</p>
+			</div>
+			<script src="http://jonthornton.github.io/Datepair.js/dist/datepair.js"></script>
+			<script src="http://jonthornton.github.io/Datepair.js/dist/jquery.datepair.js"></script>
+			<script>
+			$('#datepairExample .time').timepicker({
+				'showDuration': true,
+				'timeFormat': 'H:i', 
+				'scrollDefault': 'now'
+			});
+			$('#datepairExample .date').datepicker({
+				'format': 'yyyy-mm-dd',
+				'autoclose': true
+			});
+			$('#datepairExample').datepair();
+			</script>
+			
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">담당자</p>
 				<select class="selectpicker show-tick" data-style="btn-primary" name="manager" id="manager" data-live-search="true" title="담당자 선택.." data-width="100%" data-size="10" onchange="changeSelect()">
 					<c:forEach var="companyList" items="${companyList}" varStatus="list">

@@ -12,7 +12,6 @@
 
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-material-datetimepicker.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/plugins/summernote/summernote.css" />
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -21,10 +20,12 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/material.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/moment-with-locales.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap-material-datetimepicker.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/plugins/summernote/summernote.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/plugins/summernote/lang/summernote-ko-KR.js"></script>
-<script src="https://code.jquery.com/ui/1.9.1/jquery-ui.js" integrity="sha256-tXuytmakTtXe6NCDgoePBXiKe1gB+VA3xRvyBs/sq94=" crossorigin="anonymous"></script>
+<!-- <script src="https://code.jquery.com/ui/1.9.1/jquery-ui.js" integrity="sha256-tXuytmakTtXe6NCDgoePBXiKe1gB+VA3xRvyBs/sq94=" crossorigin="anonymous"></script> -->
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/plugins/jquery_timepicker/jquery.timepicker.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/plugins/jquery_timepicker/jquery.timepicker.css">
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.css">
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap-select.min.js"></script>
@@ -34,9 +35,11 @@
 <script src="https://cdn.jsdelivr.net/npm/choices.js@4/public/assets/scripts/choices.min.js"></script>
 
 <%-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script> --%>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-datepicker.css">
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap-datepicker.js"></script>
 
 <link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/resources/img/Q_logo.png"> 
 
@@ -98,8 +101,8 @@
 		temp_obj["userid"] = $("#userid").val();
 		temp_obj["companycode"] = $("#companycode").val();
 		temp_obj["coworktext"] = $("#coworktext").val();
-		temp_obj["startdate"] = $("#startdate").val();
-		temp_obj["enddate"] = $("#enddate").val();
+		temp_obj["startdate"] = $("#startdate").val() + " " + $("#starttime").val();
+		temp_obj["enddate"] = $("#enddate").val() + " " + $("#endtime").val();
 
 		var selectdata = $('#coworksubject option:selected').val();
 		console.log("selectdata : " + selectdata);
@@ -192,14 +195,14 @@
 		location.href = "/Cowork/List";
 	}
 	
-	$(document).ready(function() {
+	/* $(document).ready(function() {
 
 		$('#enddate').bootstrapMaterialDatePicker ({
 			weekStart: 0, 
 			format: 'YYYY-MM-DD HH:mm',
 			cancelText: 'Cancel',
 			okText: 'OK',
-			/* nowButton : true, */
+			nowButton : true,
 			switchOnClick : true,
 			lang: 'ko' 
 		});
@@ -209,7 +212,7 @@
 			format: 'YYYY-MM-DD HH:mm',
 			cancelText: 'Cancel',
 			okText: 'OK',
-			/* nowButton : true, */
+			nowButton : true,
 			switchOnClick : true,
 			lang: 'ko'
 		}).on('change', function(e, date) {
@@ -223,7 +226,7 @@
 		
 		$.material.init()
 		
-	});
+	}); */
 	
 	function changeSelect(){
 		
@@ -665,8 +668,31 @@ h2 {
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">업무 내용</p>
 			<textarea id="coworktext" name="coworktext" class="form-control summernote hint2emoji" rows="3" placeholder="업무 내용을 입력해주세요.." style="width: 100%; display: inline-block;" required></textarea>
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">업무 날짜</p>
-			<input id="startdate" name="startdate" type="text" class="form-control" placeholder="시작 시간.." value="" size="50" style="width: 49%; display: inline-block;">
-			<input id="enddate" name="enddate" type="text" class="form-control pull-right" placeholder="종료 시간.." value="" size="50" style="width: 49%; display: inline-block;">
+			<!-- <input id="startdate" name="startdate" type="text" class="form-control" placeholder="시작 시간.." value="" size="50" style="width: 49%; display: inline-block;">
+			<input id="enddate" name="enddate" type="text" class="form-control pull-right" placeholder="종료 시간.." value="" size="50" style="width: 49%; display: inline-block;"> -->
+			<div class="demo">
+				<p id="datepairExample">
+					<input type="text" class="form-control date start" id="startdate" name="startdate" placeholder="시작 날짜.." size="50" style="width: 24%; display: inline-block;" autocomplete="off" />
+					<input type="text" class="form-control time start" id="starttime" name="starttime" placeholder="시작 시간.." size="50" style="width: 24%; display: inline-block;" autocomplete="off" /> to
+					<input type="text" class="form-control date end" id="enddate" name="enddate" placeholder="종료 날짜.." size="50" style="width: 24%; display: inline-block;" autocomplete="off" />
+					<input type="text" class="form-control time end" id="endtime" name="endtime" placeholder="종료 시간.." size="50" style="width: 24%; display: inline-block;" autocomplete="off" />
+				</p>
+			</div>
+			<script src="http://jonthornton.github.io/Datepair.js/dist/datepair.js"></script>
+			<script src="http://jonthornton.github.io/Datepair.js/dist/jquery.datepair.js"></script>
+			<script>
+			$('#datepairExample .time').timepicker({
+				'showDuration': true,
+				'timeFormat': 'H:i', 
+				'scrollDefault': 'now'
+			});
+			$('#datepairExample .date').datepicker({
+				'format': 'yyyy-mm-dd',
+				'autoclose': true
+			});
+			$('#datepairExample').datepair();
+			</script>
+			
 			<p class="sub-header" style="margin-left: 10px; margin-top:20px; font-size: 15px; font-weight: bold;">담당자</p>
 			<select class="selectpicker show-tick" multiple data-selected-text-format="count > 10" data-style="btn-primary" name="manager" id="manager" data-live-search="true" title="== 담당자를 선택해주세요 ==" data-width="100%" data-size="10" onchange="changeSelect()" style="display: inline-block;">
 				

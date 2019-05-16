@@ -63,7 +63,7 @@
 				updateArrows: true,
 
 				// starting page of the pager (zero based index)
-				page: 0,
+				page: 1,
 
 				// reset pager after filtering; set to desired page #
 				// set to false to not change page at filter start
@@ -73,7 +73,7 @@
 				size: 5,
 
 				// Number of options to include in the pager number selector
-				maxOptionSize: 20,
+				maxOptionSize: 5,
 
 				// Save pager page & size if the storage script is loaded (requires $.tablesorter.storage in jquery.tablesorter.widgets.js)
 				savePages: true,
