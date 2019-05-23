@@ -115,8 +115,10 @@
 			temp_obj["coworkstep"] = $("#coworkstep3").val();
 		} else if (selectdata == "상담") {
 			temp_obj["coworkstep"] = $("#coworkstep4").val();
-		} else {
+		} else if (selectdata == "프로젝트") {
 			temp_obj["coworkstep"] = $("#coworkstep5").val();
+		} else {
+			temp_obj["coworkstep"] = "완료";
 		}
 		
 		var comcode = $("#companycode").val();
@@ -417,12 +419,18 @@
 			$('.coworkstep3').css("display","none");
 			$('.coworkstep4').css("display","");
 			$('.coworkstep5').css("display","none");
-		} else {
+		} else if (selectdata == "프로젝트") {
 			$('.coworkstep1').css("display","none");
 			$('.coworkstep2').css("display","none");
 			$('.coworkstep3').css("display","none");
 			$('.coworkstep4').css("display","none");
 			$('.coworkstep5').css("display","");
+		} else {
+			$('.coworkstep1').css("display","none");
+			$('.coworkstep2').css("display","none");
+			$('.coworkstep3').css("display","none");
+			$('.coworkstep4').css("display","none");
+			$('.coworkstep5').css("display","none");
 		}
 		
 	}
@@ -618,6 +626,7 @@ h2 {
 				<!-- <option value="정기점검">정기점검</option> -->
 				<option value="상담">상담</option>
 				<option value="프로젝트">프로젝트</option>
+				<option value="기타">기타</option>
 			</select>
 			<select class="form-control coworkstep1" id="coworkstep1" name="coworkstep1" style="display: none;">
 				<option value="" selected disabled hidden>== 진행단계를 선택해주세요 ==</option>
