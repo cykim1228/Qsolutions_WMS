@@ -373,6 +373,12 @@
 		location.href = url;
 	}
 	
+	function insertcoworkform() {
+		var companycode = $("#companycode").val();
+		var url = "/Company/InsertCoworkForm?companycode="+companycode;
+		location.href = url;
+	}
+	
   </script>
   
   <script>
@@ -816,6 +822,7 @@ body {
     	<button type="button" class="btn btn-primary pull-right" onclick="updateform()" style="margin-right: 10px; margin-top: 8px;">고객사 수정</button>
     	<input type="button" class="btn btn-success pull-right" name="excelConvertBtn" id="excelConvertBtn" value="엑셀 출력" style="cursor:hand; margin-right:10px; margin-top: 8px;" />
 		<button type="button" class="btn btn-info pull-right" onclick="insertuserform()" style="margin-right: 10px; margin-top: 8px;">담당자 등록</button>
+		<button type="button" class="btn btn-warning pull-right" onclick="insertcoworkform()" style="margin-right: 10px; margin-top: 8px;">업무 등록</button>
 		<br class="visible-xs">
 	</div>
 	<div class="viewListTop visible-xs">

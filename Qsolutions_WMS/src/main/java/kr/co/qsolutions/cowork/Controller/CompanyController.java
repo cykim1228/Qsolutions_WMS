@@ -37,6 +37,7 @@ import kr.co.qsolutions.cowork.DTO.SubCoworkDTO;
 import kr.co.qsolutions.cowork.DTO.UserDTO;
 import kr.co.qsolutions.cowork.Service.CompanyService;
 import kr.co.qsolutions.cowork.Service.CoworkService;
+import kr.co.qsolutions.cowork.Service.ManagerService;
 import kr.co.qsolutions.cowork.Service.UserService;
 import kr.co.qsolutions.cowork.Util.AccountControl;
 import kr.co.qsolutions.cowork.Util.FileUploadService;
@@ -44,6 +45,7 @@ import kr.co.qsolutions.cowork.VO.CompanyVO;
 import kr.co.qsolutions.cowork.VO.CoworkPagingVO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
 import kr.co.qsolutions.cowork.VO.FileVO;
+import kr.co.qsolutions.cowork.VO.ManagerVO;
 import kr.co.qsolutions.cowork.VO.PagingVO;
 import kr.co.qsolutions.cowork.VO.PagingViewVO;
 import kr.co.qsolutions.cowork.VO.UserPagingVO;
@@ -70,6 +72,9 @@ public class CompanyController {
 	
 	@Autowired
 	FileUploadService fileUploadService;
+	
+	@Inject
+	private ManagerService managerservice;
 	
 	String returnUrl;
 	/**
@@ -685,6 +690,153 @@ public class CompanyController {
 		model.addAttribute("tmpcode", tmpcode);
 		
 		returnUrl = "user/insertCompanyUser";
+		return returnUrl;
+	}
+	
+	@RequestMapping(value = "/Company/InsertCoworkForm")
+	public String CompanyInsertCoworkform(HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
+		UserVO loginVO = (UserVO)session.getAttribute("login");
+		List<CompanyVO> companyList = coworkservice.CompanyAllSelect();
+		String tmpcode = (String)request.getParameter("companycode");
+		
+		CoworkVO coworkVO = new CoworkVO();
+		
+		coworkVO.setUserid(loginVO.getUserid());
+		coworkVO.setUsername(loginVO.getUsername());
+		
+		List<ManagerVO> managerVO = (List<ManagerVO>)managerservice.SelectManager();
+		
+		List<UserVO> usersVO = (List<UserVO>)companyservice.SelectUser();
+		
+		System.out.println("loginVO : " + loginVO);
+		System.out.println("managerVO : " + managerVO);
+		System.out.println("usersVO : " + usersVO);
+		
+		model.addAttribute("managerVO", managerVO);
+		model.addAttribute("usersVO", usersVO);
+		model.addAttribute("CoworkVO", coworkVO);
+		model.addAttribute("companyList",companyList);
+		model.addAttribute("tmpcode", tmpcode);
+		
+		returnUrl = "cowork/insertCompanyCowork";
+		return returnUrl;
+	}
+	
+	@RequestMapping(value = "/Company/InsertSelectManager")
+	public void InsertSelectManager(@RequestParam(value="selectsManager[]") List<String> arrayParams, @RequestParam(value="comcode") String companycode, HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
+
+		/*
+		UserVO loginVO = (UserVO)session.getAttribute("login");
+		ObjectMapper mapper = new ObjectMapper();
+		
+		System.out.println("mapper : "+mapper);
+		*/
+		
+		String tmpcodeStr = "";
+		String tmpstr = "";
+		Date date = new Date();
+        SimpleDateFormat dt = new SimpleDateFormat("yyyyMMdd");
+    	String nowdate = dt.format(date.getTime());
+		//coworkcode생성 및 기본 입력 데이터 호출
+		String newcoworkcode = coworkservice.CoworkCodeSelect(nowdate);
+		if(newcoworkcode == null || newcoworkcode == "") {
+			tmpcodeStr = "CW" + nowdate + "00001";
+		}else {
+			tmpstr = newcoworkcode.substring(10,15);
+			int tmpcode = Integer.parseInt(tmpstr,10);
+			tmpcodeStr = newcoworkcode.substring(0, 10);
+			tmpcode = tmpcode + 1;
+			newcoworkcode = tmpcodeStr + tmpcode;
+			if( newcoworkcode.length() < 15) {
+				for(int i = newcoworkcode.length();i < 15; i++)
+				tmpcodeStr = tmpcodeStr + 0;
+			}
+			tmpcodeStr = tmpcodeStr + tmpcode;
+		}
+		System.out.println("tmpcodeStr=="+tmpcodeStr);
+		//coworkcode생성=========================================================
+
+		String coworkcode = tmpcodeStr;
+		
+		System.out.println("arrayParams-------------->" + arrayParams); 
+
+		System.out.println("companycode-------------->" + companycode); 
+		
+		System.out.println("coworkcode-------------->" + coworkcode); 
+		
+		CoworkDTO coworkDTO = new CoworkDTO();
+		
+		coworkDTO.setCoworkcode(coworkcode);
+		coworkDTO.setCompanycode(companycode);
+		
+		for (int i = 0; i < arrayParams.size(); i++) {
+			String userid = arrayParams.get(i);
+			System.out.println("manager-------------->" + userid); 
+			
+			coworkDTO.setUserid(userid);
+			coworkservice.InsertCoworkManager(coworkDTO);
+			
+		}
+		
+		/*
+		for(UserVO str : body.getManagerList()) {
+
+			System.out.println("name-------------->"+str.getUserid()); 
+
+			// System.out.println("userId-------------->"+str.get()); 
+
+		}
+
+		 */
+		/*
+		mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+		
+		CoworkDTO coworkDTO = mapper.readValue(body, CoworkDTO.class);
+        String jsonStr = mapper.writeValueAsString(coworkDTO);
+        System.out.println("JsonTest : "+jsonStr);
+
+        coworkservice.InsertCoworkManager(coworkDTO);
+		*/
+		
+	}
+	
+	@RequestMapping(value = "/Company/InsertCompanyCowork")
+	public String CoworkInsert(@RequestBody String body,HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+        CoworkDTO coworkDTO = mapper.readValue(body, CoworkDTO.class);
+        String jsonStr = mapper.writeValueAsString(coworkDTO);
+        
+        String tmpcodeStr = "";
+		String tmpstr = "";
+		Date date = new Date();
+        SimpleDateFormat dt = new SimpleDateFormat("yyyyMMdd");
+    	String nowdate = dt.format(date.getTime());
+		//coworkcode생성 및 기본 입력 데이터 호출
+		String newcoworkcode = coworkservice.CoworkCodeSelect(nowdate);
+		if(newcoworkcode == null || newcoworkcode == "") {
+			tmpcodeStr = "CW" + nowdate + "00001";
+		}else {
+			tmpstr = newcoworkcode.substring(10,15);
+			int tmpcode = Integer.parseInt(tmpstr,10);
+			tmpcodeStr = newcoworkcode.substring(0, 10);
+			tmpcode = tmpcode + 1;
+			newcoworkcode = tmpcodeStr + tmpcode;
+			if( newcoworkcode.length() < 15) {
+				for(int i = newcoworkcode.length();i < 15; i++)
+				tmpcodeStr = tmpcodeStr + 0;
+			}
+			tmpcodeStr = tmpcodeStr + tmpcode;
+		}
+		System.out.println("tmpcodeStr=="+tmpcodeStr);
+		//coworkcode생성=========================================================
+		
+		coworkDTO.setCoworkcode(tmpcodeStr);
+        
+        coworkservice.CoworkViewInsert(coworkDTO);
+        		
+		returnUrl = "redirect:/Cowork/List";
 		return returnUrl;
 	}
 	
