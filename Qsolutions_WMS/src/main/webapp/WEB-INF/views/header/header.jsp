@@ -148,6 +148,7 @@ function usersetting(){
 							<li><a href="${pageContext.request.contextPath}/Cowork/List"><i class="fa fa-clipboard fa-fw fa-lg iconcss" aria-hidden="true"></i>업무</a></li>
 							<li><a href="${pageContext.request.contextPath}/Company/List"><i class="fa fa-building fa-fw fa-lg iconcss" aria-hidden="true"></i>사이트</a></li>
 							<li><a href="${pageContext.request.contextPath}/User/List"><i class="fa fa-user fa-fw fa-lg iconcss" aria-hidden="true"></i>담당자</a></li>
+							<li><a href="${pageContext.request.contextPath}/Equipment/List"><i class="fa fa-server fa-fw fa-lg iconcss" aria-hidden="true"></i>장비</a></li>
 							<li><a href="${pageContext.request.contextPath}/Cowork/Calendar"><i class="fa fa-calendar fa-fw fa-lg iconcss" aria-hidden="true"></i>업무캘린더</a></li>
 							<li><a href="${pageContext.request.contextPath}/Cowork/CalendarGoogle"><i class="fa fa-google fa-fw fa-lg iconcss" aria-hidden="true"></i>구글캘린더</a></li>
 							<li><a onclick="usersetting()"><i class="fa fa-cog fa-fw fa-lg iconcss" aria-hidden="true"></i>설정</a></li>

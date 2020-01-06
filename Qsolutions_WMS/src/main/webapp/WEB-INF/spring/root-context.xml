@@ -5,11 +5,15 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
 		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
-		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
@@ -22,10 +26,10 @@
 -->
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
         <property name="url"
-            value="jdbc:mysql://localhost:3306/qsolcowork?useSSL=false&amp;serverTimezone=UTC&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;allowMultiQueries=true">
+            value="jdbc:mysql://localhost:3306/qsolcowork?useSSL=false&amp;serverTimezone=UTC&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;allowPublicKeyRetrieval=true&amp;allowMultiQueries=true">
         </property>
-        <property name="username" value="zzan"></property>
-        <property name="password" value="1234"></property>
+        <property name="username" value="root"></property>
+        <property name="password" value="qsol123!@#"></property>
     </bean>
     
     
@@ -72,5 +76,29 @@
          <!-- defaultEncoding -->
          <property name="defaultEncoding" value="utf-8" />
 	</bean>
+	
+	
+	<context:component-scan base-package="kr.co.qsolutions.cowork.Task"></context:component-scan>
+	
+	<task:scheduler id="ExpiredEmailTask" pool-size="10" />
+	<task:executor id="gsTaskExecutor" pool-size="10" />
+	<task:annotation-driven executor="gsTaskExecutor" scheduler="ExpiredEmailTask" />
+	
+	<!-- Email 관련 -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="mail.qsolutions.co.kr" /> <!-- smtp 서버명 -->
+		<property name="port" value="25" /> <!-- 포트 번호 -->
+		<property name="username" value="chanyoung.kim@qsolutions.co.kr" /> <!-- id(일반적인 id가 아니니 확인 필요) -->
+		<property name="password" value="1q2w3e4r5t!" /> <!-- 비밀번호 -->
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.debug">true</prop>
+			</props>
+		</property>
+	</bean>
+	
 	
 </beans>

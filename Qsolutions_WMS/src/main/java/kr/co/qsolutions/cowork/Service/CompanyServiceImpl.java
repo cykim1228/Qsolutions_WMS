@@ -1,5 +1,7 @@
 package kr.co.qsolutions.cowork.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -9,14 +11,17 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import kr.co.qsolutions.cowork.DAO.CompanyDao;
 import kr.co.qsolutions.cowork.DAO.CoworkDao;
 import kr.co.qsolutions.cowork.DTO.CompanyDTO;
+import kr.co.qsolutions.cowork.DTO.ContractDTO;
 import kr.co.qsolutions.cowork.DTO.CoworkDTO;
 import kr.co.qsolutions.cowork.DTO.FileDTO;
 import kr.co.qsolutions.cowork.VO.CompanyVO;
+import kr.co.qsolutions.cowork.VO.ContractVO;
 import kr.co.qsolutions.cowork.VO.CoworkPagingVO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
 import kr.co.qsolutions.cowork.VO.FileVO;
@@ -185,4 +190,46 @@ public class CompanyServiceImpl implements CompanyService {
 		return dao.CoworkViewSelectCompanyList(companycode);
 	}
 
+	@Override
+	public int InsertContract(ContractDTO contractDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.InsertContract(contractDTO);
+	}
+
+	@Override
+	public List<ContractVO> SelectContract(ContractDTO contractDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.SelectContract(contractDTO);
+	}
+
+	@Override
+	public ContractVO ViewContract(ContractDTO contractDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.ViewContract(contractDTO);
+	}
+
+	@Override
+	public int DeleteContract(ContractDTO contractDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.DeleteContract(contractDTO);
+	}
+
+	@Override
+	public int UpdateContract(ContractDTO contractDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.UpdateContract(contractDTO);
+	}
+
+	@Override
+	public List<ContractVO> ContractAllSelect() throws Exception {
+		// TODO Auto-generated method stub
+		return dao.ContractAllSelect();
+	}
+
+	@Override
+	public List<ContractVO> ExpiredContractSend() throws Exception {
+		// TODO Auto-generated method stub
+		return dao.ExpiredContractSend();
+	}
+	
 }

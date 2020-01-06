@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="co.kr.qsolutions.mapper.equipmentMapper">
+	
+	<select id="SelectEquipmentList" parameterType="PagingVO" resultType="EquipmentVO">
+		select 
+			equipmentcode, equipmentname, equipmentcompany, equipmentsubject, equipmentdivision, equipmentspec, IsUse
+		from
+			equipment
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+	       	<if test="searchType=='equipmentcode'">
+	       		equipmentcode like CONCAT('%',#{searchData},'%')
+	       	</if>
+	       	<if test="searchType=='equipmentname'">
+	       		equipmentname like CONCAT('%',#{searchData},'%')
+	       	</if>
+			AND IsUse != 1
+		</trim>
+		order by
+			equipmentcode desc
+		Limit #{start},#{last}
+	</select>
+	
+ 	<select id="SelectEquipmentCount" parameterType="PagingVO" resultType="java.lang.Integer">
+		select 
+			count(*)
+		from
+			equipment
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+	       	<if test="searchType=='equipmentcode'">
+	       		equipmentcode like CONCAT('%',#{searchData},'%')
+	       	</if>
+	       	<if test="searchType=='equipmentname'">
+	       		equipmentname like CONCAT('%',#{searchData},'%')
+	       	</if>
+			AND IsUse != 1
+		</trim>
+		order by
+			equipmentname asc
+	</select>
+	
+	<select id="ViewEquipment" resultType="EquipmentVO" parameterType="EquipmentDTO">
+		select 
+			equipmentcode, equipmentname, equipmentcompany, equipmentsubject, equipmentdivision, equipmentspec
+		from
+			equipment
+		where
+			equipmentcode = #{equipmentcode} and IsUse != 1
+	</select>
+	
+	<select id="SelectEquipmentCode" resultType="String">
+		select MAX(equipmentcode) from equipment
+	</select>
+	
+	<insert id="InsertEquipment" parameterType="EquipmentDTO">
+		insert into equipment
+			(equipmentcode, equipmentname, equipmentcompany, equipmentsubject, equipmentdivision, equipmentspec)
+		value
+			(#{equipmentcode},#{equipmentname},#{equipmentcompany},#{equipmentsubject},#{equipmentdivision},#{equipmentspec})
+	</insert>
+	
+	<update id="UpdateEquipment" parameterType="EquipmentDTO">
+		update equipment 
+			set 
+				equipmentname = #{equipmentname}, equipmentcompany = #{equipmentcompany}, equipmentsubject = #{equipmentsubject}, equipmentdivision = #{equipmentdivision}, equipmentspec = #{equipmentspec}
+			where 
+				equipmentcode = #{equipmentcode}
+	</update>
+	
+	<update id="DeleteEquipment" parameterType="EquipmentDTO">
+		UPDATE equipment e
+ 			SET e.IsUse = 1
+		WHERE e.equipmentcode = #{equipmentcode}
+	</update>
+	
+	<update id="DeleteEquipmentModel" parameterType="EquipmentDTO">
+		UPDATE model m
+ 			SET m.contractcode = null, m.IsUse = 1
+		WHERE m.equipmentcode = #{equipmentcode}
+	</update>
+	
+	<select id="EquipmentAllSelect" resultType="EquipmentVO">
+		select 
+			equipmentcode, equipmentname, equipmentcompany
+		from 
+			equipment
+		where
+			IsUse != 1
+	</select>
+	
+	<insert id="InsertContractEquipment" parameterType="EquipmentDTO">
+		insert into contractequipment
+			(contractcode, equipmentcode, equipmentname, equipmentcompany, equipmentsubject, equipmentdivision, equipmentspec, cedetail)
+		value
+			(#{contractcode},#{equipmentcode},#{equipmentname},#{equipmentcompany},#{equipmentsubject},#{equipmentdivision},#{equipmentspec},#{cedetail})
+	</insert>
+	
+	<select id="SelectModelCode" resultType="String">
+		select MAX(modelcode) from model
+	</select>
+	
+	<insert id="InsertModel" parameterType="ModelDTO">
+		insert into model
+			(modelcode, equipmentcode, contractcode, modelname, modelserial, modelmac, modeldetail)
+		value
+			(#{modelcode},#{equipmentcode},#{contractcode},#{modelname},#{modelserial},#{modelmac},#{modeldetail})
+	</insert>
+	
+	<select id="SelectModelList" resultType="ModelVO" parameterType="EquipmentDTO">
+		select 
+			m.modelcode, m.contractcode, m.modelname, m.modelserial, m.modelmac, m.modeldetail, ct.contracttitle, ct.contractcompany, c.companyname
+		from 
+    		model m left join contract ct ON m.contractcode = ct.contractcode
+    		left join company c ON ct.contractcompany = c.companycode
+		where
+			m.equipmentcode = #{equipmentcode} and m.IsUse != 1
+		ORDER BY m.modelcode desc
+	</select>
+	
+	<select id="ViewSelectModel" resultType="ModelVO" parameterType="ModelDTO">
+		select 
+			m.modelcode, m.contractcode, m.modelname, m.modelserial, m.modelmac, m.modeldetail, ct.contracttitle, ct.contractcompany, c.companyname, ct.startdate, ct.enddate, e.equipmentname, m.equipmentcode
+		from 
+    		model m left join contract ct ON m.contractcode = ct.contractcode
+    		left join company c ON ct.contractcompany = c.companycode
+    		left join equipment e ON m.equipmentcode = e.equipmentcode
+		where
+			m.modelcode = #{modelcode} and m.IsUse != 1
+	</select>
+	
+	<select id="SelectContractModelList" resultType="ModelVO" parameterType="ContractDTO">
+		select 
+			m.modelcode, m.contractcode, m.modelname, m.modelserial, m.modelmac, m.modeldetail, ct.contracttitle, ct.contractcompany, c.companyname, e.equipmentname
+		from 
+    		model m left join contract ct ON m.contractcode = ct.contractcode
+    		left join company c ON ct.contractcompany = c.companycode
+    		left join equipment e ON m.equipmentcode = e.equipmentcode
+		where
+			m.contractcode = #{contractcode} and m.IsUse != 1
+		ORDER BY m.modelcode desc
+	</select>
+	
+	<update id="DeleteContractModel" parameterType="ModelDTO">
+		update model m 
+			set m.contractcode = null
+		where
+			m.modelcode = #{modelcode};
+	</update>
+	
+	<update id="DeleteModel" parameterType="ModelDTO">
+		update model m 
+			set m.contractcode = null, m.IsUse = 1
+		where
+			m.modelcode = #{modelcode};
+	</update>
+	
+	<update id="UpdateModel" parameterType="ModelDTO">
+		update model 
+			set 
+				modelname = #{modelname}, modelserial = #{modelserial}, modelmac = #{modelmac}, modeldetail = #{modeldetail}, contractcode = #{contractcode}
+			where 
+				modelcode = #{modelcode}
+	</update>
+	
+	<select id="SelectModel" resultType="ModelVO">
+		select 
+			m.modelcode, m.equipmentcode, m.modelname, m.modelserial, m.modelmac, m.modeldetail, e.equipmentname
+		from 
+    		model m left join equipment e ON m.equipmentcode = e.equipmentcode
+		where       
+			m.contractcode is null and m.IsUse != 1
+		ORDER BY m.modelcode desc;
+	</select>
+	
+	<update id="UpdateContractModel" parameterType="ModelDTO">
+		update model 
+			set 
+				contractcode = #{contractcode}
+			where 
+				modelcode = #{modelcode}
+	</update>
+	
+</mapper>

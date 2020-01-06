@@ -17,6 +17,7 @@ import kr.co.qsolutions.cowork.DTO.CoworkDTO;
 import kr.co.qsolutions.cowork.Service.CompanyService;
 import kr.co.qsolutions.cowork.Service.CoworkService;
 import kr.co.qsolutions.cowork.Util.EmailSender;
+import kr.co.qsolutions.cowork.VO.ContractVO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
 import kr.co.qsolutions.cowork.VO.EmailForm;
 import kr.co.qsolutions.cowork.VO.SubCoworkVO;
@@ -84,7 +85,7 @@ public class EmailController {
     	System.out.println("tmpcode : " + tmpcode);
     	System.out.println("coworkVO : " + coworkVO);
     	
-    	List<SubCoworkVO>subcoworkVO = coworkservice.SubCoworkListSelect(tmpcode);
+    	List<SubCoworkVO> subcoworkVO = coworkservice.SubCoworkListSelect(tmpcode);
     	
     	List<UserVO> userList = coworkservice.SelectCoworkUser(coworkDTO);
     	
@@ -106,5 +107,7 @@ public class EmailController {
     	
         return "redirect:/Cowork/List";
     }
+    
+    
     
 }

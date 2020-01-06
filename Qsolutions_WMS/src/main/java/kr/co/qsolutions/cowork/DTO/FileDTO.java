@@ -18,6 +18,8 @@ public class FileDTO {
     private String profilepathname;
     private String usercolor;
     
+    private String equipmentcode;
+    
     public FileDTO() {
     }
     
@@ -91,12 +93,21 @@ public class FileDTO {
 	public void setUsercolor(String usercolor) {
 		this.usercolor = usercolor;
 	}
+	
+	public String getEquipmentcode() {
+		return equipmentcode;
+	}
+	
+	public void setEquipmentcode(String equipmentcode) {
+		this.equipmentcode = equipmentcode;
+	}
 
 	@Override
 	public String toString() {
 		return "FileDTO [companycode=" + companycode + ", filename=" + filename + ", filepathname=" + filepathname
 				+ ", uploaddate=" + uploaddate + ", fname=" + fname + ", uploadFile=" + uploadFile + ", userid="
-				+ userid + ", profilepathname=" + profilepathname + ", usercolor=" + usercolor + "]";
+				+ userid + ", profilepathname=" + profilepathname + ", usercolor=" + usercolor + ", equipmentcode="
+				+ equipmentcode + "]";
 	}
 
 }

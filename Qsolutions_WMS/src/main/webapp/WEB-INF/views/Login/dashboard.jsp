@@ -52,7 +52,7 @@ function todayCowork(){
     margin-top: 20px;
     margin-left: 10%;
     background-size: cover;
-    background-image: url('http://qsol.synology.me/${profileVO.profilepathname}');
+    background-image: url('http://localhost:8090/${profileVO.profilepathname}');
     background-repeat: no-repeat;
     background-position: center;
 }

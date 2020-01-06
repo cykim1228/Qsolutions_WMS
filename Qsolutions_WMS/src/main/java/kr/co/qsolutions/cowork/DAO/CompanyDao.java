@@ -8,9 +8,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import kr.co.qsolutions.cowork.DTO.CompanyDTO;
+import kr.co.qsolutions.cowork.DTO.ContractDTO;
 import kr.co.qsolutions.cowork.DTO.CoworkDTO;
 import kr.co.qsolutions.cowork.DTO.FileDTO;
 import kr.co.qsolutions.cowork.VO.CompanyVO;
+import kr.co.qsolutions.cowork.VO.ContractVO;
 import kr.co.qsolutions.cowork.VO.CoworkPagingVO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
 import kr.co.qsolutions.cowork.VO.FileVO;
@@ -71,4 +73,18 @@ public interface CompanyDao {
 
 	public List<CoworkVO> CoworkViewSelectCompanyList(String companycode) throws Exception;
 
+	public int InsertContract(ContractDTO contractDTO) throws Exception;
+
+	public List<ContractVO> SelectContract(ContractDTO contractDTO) throws Exception;
+
+	public ContractVO ViewContract(ContractDTO contractDTO) throws Exception;
+
+	public int DeleteContract(ContractDTO contractDTO) throws Exception;
+
+	public int UpdateContract(ContractDTO contractDTO) throws Exception;
+
+	public List<ContractVO> ContractAllSelect() throws Exception;
+
+	public List<ContractVO> ExpiredContractSend() throws Exception;
+	
 }

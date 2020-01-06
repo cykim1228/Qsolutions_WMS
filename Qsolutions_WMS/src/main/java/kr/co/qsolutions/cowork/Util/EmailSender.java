@@ -5,7 +5,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.List;
 
+import javax.inject.Inject;
 import javax.mail.Message.RecipientType;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -14,19 +18,28 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import kr.co.qsolutions.cowork.Service.CompanyService;
+import kr.co.qsolutions.cowork.VO.ContractVO;
 import kr.co.qsolutions.cowork.VO.EmailForm;
 
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Scheduled;
 
 @Component
 public class EmailSender {
     @Autowired
     private JavaMailSender mailSender;
     
+    @Inject
+	private CompanyService companyservice;
+    
     public void sendEmail(EmailForm emailForm) throws Exception{
         //皋老 惯价 扁瓷 力傍
+    	
+    	System.out.println("sendEmail......");
+    	
         MimeMessage msg = mailSender.createMimeMessage();
         msg.setSubject(emailForm.getSubject(), "utf-8"); //皋老 力格
         msg.setText(emailForm.getContent(), "utf-8", "html");
@@ -86,6 +99,51 @@ public class EmailSender {
         	return;
         }
         
+    }
+    
+    public void sendExpiredContractMail(EmailForm emailForm) throws Exception {
+    	MimeMessage msg = mailSender.createMimeMessage();
+    	msg.setSubject(emailForm.getSubject(), "utf-8"); //皋老 力格
+        msg.setText(emailForm.getContent(), "utf-8", "html");
+        msg.setFrom(new InternetAddress("chanyoung.kim@qsolutions.co.kr","QSolutions"));
+        
+		msg.setRecipient(RecipientType.TO, new InternetAddress(emailForm.getReceiver()));
+		
+        try {
+        	mailSender.send(msg);
+		} catch (MailException ex) {
+			ex.printStackTrace();
+		}
+        
+    }
+    
+    public void ExpiredContractSend() throws Exception {
+    	
+    	List<ContractVO> contractVO = companyservice.ExpiredContractSend();
+    	
+    	EmailForm mailForm = new EmailForm();
+    	
+    	String receiver = "chanyoung.kim@qsolutions.co.kr";
+    	String subject = "[诀公包府矫胶袍] 皋老辑厚胶";
+    	String content = "<h1>Hello world</h1>";
+    	
+    	System.out.println("receiver : " + receiver);
+    	System.out.println("subject : " + subject);
+    	System.out.println("content : " + content);
+    	
+    	mailForm.setReceiver(receiver);
+    	mailForm.setSubject(subject);
+    	mailForm.setContent(content);
+    	
+    	MimeMessage msg = mailSender.createMimeMessage();
+        msg.setSubject(subject, "utf-8"); //皋老 力格
+        msg.setText(content, "utf-8", "html");
+        msg.setFrom(new InternetAddress("chanyoung.kim@qsolutions.co.kr","QSolutions"));
+        
+		msg.setRecipient(RecipientType.TO, new InternetAddress(receiver));
+		
+        
+    	
     }
     
 }

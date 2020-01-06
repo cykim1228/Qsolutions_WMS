@@ -26,6 +26,9 @@
             <typeAlias type="kr.co.qsolutions.cowork.DTO.CompanyDTO" alias="CompanyDTO"/>
             <typeAlias type="kr.co.qsolutions.cowork.DTO.SearchDTO" alias="SearchDTO"/>
             <typeAlias type="kr.co.qsolutions.cowork.DTO.ManagerDTO" alias="ManagerDTO"/>
+            <typeAlias type="kr.co.qsolutions.cowork.DTO.ContractDTO" alias="ContractDTO"/>
+            <typeAlias type="kr.co.qsolutions.cowork.DTO.EquipmentDTO" alias="EquipmentDTO"/>
+            <typeAlias type="kr.co.qsolutions.cowork.DTO.ModelDTO" alias="ModelDTO"/>
             <typeAlias type="kr.co.qsolutions.cowork.VO.UserVO" alias="UserVO"/>
             <typeAlias type="kr.co.qsolutions.cowork.VO.LogVO" alias="LogVO"/>
             <typeAlias type="kr.co.qsolutions.cowork.VO.PagingVO" alias="PagingVO"/>
@@ -38,6 +41,9 @@
             <typeAlias type="kr.co.qsolutions.cowork.VO.PagingViewVO" alias="PagingViewVO"/>
             <typeAlias type="kr.co.qsolutions.cowork.VO.CoworkPagingVO" alias="CoworkPagingVO"/>
             <typeAlias type="kr.co.qsolutions.cowork.VO.UserPagingVO" alias="UserPagingVO"/>
+            <typeAlias type="kr.co.qsolutions.cowork.VO.ContractVO" alias="ContractVO"/>
+            <typeAlias type="kr.co.qsolutions.cowork.VO.EquipmentVO" alias="EquipmentVO"/>
+            <typeAlias type="kr.co.qsolutions.cowork.VO.ModelVO" alias="ModelVO"/>
         </typeAliases>
         <mappers>
 	        <package name="kr.co.qsolutions.mapper"/>

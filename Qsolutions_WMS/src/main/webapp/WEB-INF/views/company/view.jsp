@@ -31,7 +31,7 @@
 
 	function deleteform(){
 		
-		var answer = confirm("삭제하시겠습니까??")
+		var answer = confirm("삭제하시겠습니까?")
 		if (answer) {
 			var companycode = $("#companycode").val();
 			$.ajax({
@@ -58,7 +58,7 @@
 		location.href = "/qsolcowork/Company/List";
 	}
 	
-	function uploadfile(){
+	/* function uploadfile(){
  		
  		var temp_obj = {};
  		
@@ -84,7 +84,7 @@
 	            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
 	        }
 	    });
-	}
+	} */
 	
 	function deletefile(val){
  		
@@ -376,6 +376,12 @@
 	function insertcoworkform() {
 		var companycode = $("#companycode").val();
 		var url = "/Company/InsertCoworkForm?companycode="+companycode;
+		location.href = url;
+	}
+	
+	function insertcontractform() {
+		var companycode = $("#companycode").val();
+		var url = "/Company/InsertContractForm?companycode="+companycode;
 		location.href = url;
 	}
 	
@@ -823,6 +829,7 @@ body {
     	<input type="button" class="btn btn-success pull-right" name="excelConvertBtn" id="excelConvertBtn" value="엑셀 출력" style="cursor:hand; margin-right:10px; margin-top: 8px;" />
 		<button type="button" class="btn btn-info pull-right" onclick="insertuserform()" style="margin-right: 10px; margin-top: 8px;">담당자 등록</button>
 		<button type="button" class="btn btn-warning pull-right" onclick="insertcoworkform()" style="margin-right: 10px; margin-top: 8px;">업무 등록</button>
+		<button type="button" class="btn btn-default pull-right" onclick="insertcontractform()" style="margin-right: 10px; margin-top: 8px;">계약 등록</button>
 		<br class="visible-xs">
 	</div>
 	<div class="viewListTop visible-xs">
@@ -860,6 +867,34 @@ body {
 							<td class="hidden-xs"><a href="${companyVO.companyhomepg}">${companyVO.companyhomepg}</a></td>
 							<td>[${companyVO.companyzipcode}] ${companyVO.companyaddress} ${companyVO.companyaddress2}</td>
 						</tr>
+				</tbody>
+			</table>
+	</div>
+	</div>
+	
+	<div class="viewList">
+	<span class="sub-header" style="margin-left: 10px; position: relative; font-size: 23px; font-weight: bold;">계약 목록</span>
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead align="center">
+					<tr>
+						<th style="width: 10%; text-align: center;">계약종류</th>
+						<th style="width: 30%; text-align: center;">계약명</th>
+						<th class="hidden-xs" style="width: 20%; text-align: center;">시작일</th>
+						<th class="hidden-xs" style="width: 20%; text-align: center;">종료일</th>
+						<th style="width: 20%; text-align: center;">진행률</th>
+					</tr>
+				</thead>
+				<tbody align="center">
+					<c:forEach items="${contractList}" var="contractList" varStatus="rowCount">
+						<tr>
+							<td>${contractList.contractsubject}</td>
+							<td><a href="${pageContext.request.contextPath}/Company/Contract?contractcompany=${contractList.contractcompany}&contractcode=${contractList.contractcode}">${contractList.contracttitle}</a></td>
+							<td class="hidden-xs">${contractList.startdate}</td>
+							<td class="hidden-xs">${contractList.enddate}</td>
+							<td>${contractList.contractname}</td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
 	</div>

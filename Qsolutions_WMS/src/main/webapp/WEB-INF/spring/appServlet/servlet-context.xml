@@ -3,8 +3,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
@@ -41,11 +43,10 @@
 			<mapping path="/User/**"/> 
 			<mapping path="/Search/**"/>
 			<mapping path="/Dashboard/**"/>
+			<mapping path="/Equipment/**"/>
 			<beans:ref bean="authenticationInterceptor"></beans:ref>
 		</interceptor>
 	</interceptors>
-	
-	<context:component-scan base-package="pack" />
 
 	<!-- Email 관련 -->
 	<beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
@@ -75,7 +76,7 @@
 	<!-- 승인된 자바스크립트 원본과 승인된 리디렉션 URI -->
 	<beans:bean id="googleOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">
 		<beans:property name="scope" value="https://www.googleapis.com/auth/plus.login" />
-		<beans:property name="redirectUri" value="http://localhost:8080/qsolcowork/oauth2callback" />
+		<beans:property name="redirectUri" value="http://localhost:8090/qsolcowork/oauth2callback" />
 	</beans:bean>
 	
 	<!-- 엑셀 변환 위한 빈즈설정 -->
@@ -83,5 +84,5 @@
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> 
 	<beans:property name="maxUploadSize" value="10000000" /> 
 	</beans:bean>
-
+	
 </beans:beans>

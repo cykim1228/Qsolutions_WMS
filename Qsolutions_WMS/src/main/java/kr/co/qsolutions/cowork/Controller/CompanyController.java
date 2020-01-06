@@ -31,23 +31,31 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.co.qsolutions.cowork.DTO.CompanyDTO;
+import kr.co.qsolutions.cowork.DTO.ContractDTO;
 import kr.co.qsolutions.cowork.DTO.CoworkDTO;
+import kr.co.qsolutions.cowork.DTO.EquipmentDTO;
 import kr.co.qsolutions.cowork.DTO.FileDTO;
+import kr.co.qsolutions.cowork.DTO.ModelDTO;
 import kr.co.qsolutions.cowork.DTO.SubCoworkDTO;
 import kr.co.qsolutions.cowork.DTO.UserDTO;
 import kr.co.qsolutions.cowork.Service.CompanyService;
 import kr.co.qsolutions.cowork.Service.CoworkService;
+import kr.co.qsolutions.cowork.Service.EquipmentService;
 import kr.co.qsolutions.cowork.Service.ManagerService;
 import kr.co.qsolutions.cowork.Service.UserService;
 import kr.co.qsolutions.cowork.Util.AccountControl;
 import kr.co.qsolutions.cowork.Util.FileUploadService;
 import kr.co.qsolutions.cowork.VO.CompanyVO;
+import kr.co.qsolutions.cowork.VO.ContractVO;
 import kr.co.qsolutions.cowork.VO.CoworkPagingVO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
+import kr.co.qsolutions.cowork.VO.EquipmentVO;
 import kr.co.qsolutions.cowork.VO.FileVO;
 import kr.co.qsolutions.cowork.VO.ManagerVO;
+import kr.co.qsolutions.cowork.VO.ModelVO;
 import kr.co.qsolutions.cowork.VO.PagingVO;
 import kr.co.qsolutions.cowork.VO.PagingViewVO;
+import kr.co.qsolutions.cowork.VO.SubCoworkVO;
 import kr.co.qsolutions.cowork.VO.UserPagingVO;
 import kr.co.qsolutions.cowork.VO.UserVO;
 
@@ -76,6 +84,9 @@ public class CompanyController {
 	@Inject
 	private ManagerService managerservice;
 	
+	@Inject
+	private EquipmentService equipmentservice;
+	
 	String returnUrl;
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -98,6 +109,7 @@ public class CompanyController {
 		return "company/viewlist";
 	}
 	
+	/*
 	@RequestMapping(value = "/Company/Upload")
 	public String upload(HttpServletResponse response, HttpServletRequest request, HttpSession session, Model model, @RequestParam("file") MultipartFile file) throws Exception {
 
@@ -129,6 +141,7 @@ public class CompanyController {
 		
 	    return "company/viewlist";
 	}
+	*/
 	
 	/*
 	@RequestMapping(value = "/fileUpload") // method = RequestMethod.GET 
@@ -210,6 +223,9 @@ public class CompanyController {
 		CoworkDTO coworkDTO = new CoworkDTO();
 		coworkDTO.setCoworkcompany(tmpcode);
 		
+		ContractDTO contractDTO = new ContractDTO();
+		contractDTO.setContractcompany(tmpcode);
+		
 		userPagingVO.setCompanycode(tmpcode);
 		coworkpagingVO.setCompanycode(tmpcode);
 		
@@ -246,6 +262,8 @@ public class CompanyController {
 		
 		List<FileVO> fileList = companyservice.SelectFileUpload(companyDTO);
 		
+		List<ContractVO> contractList = companyservice.SelectContract(contractDTO);
+		
 		System.out.println("업무 List 컨트롤러 : " + tmpcode);
 		
 		System.out.println("coworkList : " + coworkList);
@@ -277,6 +295,7 @@ public class CompanyController {
 		model.addAttribute("userPagingVO", userPagingVO);
 		// model.addAttribute("coworksList", coworksList);
 		model.addAttribute("coworkpagingVO", coworkpagingVO);
+		model.addAttribute("contractList", contractList);
 		
 		returnUrl = "company/view";
 		return returnUrl;
@@ -722,6 +741,19 @@ public class CompanyController {
 		return returnUrl;
 	}
 	
+	@RequestMapping(value = "/Company/InsertContractForm")
+	public String CompanyInsertContractform(HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
+		UserVO loginVO = (UserVO)session.getAttribute("login");
+		List<CompanyVO> companyList = coworkservice.CompanyAllSelect();
+		String tmpcode = (String)request.getParameter("companycode");
+		
+		model.addAttribute("companyList",companyList);
+		model.addAttribute("tmpcode", tmpcode);
+		
+		returnUrl = "company/insertContract";
+		return returnUrl;
+	}
+	
 	@RequestMapping(value = "/Company/InsertSelectManager")
 	public void InsertSelectManager(@RequestParam(value="selectsManager[]") List<String> arrayParams, @RequestParam(value="comcode") String companycode, HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
 
@@ -838,6 +870,178 @@ public class CompanyController {
         		
 		returnUrl = "redirect:/Cowork/List";
 		return returnUrl;
+	}
+	
+	@RequestMapping(value = "/Company/InsertContract")
+	public String ContractInsert(@RequestBody String body,HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+        ContractDTO contractDTO = mapper.readValue(body, ContractDTO.class);
+        String jsonStr = mapper.writeValueAsString(contractDTO);
+        
+        System.out.println("====계약 등록====");
+        
+        companyservice.InsertContract(contractDTO);
+        		
+		returnUrl = "redirect:/Company/List";
+		return returnUrl;
+	}
+	
+	@RequestMapping(value = "/Company/Contract")
+	public String ContractView(HttpServletResponse response, HttpServletRequest request, HttpSession session, Model model) throws Exception {
+		
+		UserVO loginVO = (UserVO)session.getAttribute("login");
+		String tmpcode = (String)request.getParameter("contractcompany");
+		String contractcode = (String)request.getParameter("contractcode");
+		
+		CompanyDTO companyDTO = new CompanyDTO();
+		companyDTO.setCompanycode(tmpcode);
+		
+		CoworkDTO coworkDTO = new CoworkDTO();
+		coworkDTO.setCoworkcompany(tmpcode);
+		
+		ContractDTO contractDTO = new ContractDTO();
+		contractDTO.setContractcompany(tmpcode);
+		contractDTO.setContractcode(contractcode);
+		
+		ContractVO contractVO = companyservice.ViewContract(contractDTO);
+		
+		List<ModelVO> modelList = equipmentservice.SelectContractModelList(contractDTO);
+		
+		System.out.println(contractVO);
+		
+		model.addAttribute("contractVO", contractVO);
+		model.addAttribute("modelList", modelList);
+		
+		returnUrl = "company/contract";
+		return returnUrl;
+	}
+	
+	@RequestMapping(value = "/Company/UpdateContractForm")
+	public String ContractUpdateform(HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
+		UserVO loginVO = (UserVO)session.getAttribute("login");
+		
+		String tmpcode = (String)request.getParameter("contractcode");
+		String contractcompany = (String)request.getParameter("contractcompany");
+		ContractDTO contractDTO = new ContractDTO();
+		contractDTO.setContractcode(tmpcode);
+		contractDTO.setContractcompany(contractcompany);
+		
+		ContractVO contractVO = companyservice.ViewContract(contractDTO);
+		
+		List<CompanyVO> companyList = coworkservice.CompanyAllSelect();
+		
+		model.addAttribute("companyList",companyList);
+		model.addAttribute("contractcompany", contractcompany);
+		
+		model.addAttribute("contractVO", contractVO);
+		
+		returnUrl = "company/modifyContract";
+		return returnUrl;
+	}
+	
+	@RequestMapping(value = "/Company/UpdateContract")
+	public String ContractUpdate(@RequestBody String body, HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
+		UserVO loginVO = (UserVO)session.getAttribute("login");
+
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+        ContractDTO contractDTO = mapper.readValue(body, ContractDTO.class);
+        String jsonStr = mapper.writeValueAsString(contractDTO);
+        
+        companyservice.UpdateContract(contractDTO);
+
+        System.out.println("contractDTO : " + contractDTO);
+        
+		returnUrl = "redirect:/Company/List";
+		return returnUrl;
+	}
+	
+	@RequestMapping(value = "/Company/DeleteContract")
+	public String ContractDelete(HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
+		String tmpcode = (String)request.getParameter("contractcode");
+		
+		ContractDTO contractDTO = new ContractDTO();
+		contractDTO.setContractcode(tmpcode);
+		
+		System.out.println("contractcode : " + tmpcode);
+		
+		companyservice.DeleteContract(contractDTO);
+		
+		returnUrl = "redirect:/Company/List";
+		return returnUrl;
+	}
+	
+	@RequestMapping(value = "/Company/InsertEquipmentForm")
+	public String EquipmentInsertForm(HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
+		
+		String contractcode = (String)request.getParameter("contractcode");
+		String contractcompany = (String)request.getParameter("contractcompany");
+		
+		ContractDTO contractDTO = new ContractDTO();
+		contractDTO.setContractcode(contractcode);
+		contractDTO.setContractcompany(contractcompany);
+		
+		ContractVO contractVO = companyservice.ViewContract(contractDTO);
+		
+		List<EquipmentVO> equipmentList = equipmentservice.EquipmentAllSelect();
+		
+        ModelVO modelVO = new ModelVO();
+		
+		List<ModelVO> modelList = (List<ModelVO>)equipmentservice.SelectModel();
+		
+		System.out.println("contractVO = " + contractVO);
+		System.out.println("===========================");
+		System.out.println("equipmentList = " + equipmentList);
+		System.out.println("===========================");
+		System.out.println("modelList = " + modelList);
+		
+		model.addAttribute("equipmentList",equipmentList);
+		model.addAttribute("contractVO", contractVO);
+		model.addAttribute("modelList", modelList);
+		
+		
+		returnUrl = "company/insertModel";
+		return returnUrl;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/Company/ChangeEquipment", method = RequestMethod.GET)
+	public EquipmentVO ChangeEquipment(@RequestParam(value="equipmentcode")String equipmentcode, Model model) throws Exception {
+
+		System.out.println("equipmentcode : " + equipmentcode);
+		
+		EquipmentDTO equipmentDTO = new EquipmentDTO();
+		equipmentDTO.setEquipmentcode(equipmentcode);
+		
+		EquipmentVO selectVO = equipmentservice.ViewEquipment(equipmentDTO);
+     	
+     	System.out.println("selectVO : " + selectVO);
+     	
+		return selectVO;
+	}
+	
+	@RequestMapping(value = "/Company/InsertEquipment")
+	public void InsertEquipment(@RequestParam(value="selectModel[]") List<String> arrayParams, @RequestParam(value="contractcode") String contractcode, HttpServletResponse response, HttpServletRequest request, HttpSession session ,Model model) throws Exception {
+
+		System.out.println("arrayParams-------------->" + arrayParams); 
+
+		System.out.println("contractcode-------------->" + contractcode); 
+		
+		ModelDTO modelDTO = new ModelDTO();
+		
+		modelDTO.setContractcode(contractcode);
+		
+		for (int i = 0; i < arrayParams.size(); i++) {
+			String modelcode = arrayParams.get(i);
+			System.out.println("modelcode-------------->" + modelcode); 
+			
+			modelDTO.setModelcode(modelcode);
+			equipmentservice.UpdateContractModel(modelDTO);
+			
+		}
+		
 	}
 	
 }

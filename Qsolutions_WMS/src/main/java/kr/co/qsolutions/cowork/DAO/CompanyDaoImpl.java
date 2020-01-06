@@ -12,9 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import kr.co.qsolutions.cowork.DTO.CompanyDTO;
+import kr.co.qsolutions.cowork.DTO.ContractDTO;
 import kr.co.qsolutions.cowork.DTO.CoworkDTO;
 import kr.co.qsolutions.cowork.DTO.FileDTO;
 import kr.co.qsolutions.cowork.VO.CompanyVO;
+import kr.co.qsolutions.cowork.VO.ContractVO;
 import kr.co.qsolutions.cowork.VO.CoworkPagingVO;
 import kr.co.qsolutions.cowork.VO.CoworkVO;
 import kr.co.qsolutions.cowork.VO.FileVO;
@@ -181,6 +183,47 @@ public class CompanyDaoImpl implements CompanyDao  {
 		return sqlSession.selectList(Namespace+".CoworkViewSelectCompanyList", companycode);
 	}
 
-	
+	@Override
+	public int InsertContract(ContractDTO contractDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.insert(Namespace+".InsertContract", contractDTO);
+	}
+
+	@Override
+	public List<ContractVO> SelectContract(ContractDTO contractDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(Namespace+".SelectContract", contractDTO);
+	}
+
+	@Override
+	public ContractVO ViewContract(ContractDTO contractDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(Namespace+".ViewContract", contractDTO);
+	}
+
+	@Override
+	public int DeleteContract(ContractDTO contractDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.update(Namespace+".DeleteContract", contractDTO);
+	}
+
+	@Override
+	public int UpdateContract(ContractDTO contractDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.update(Namespace+".UpdateContract", contractDTO);
+	}
+
+	@Override
+	public List<ContractVO> ContractAllSelect() throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(Namespace+".ContractAllSelect");
+	}
+
+	@Override
+	public List<ContractVO> ExpiredContractSend() throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(Namespace+".ExpiredContractSend");
+	}
+
 }
 																																																																																																																																																																							

@@ -258,4 +258,61 @@
 			IsUse != 1
 	</select>
 	
+	<insert id="InsertContract" parameterType="ContractDTO">
+		insert into contract
+			(contractcode, contractcompany, contractsubject, startdate, enddate, contractname, contracttitle)
+		value
+			(#{contractcode},#{contractcompany},#{contractsubject},#{startdate},#{enddate},#{contractname},#{contracttitle})
+	</insert>
+	
+	<select id="SelectContract" resultType="ContractVO" parameterType="ContractDTO">
+		select 
+			contractcode, contractcompany, contractsubject, startdate, enddate, contractname, contracttitle
+		from 
+    		contract
+		where
+			contractcompany = #{contractcompany} and IsUse != 1
+	</select>
+	
+	<select id="ViewContract" resultType="ContractVO" parameterType="ContractDTO">
+		select 
+			contractcode, contractcompany, contractsubject, startdate, enddate, contractname, contracttitle
+		from 
+    		contract
+		where
+			contractcompany = #{contractcompany} and contractcode = #{contractcode} and IsUse != 1
+	</select>
+	
+	<update id="DeleteContract" parameterType="ContractDTO">
+		UPDATE contract ct
+ 			SET ct.IsUse = 1
+		WHERE ct.contractcode = #{contractcode}
+	</update>
+	
+	<update id="UpdateContract" parameterType="ContractDTO">
+		update contract 
+			set 
+				contractcompany = #{contractcompany}, contractsubject = #{contractsubject}, startdate = #{startdate}, enddate = #{enddate}, contractname = #{contractname}, contracttitle = #{contracttitle}
+			where 
+				contractcode = #{contractcode}
+	</update>
+	
+	<select id="ContractAllSelect" resultType="ContractVO">
+		select 
+			ct.contractcode,ct.contracttitle,c.companyname
+		from 
+			contract ct inner join company c ON ct.contractcompany = c.companycode
+		where
+			ct.IsUse != 1
+	</select>
+	
+	<select id="ExpiredContractSend" resultType="ContractVO">
+		select
+			* 
+		from 
+			contract 
+		where 
+			DATE_SUB(enddate, INTERVAL 30 DAY) = DATE_FORMAT(NOW(), '%Y-%m-%d')
+	</select>
+	
 </mapper>
